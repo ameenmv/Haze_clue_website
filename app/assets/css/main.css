@@ -1,0 +1,59 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+@import "./style-guide/colors.css";
+@import "./style-guide/fonts.css";
+@import "./utilities.css";
+@import "./components.css";
+
+@theme {
+  --container-8xl: 90rem;
+  --breakpoint-xs: 30rem; /* 480px */
+}
+:root {
+  /* Font for LTR languages */
+  /* font-family: var(--font-helvetica); */
+
+  /* Light Theme */
+  --ui-text: var(--color-black);
+  --ui-primary: var(--color-brand-300);
+  --ui-bg: var(--color-base-light);
+
+  --ui-container: var(--container-8xl);
+}
+
+/* Dark Theme */
+.dark {
+  --ui-text: var(--color-white);
+  --ui-primary: var(--color-brand-300);
+  --ui-bg: var(--color-base-dark);
+}
+
+/* Font for RTL languages */
+[dir="rtl"] body {
+  /* font-family: var(--font-graphik); */
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+  @apply w-1 h-1;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  @apply bg-neutral-50;
+}
+
+/* Thumb */
+::-webkit-scrollbar-thumb {
+  @apply bg-primary rounded-sm;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}

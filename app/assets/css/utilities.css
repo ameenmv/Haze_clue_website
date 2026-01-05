@@ -1,0 +1,162 @@
+@theme static {
+  --color-brand-gradient: linear-gradient(
+    90deg,
+    #ffa51f 0%,
+    #e5264f 22.12%,
+    #e5264f 54.35%,
+    #e5264f 74.84%,
+    #ffa51f 100%
+  );
+
+  --color-white-gradient: radial-gradient(
+    278.88% 78.42% at 38.62% 53.72%,
+    #d8d8d8 0%,
+    #fff 29.2%,
+    #d8d8d8 65.51%
+  );
+  --color-black-gradient: radial-gradient(
+    278.88% 78.42% at 38.62% 53.72%,
+    #07090d 0%,
+    rgba(7, 9, 13, 0.7) 29.2%,
+    #07090d 65.51%
+  );
+
+  --filter-black: brightness(0) saturate(100%) invert(4%) sepia(41%)
+    saturate(67%) hue-rotate(314deg) brightness(97%) contrast(82%);
+  --filter-brand: brightness(0) saturate(100%) invert(24%) sepia(91%)
+    saturate(5935%) hue-rotate(339deg) brightness(98%) contrast(90%);
+  --filter-gray: brightness(0) saturate(100%) invert(28%) sepia(6%)
+    saturate(959%) hue-rotate(352deg) brightness(95%) contrast(81%);
+  --filter-white: brightness(0) saturate(100%) invert(91%) sepia(0%)
+    saturate(7500%) hue-rotate(123deg) brightness(113%) contrast(101%);
+  --drop-shadow-dark: drop-shadow(0px 6px 8px #07090d);
+  --drop-shadow-light: drop-shadow(0px 6px 8px #e5e6e8);
+}
+
+/*  Text Utilities  */
+@utility text-brand-gradient {
+  background-image: var(--color-brand-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@utility bg-brand-gradient {
+  background-image: var(--color-brand-gradient);
+}
+
+@utility text-white-gradient {
+  background-image: var(--color-white-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+@utility text-black-gradient {
+  background-image: var(--color-black-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Filter Utilities */
+@utility filter-black {
+  filter: var(--filter-black);
+}
+@utility filter-brand {
+  filter: var(--filter-brand);
+}
+@utility filter-gray {
+  filter: var(--filter-gray);
+}
+@utility filter-white {
+  filter: var(--filter-white);
+}
+
+@utility drop-shadow-dark {
+  filter: var(--drop-shadow-dark);
+}
+
+@utility drop-shadow-light {
+  filter: var(--drop-shadow-light);
+}
+
+/* Flex Utilities */
+@utility flex-center {
+  @apply flex items-center justify-center;
+}
+
+@utility flex-col-center {
+  @apply flex flex-col items-center justify-center;
+}
+
+@utility flex-between {
+  @apply flex items-center justify-between;
+}
+@utility flex-col-between {
+  @apply flex flex-col items-center justify-between;
+}
+
+/* Font Utilities */
+/* @utility font-heading {
+  font-family: var(--font-palmore), var(--font-sans);
+  [dir="rtl"] & {
+    font-family: var(--font-shorooq), var(--font-sans);
+  }
+} */
+
+/* @utility text-heading {
+  @apply font-heading text-5xl md:text-6xl lg:text-7xl;
+} */
+
+/* Spacing Utilities */
+@utility section-space {
+  @apply lg:space-y-24 md:space-y-16 space-y-12;
+}
+
+@utility py-space {
+  @apply lg:py-20 md:py-16 py-12;
+}
+@utility pt-space {
+  @apply lg:pt-24 md:pt-16 pt-12;
+}
+@utility pb-space {
+  @apply lg:pb-24 md:pb-16 pb-12;
+}
+
+@utility my-space {
+  @apply lg:my-24 md:my-16 my-12;
+}
+
+@utility section-container {
+  @apply container mx-auto px-4;
+}
+
+/* Scrollbar Utilities */
+@utility scrollbar-hidden {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility text-outline-white {
+  color: transparent; /* no fill */
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: var(--color-white);
+}
+@utility text-outline-black {
+  color: transparent; /* no fill */
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: var(--color-black);
+}
+
+@utility floating-label {
+  @apply pointer-events-none absolute ltr:left-0 rtl:right-0 -top-4 transition-all peer-focus:-top-4 peer-focus:text-sm text-base peer-placeholder-shown:top-1 peer-placeholder-shown:font-normal opacity-80;
+}
+
+
+@utility scroll-fade-in {
+  animation: fade-in-up ease-out both;
+  animation-timeline: view();
+  animation-range: entry 0% cover 40%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
