@@ -12,7 +12,12 @@ export default {
     userName: 'اسم المستخدم',
     password: 'كلمة المرور',
     newPassword: 'كلمة المرور الجديدة',
-    confirmPassword: 'تأكيد كلمة المرور'
+    confirmPassword: 'تأكيد كلمة المرور',
+    agreeTo: 'أوافق على',
+    terms: 'شروط الخدمة',
+    and: 'و',
+    privacy: 'سياسة الخصوصية',
+    or: 'أو'
   },
   placeholder: {
     name: 'ادخل اسمك الكامل',
@@ -26,14 +31,35 @@ export default {
     title: 'تسجيل الدخول',
     success: 'تم تسجيل الدخول بنجاح',
     successDescription: 'تم تسجيل الدخول بنجاح.',
-    description: 'هل أنت مستخدم {site_name} ؟ أدخل رقم الجوال'
+    subtitle: 'سجل الدخول إلى حسابك',
+    welcome: 'مرحبًا بعودتك',
+    emailPlaceholder: 'أدخل بريدك الإلكتروني',
+    passwordPlaceholder: 'أدخل كلمة المرور',
+    rememberMe: 'تذكرني',
+    forgotPassword: 'نسيت كلمة المرور؟',
+    submit: 'تسجيل الدخول',
+    signingIn: 'جاري تسجيل الدخول...',
+    noAccount: 'ليس لديك حساب؟',
+    signUp: 'إنشاء حساب',
+    continueWith: 'أو المتابعة باستخدام'
   },
   register: {
     title: 'إنشاء حساب',
     description: 'هل ترغب في أن تصبح مستخدمًا في {site_name} ؟ أنشئ حسابك',
     message: 'احصل على عمليات دفع أسرع، الوصول إلى سجل طلباتك، إنشاء قائمة أمنيات والانضمام إلى {site_name}.',
     success: 'تم إنشاء الحساب بنجاح',
-    successDescription: 'تم إنشاء حسابك بنجاح. يمكنك الآن تسجيل الدخول.'
+    successDescription: 'تم إنشاء حسابك بنجاح. يمكنك الآن تسجيل الدخول.',
+    subtitle: 'املأ بياناتك للبدء',
+    submit: 'إنشاء حساب',
+    creating: 'جاري إنشاء الحساب...',
+    weak: 'ضعيف',
+    fair: 'مقبول',
+    good: 'جيد',
+    strong: 'قوي',
+    social: {
+      google: 'المتابعة باستخدام Google',
+      facebook: 'المتابعة باستخدام Facebook'
+    }
   },
   verification: {
     title: 'رمز التحقق',
@@ -47,11 +73,14 @@ export default {
     resendSuccess: 'تم إعادة إرسال رمز التحقق',
     resendFailed: 'فشل في إعادة إرسال الرمز'
   },
-  forgetPassword: {
-    title: 'نسيت كلمة المرور؟',
-    description: 'ادخل رقم الجوال لإرسال رمز التحقق',
-    success: 'تم إعادة تعيين كلمة المرور بنجاح',
-    successDescription: 'تم إعادة تعيين كلمة المرور بنجاح. يمكنك الآن تسجيل الدخول بكلمة المرور الجديدة.'
+  forgotPassword: {
+    title: 'إعادة تعيين كلمة المرور',
+    description: 'أدخل البريد الإلكتروني الذي سجلت به، وسنرسل لك تعليمات لإعادة تعيين كلمة المرور.',
+    emailPlaceholder: 'بريدك الإلكتروني',
+    submit: 'إرسال رابط إعادة التعيين',
+    backToLogin: 'العودة لتسجيل الدخول',
+    success: 'تم إرسال الرابط',
+    successDescription: 'لقد أرسلنا رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.'
   },
   changePassword: {
     title: 'تغيير كلمة المرور',
