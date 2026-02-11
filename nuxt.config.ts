@@ -20,12 +20,15 @@ export default defineNuxtConfig({
   app: {
     head: {
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+        { rel: 'icon', type: 'image/png', href: '/logo.png' },
+        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
+        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200..800&family=Tajawal:wght@200..900&display=swap' }
       ],
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'description', content: 'Welcome to neop' },
+        { name: 'description', content: 'Haze Clue - Unleash Your Mind\'s Potential' },
         { name: 'format-detection', content: 'telephone=no' }
       ]
     }
@@ -128,4 +131,4 @@ export default defineNuxtConfig({
   pinia: {
     storesDirs: ['app/stores', 'app/stores/**']
   }
-})
+}) // Trigger rebuild

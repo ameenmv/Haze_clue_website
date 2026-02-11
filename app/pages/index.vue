@@ -1,16 +1,30 @@
 <script setup lang="ts">
+import AboutSection from '~/components/landing/AboutSection.vue'
+import CTASection from '~/components/landing/CTASection.vue'
+import FeaturesSection from '~/components/landing/FeaturesSection.vue'
+import HeroSection from '~/components/landing/HeroSection.vue'
+import TechnologySection from '~/components/landing/TechnologySection.vue'
+
+definePageMeta({
+  layout: 'landing'
+})
+
 const { t } = useI18n()
+
+useHead({
+  title: t('landing.hero.title'),
+  meta: [
+    { name: 'description', content: t('landing.hero.subtitle') }
+  ]
+})
 </script>
 
 <template>
-  <UContainer class="flex-center pt-4 text-center">
-    <div>
-      <h1 class="text-4xl font-bold mb-4">
-        {{ t("app.title") }}
-      </h1>
-      <p class="mb-4">
-        {{ t("app.description") }}
-      </p>
-    </div>
-  </UContainer>
+  <div>
+    <HeroSection />
+    <FeaturesSection />
+    <AboutSection />
+    <TechnologySection />
+    <CTASection />
+  </div>
 </template>
