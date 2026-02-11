@@ -216,8 +216,4 @@ const handleSubmit = async () => {
 }
 </script>
 
-<style scoped>
-.font-poppins {
-  font-family: 'Poppins', sans-serif;
-}
-</style>
+

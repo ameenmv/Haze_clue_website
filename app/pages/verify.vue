@@ -17,8 +17,8 @@
       
     </div>
 
-    <!-- Right Side - Form -->
-    <div class="flex-1 flex flex-col relative bg-white dark:bg-gray-900 transition-colors duration-300">
+    <!-- Right Side - Form Container -->
+    <div class="flex-1 flex flex-col relative bg-[#FAFAFB] dark:bg-gray-950 transition-colors duration-300">
       
       <!-- Top Actions -->
       <div class="absolute top-6 right-6 flex items-center gap-3 z-20">
@@ -26,29 +26,32 @@
         
         <button 
           @click="toggleDark" 
-          class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-600 dark:text-gray-300"
+          class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors text-gray-600 dark:text-gray-300"
           :title="isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
         >
           <Icon :name="isDark ? 'ph:sun-bold' : 'ph:moon-bold'" class="w-6 h-6" />
         </button>
       </div>
 
-      <div class="flex-1 flex flex-col items-center justify-center p-8 lg:p-16 overflow-y-auto">
-        <LoginForm />
+      <div class="flex-1 flex flex-col items-center justify-center p-4 lg:p-16 overflow-y-auto">
+        <!-- Card Container -->
+        <div class="w-full max-w-[448px] bg-white dark:bg-gray-900 rounded-[16px] shadow-sm p-8 md:p-12 relative border border-gray-100 dark:border-gray-800">
+            <VerificationForm />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import LoginForm from '~/components/auth/LoginForm.vue'
+import VerificationForm from '~/components/auth/VerificationForm.vue'
 
 definePageMeta({
   layout: false
 })
 
 useHead({
-  title: 'Login | Haze Clue'
+  title: 'Verify | Haze Clue'
 })
 
 const colorMode = useColorMode()
@@ -66,5 +69,3 @@ const toggleDark = () => {
   colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
 }
 </script>
-
-

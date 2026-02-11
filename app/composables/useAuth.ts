@@ -116,10 +116,55 @@ export function useAuth() {
     }
   }
 
+  const verifyOtp = async (email: string, code: string) => {
+    isLoading.value = true
+    error.value = null
+
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1500))
+      return { success: true }
+    } catch (e: any) {
+      error.value = e.message || 'Verification failed'
+      return { success: false, error: error.value }
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  const resendOtp = async (email: string) => {
+    isLoading.value = true
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+      return { success: true }
+    } catch (e: any) {
+      return { success: false, error: e.message }
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  const resetPassword = async (token: string, password: string) => {
+    isLoading.value = true
+    error.value = null
+
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+      return { success: true }
+    } catch (e: any) {
+      error.value = e.message || 'Failed to reset password'
+      return { success: false, error: error.value }
+    } finally {
+      isLoading.value = false
+    }
+  }
+
   return {
     register,
     login,
     forgotPassword,
+    verifyOtp,
+    resendOtp,
+    resetPassword,
     isLoading,
     error
   }

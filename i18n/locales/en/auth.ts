@@ -62,14 +62,17 @@ export default {
     }
   },
   verification: {
-    title: 'Verification Code',
-    verifyPhone: 'Verify Phone',
-    description: 'We just sent {length}-digit code to your phone number ',
-    resendOtp: 'Resend verification code',
-    otpSent: 'Verification code sent to {phone}',
-    timer: 'You can resend verification code in {time}',
+    title: 'Enter Verification Code',
+    subtitle: "We've sent a 6-digit code to your email",
+    emailSentTo: '{email}. Please enter it below to verify your identity.',
+    codeLabel: 'Verification Code',
+    expiresIn: 'Code expires in {time}',
+    submit: 'Verify Code',
+    resend: "Didn't receive the code?",
+    resendLink: 'Resend Code',
+    backToLogin: 'Back to Login',
     success: 'Verification Successful',
-    successDescription: 'Your phone number has been successfully verified.',
+    successDescription: 'Your email has been successfully verified.',
     resendSuccess: 'Verification Code Resent',
     resendFailed: 'Failed to Resend Code'
   },
@@ -87,6 +90,13 @@ export default {
     description: 'Enter your new password',
     success: 'Password Reset Successful',
     successDescription: 'Your password has been reset successfully. You can now log in with your new password.'
+  },
+  resetPassword: {
+    title: 'Reset Password',
+    subtitle: 'Enter your new password below',
+    submit: 'Reset Password',
+    success: 'Password Reset Successful',
+    successDescription: 'Your password has been reset successfully. You can now log in.'
   },
   guest: {
     title: 'Continue as Guest',

@@ -5,17 +5,13 @@
       
       <!-- Logo Area -->
       <div class="flex items-center gap-3 z-10">
-        <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-[#6C4EFD]">
-           <Icon name="ph:rocket-launch-fill" class="w-6 h-6" />
-        </div>
-        <span class="text-2xl font-bold font-poppins">HazeClue</span>
+        <img src="/logo.png" alt="Haze Clue" class="w-16 h-16 object-contain" />
       </div>
 
       <!-- Illustration Area -->
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[450px]">
-         <div class="relative w-[458px] h-[458px]">
-             <!-- Using the copied image from public folder -->
-             <img src="/nm.png" alt="Illustration" class="w-full h-full object-contain mix-blend-lighten" />
+         <div class="relative w-[458px] h-[458px] flex items-center justify-center">
+             <img src="/auth-illustration.png" alt="Illustration" class="w-full h-full object-contain" />
          </div>
       </div>
       
@@ -51,6 +47,10 @@ definePageMeta({
   layout: false
 })
 
+useHead({
+  title: 'Register | Haze Clue'
+})
+
 const colorMode = useColorMode()
 
 const isDark = computed({
@@ -67,8 +67,4 @@ const toggleDark = () => {
 }
 </script>
 
-<style scoped>
-.font-poppins {
-  font-family: 'Poppins', sans-serif;
-}
-</style>
+
