@@ -14,7 +14,7 @@
 
 - [📂 Project Structure](#-project-structure)
 - [🧩 Component Organization](#-component-organization)
-- [🎨 Reusable UI Components](#-reusable-ui-components)
+- [🎨 Reusable UI Components](#-reusable-ui-components) 
 - [✨ Key Features](#-key-features)
 - [🛠 Setup](#-setup)
 - [🌍 Environment Variables](#-environment-variables)
