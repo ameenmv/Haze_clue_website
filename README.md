@@ -22,7 +22,7 @@
 
 ---
 
-## 📂 Project Structure
+## 📂 Project Structure 
 
 The project follows a modular structure within the `app` directory to keep the root clean.
 
