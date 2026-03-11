@@ -370,5 +370,88 @@ export default {
       deleteWarning: 'Once you delete your account, there is no going back. Please be certain.',
       deleteBtn: 'Delete Account'
     }
+  },
+  createSession: {
+    pageTitle: 'Create New Session | Haze Clue',
+    headerTitle: 'Create New Session',
+    headerSubtitle: 'Set up a new monitoring session for your class',
+    details: {
+      title: 'Session Details',
+      subtitle: 'Fill in the information below to create your monitoring session',
+      sessionName: 'Session Name',
+      sessionNamePlaceholder: 'e.g., Math Class - Grade 10',
+      subject: 'Subject',
+      subjectPlaceholder: 'Select Subject',
+      gradeLevel: 'Grade Level',
+      gradePlaceholder: 'Select Grade'
+    },
+    monitoring: {
+      title: 'Monitoring Settings',
+      realTimeAlerts: 'Real-time Alerts',
+      realTimeAlertsDesc: 'Get notified when attention levels drop below threshold',
+      autoSave: 'Auto-save Data',
+      autoSaveDesc: 'Automatically save session data every 5 minutes',
+      generateReport: 'Generate Report',
+      generateReportDesc: 'Automatically generate report at session end'
+    },
+    devices: {
+      title: 'Device Assignment',
+      noDevices: 'No devices connected',
+      noDevicesDesc: 'You need to connect EEG devices before starting a session. You can add devices after creating this session.',
+      addDevices: 'Add Devices Now'
+    },
+    notes: {
+      label: 'Additional Notes',
+      placeholder: 'Add any additional information about this session...'
+    },
+    actions: {
+      saveDraft: 'Save as Draft',
+      cancel: 'Cancel',
+      create: 'Create Session'
+    }
+  },
+  liveSession: {
+    pageTitle: 'Live Session | Haze Clue',
+    sessionInfo: {
+      live: 'LIVE',
+      endSession: 'End Session'
+    },
+    stats: {
+      attention: 'Class Average Attention',
+      attentionChange: '+5% from last 5 minutes',
+      devices: 'Active Devices',
+      devicesOf: 'out of 24 registered devices',
+      duration: 'Session Duration',
+      remaining: 'remaining: 19:30',
+      engagement: 'Engagement Level',
+      engagementDetail: '12 interactions in last minute'
+    },
+    meter: {
+      title: 'Class Attention Meter',
+      status: 'Status: Excellent',
+      classAverage: 'Class Average',
+      description: 'Real-time class attention level based on all connected devices'
+    },
+    actions: {
+      title: 'Session Actions',
+      addMarker: 'Add Session Marker',
+      pauseMonitoring: 'Pause Monitoring',
+      sendAlert: 'Send Class Alert'
+    },
+    status: {
+      title: 'Session Status',
+      connectedDevices: 'Connected Devices:',
+      dataQuality: 'Data Quality:',
+      lastUpdate: 'Last Update:',
+      signalStrength: 'Signal Strength:',
+      excellent: 'Excellent',
+      strong: 'Strong'
+    },
+    timeline: {
+      title: 'Class Attention Timeline',
+      subtitle: 'Chart shows collective class attention average over time',
+      last30: 'Last 30 minutes',
+      exportData: 'Export Data'
+    }
   }
 }

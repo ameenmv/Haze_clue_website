@@ -32,7 +32,8 @@ useHead({
 // ─── Handlers ──────────────────────────────────────
 const handleStartSession = (form: { className: string; subject: string; duration: string; students: string }) => {
    console.log('Starting session:', form)
-   // TODO: API call to create & start session
+   // Navigate to live session
+   navigateTo('/dashboard/live-session')
 }
 </script>
 

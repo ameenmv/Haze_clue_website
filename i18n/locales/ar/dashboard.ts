@@ -370,5 +370,88 @@ export default {
       deleteWarning: 'بمجرد حذف حسابك، لا يمكن التراجع. يرجى التأكد.',
       deleteBtn: 'حذف الحساب'
     }
+  },
+  createSession: {
+    pageTitle: 'إنشاء جلسة جديدة | هيز كلو',
+    headerTitle: 'إنشاء جلسة جديدة',
+    headerSubtitle: 'إعداد جلسة مراقبة جديدة لفصلك',
+    details: {
+      title: 'تفاصيل الجلسة',
+      subtitle: 'املأ المعلومات أدناه لإنشاء جلسة المراقبة',
+      sessionName: 'اسم الجلسة',
+      sessionNamePlaceholder: 'مثال: حصة الرياضيات - الصف العاشر',
+      subject: 'المادة',
+      subjectPlaceholder: 'اختر المادة',
+      gradeLevel: 'المستوى الدراسي',
+      gradePlaceholder: 'اختر المستوى'
+    },
+    monitoring: {
+      title: 'إعدادات المراقبة',
+      realTimeAlerts: 'تنبيهات فورية',
+      realTimeAlertsDesc: 'احصل على إشعار عندما ينخفض مستوى الانتباه عن الحد',
+      autoSave: 'حفظ تلقائي',
+      autoSaveDesc: 'حفظ بيانات الجلسة تلقائيًا كل 5 دقائق',
+      generateReport: 'إنشاء تقرير',
+      generateReportDesc: 'إنشاء تقرير تلقائي عند انتهاء الجلسة'
+    },
+    devices: {
+      title: 'تعيين الأجهزة',
+      noDevices: 'لا توجد أجهزة متصلة',
+      noDevicesDesc: 'تحتاج إلى توصيل أجهزة EEG قبل بدء الجلسة. يمكنك إضافة أجهزة بعد إنشاء هذه الجلسة.',
+      addDevices: 'أضف أجهزة الآن'
+    },
+    notes: {
+      label: 'ملاحظات إضافية',
+      placeholder: 'أضف أي معلومات إضافية حول هذه الجلسة...'
+    },
+    actions: {
+      saveDraft: 'حفظ كمسودة',
+      cancel: 'إلغاء',
+      create: 'إنشاء الجلسة'
+    }
+  },
+  liveSession: {
+    pageTitle: 'الجلسة المباشرة | هيز كلو',
+    sessionInfo: {
+      live: 'مباشر',
+      endSession: 'إنهاء الجلسة'
+    },
+    stats: {
+      attention: 'متوسط انتباه الفصل',
+      attentionChange: '+5% من آخر 5 دقائق',
+      devices: 'الأجهزة النشطة',
+      devicesOf: 'من أصل 24 جهاز مسجل',
+      duration: 'مدة الجلسة',
+      remaining: 'المتبقي: 19:30',
+      engagement: 'مستوى التفاعل',
+      engagementDetail: '12 تفاعل في آخر دقيقة'
+    },
+    meter: {
+      title: 'مقياس انتباه الفصل',
+      status: 'الحالة: ممتاز',
+      classAverage: 'متوسط الفصل',
+      description: 'مستوى انتباه الفصل الفوري بناءً على جميع الأجهزة المتصلة'
+    },
+    actions: {
+      title: 'إجراءات الجلسة',
+      addMarker: 'إضافة علامة جلسة',
+      pauseMonitoring: 'إيقاف المراقبة مؤقتًا',
+      sendAlert: 'إرسال تنبيه للفصل'
+    },
+    status: {
+      title: 'حالة الجلسة',
+      connectedDevices: 'الأجهزة المتصلة:',
+      dataQuality: 'جودة البيانات:',
+      lastUpdate: 'آخر تحديث:',
+      signalStrength: 'قوة الإشارة:',
+      excellent: 'ممتاز',
+      strong: 'قوية'
+    },
+    timeline: {
+      title: 'الجدول الزمني لانتباه الفصل',
+      subtitle: 'يوضح الرسم البياني متوسط انتباه الفصل الجماعي عبر الوقت',
+      last30: 'آخر 30 دقيقة',
+      exportData: 'تصدير البيانات'
+    }
   }
 }
