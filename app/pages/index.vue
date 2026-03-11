@@ -3,6 +3,7 @@ import AboutSection from '~/components/landing/AboutSection.vue'
 import CTASection from '~/components/landing/CTASection.vue'
 import FeaturesSection from '~/components/landing/FeaturesSection.vue'
 import HeroSection from '~/components/landing/HeroSection.vue'
+import StatsSection from '~/components/landing/StatsSection.vue'
 import TechnologySection from '~/components/landing/TechnologySection.vue'
 
 definePageMeta({
@@ -22,6 +23,7 @@ useHead({
 <template>
   <div>
     <HeroSection />
+    <StatsSection />
     <FeaturesSection />
     <AboutSection />
     <TechnologySection />
