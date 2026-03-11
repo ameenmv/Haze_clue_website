@@ -5,9 +5,13 @@ export default defineNuxtPlugin((nuxtApp) => {
   const { $i18n } = useNuxtApp()
   const { t, locale } = $i18n as { t: (key: string) => string, locale: Ref<string> }
 
-  // const config = useRuntimeConfig()
-  // const baseURL = config.public.apiBaseUrl
-  const baseURL = ''
+  const config = useRuntimeConfig()
+
+  // Use /api proxy path — Nuxt routeRules proxies this to the real backend
+  // This avoids CORS issues entirely since the browser only talks to same-origin
+  const baseURL = '/api'
+
+  console.log('[customFetch] Using proxy baseURL:', baseURL, '→', config.public.apiBaseUrl)
 
   const customFetch = $fetch.create({
     baseURL: baseURL,
@@ -15,7 +19,6 @@ export default defineNuxtPlugin((nuxtApp) => {
       'Accept': 'application/json',
       'Accept-Language': locale.value || 'en',
       'lang': locale.value || 'en'
-      // 'Cache-Control': 'max-age=31536000'
     },
 
     // Interceptors
@@ -71,7 +74,10 @@ export default defineNuxtPlugin((nuxtApp) => {
             description: t('error.unauthorized'),
             color: 'error'
           })
-          await nuxtApp.runWithContext(() => navigateTo('/auth'))
+          // Clear auth state and redirect to login
+          const authStore = useAuthStore()
+          authStore.clearSession(false)
+          await nuxtApp.runWithContext(() => navigateTo('/login'))
         } else if (status === 403) {
           useToast().add({
             title: t('error.forbidden'),
@@ -86,7 +92,6 @@ export default defineNuxtPlugin((nuxtApp) => {
               || JSON.stringify(response._data)
           }
           useToast().add({
-            // title: t('error.title'),
             title: errorMessage,
             color: 'error'
           })
@@ -111,3 +116,4 @@ export default defineNuxtPlugin((nuxtApp) => {
     }
   }
 })
+
