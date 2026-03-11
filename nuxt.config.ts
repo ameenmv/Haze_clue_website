@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['@nuxt/eslint', '@nuxt/ui', '@pinia/nuxt', '@nuxt/image', '@nuxtjs/i18n', 'nuxt-aos'],
+  modules: ['@nuxt/eslint', '@nuxt/ui', '@pinia/nuxt', '@nuxt/image', '@nuxtjs/i18n', '@nuxt/fonts', 'nuxt-aos'],
 
   components: [
     {
@@ -20,10 +20,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       link: [
-        { rel: 'icon', type: 'image/png', href: '/logo.png' },
-        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
-        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200..800&family=Tajawal:wght@200..900&display=swap' }
+        { rel: 'icon', type: 'image/png', href: '/logo.png' }
       ],
       meta: [
         { charset: 'utf-8' },
@@ -62,6 +59,97 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: '2025-10-23',
+
+  // ── Build & Vite Optimizations ──────────────────────────────────
+  vite: {
+    build: {
+      // CSS code splitting - each async chunk gets its own CSS
+      cssCodeSplit: true,
+      // Suppress chunk size warnings (we handle splitting manually)
+      chunkSizeWarningLimit: 350,
+      // Disable sourcemaps in production (fixes Tailwind warnings + faster build)
+      sourcemap: false,
+      rollupOptions: {
+        output: {
+          // Manual chunks to split large vendor libraries into separate cacheable bundles
+          manualChunks(id: string) {
+            // Vue I18n + Intlify runtime - large, rarely changes
+            if (id.includes('vue-i18n') || id.includes('@intlify')) {
+              return 'vendor-i18n'
+            }
+            // Chart.js + vue-chartjs - only used on specific pages
+            if (id.includes('chart.js') || id.includes('vue-chartjs')) {
+              return 'vendor-charts'
+            }
+            // GSAP - animation library, only used on landing page
+            if (id.includes('gsap')) {
+              return 'vendor-gsap'
+            }
+            // Reka UI - headless UI primitives (large)
+            if (id.includes('reka-ui')) {
+              return 'vendor-reka-ui'
+            }
+            // VueUse - composable utilities
+            if (id.includes('@vueuse')) {
+              return 'vendor-vueuse'
+            }
+            // Floating UI - positioning engine used by reka-ui
+            if (id.includes('@floating-ui')) {
+              return 'vendor-floating-ui'
+            }
+            // Tailwind Variants - styling engine for @nuxt/ui
+            if (id.includes('tailwind-variants')) {
+              return 'vendor-tv'
+            }
+            // TanStack - table/virtual utilities
+            if (id.includes('@tanstack')) {
+              return 'vendor-tanstack'
+            }
+            // Pinia - state management
+            if (id.includes('pinia') || id.includes('@pinia')) {
+              return 'vendor-pinia'
+            }
+            // Zod - validation library
+            if (id.includes('/zod/')) {
+              return 'vendor-zod'
+            }
+            // AOS - scroll animations
+            if (id.includes('aos') && id.includes('node_modules')) {
+              return 'vendor-aos'
+            }
+            // Iconify / Icon collections - bundle separately
+            if (id.includes('@iconify')) {
+              return 'vendor-icons'
+            }
+          }
+        }
+      }
+    }
+  },
+
+  // ── Experimental Performance Features ───────────────────────────
+  experimental: {
+    // Tree-shake client-only components on server
+    treeshakeClientOnly: true
+  },
+
+  // ── Nitro Server Optimization ──────────────────────────────────
+  nitro: {
+    minify: true
+  },
+
+  // ── Font Optimization ─────────────────────────────────────────
+  fonts: {
+    families: [
+      { name: 'Plus Jakarta Sans', provider: 'google', weights: [200, 300, 400, 500, 600, 700, 800] },
+      { name: 'Tajawal', provider: 'google', weights: [200, 300, 400, 500, 700, 800, 900] },
+      { name: 'Poppins', provider: 'google', weights: [300, 400, 500, 600, 700] },
+      { name: 'Inter', provider: 'google', weights: [300, 400, 500, 600, 700] }
+    ],
+    defaults: {
+      preload: true
+    }
+  },
 
   icon: {
     serverBundle: 'local',
@@ -130,9 +218,9 @@ export default defineNuxtConfig({
       cookieSecure: import.meta.env.PROD
     },
     bundle: {
-      fullInstall: true,
-      dropMessageCompiler: false,
-      runtimeOnly: false
+      fullInstall: false,
+      dropMessageCompiler: true,
+      runtimeOnly: true
     },
     vueI18n: './i18n.config.ts'
   },
