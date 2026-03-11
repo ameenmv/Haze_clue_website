@@ -7,19 +7,78 @@ All requests include `Accept-Language: en|ar` header -- responses should respect
 
 ---
 
-## 1. Auth (DONE)
+## 1. Auth (PARTIALLY DONE)
 
-Already implemented and integrated:
+| Method | Endpoint                    | Status  |
+|--------|-----------------------------|---------|
+| POST   | `/api/Auth/login`           | DONE    |
+| POST   | `/api/Auth/register`        | DONE    |
+| POST   | `/api/auth/forgot-password` | NEEDED  |
+| POST   | `/api/auth/verify-otp`      | NEEDED  |
+| POST   | `/api/auth/resend-otp`      | NEEDED  |
+| POST   | `/api/auth/reset-password`  | NEEDED  |
+| POST   | `/api/auth/logout`          | NEEDED  |
 
-| Method | Endpoint                | Status |
-|--------|-------------------------|--------|
-| POST   | `/api/Auth/login`       | DONE   |
-| POST   | `/api/Auth/register`    | DONE   |
-| POST   | `/api/auth/forgot-password` | DONE |
-| POST   | `/api/auth/verify-otp`  | DONE   |
-| POST   | `/api/auth/resend-otp`  | DONE   |
-| POST   | `/api/auth/reset-password` | DONE |
-| POST   | `/api/auth/logout`      | DONE   |
+### POST /api/auth/forgot-password
+
+Sends an OTP to the user's email for password recovery. No auth required.
+
+```json
+// Request
+{ "email": "string" }
+
+// Response
+{ "message": "OTP sent successfully" }
+```
+
+### POST /api/auth/verify-otp
+
+Verifies the 6-digit OTP sent to email. Returns a reset token on success. No auth required.
+
+```json
+// Request
+{ "email": "string", "code": "string" }
+
+// Response
+{ "message": "OTP verified", "resetToken": "string" }
+```
+
+### POST /api/auth/resend-otp
+
+Resends the OTP to the same email. No auth required.
+
+```json
+// Request
+{ "email": "string" }
+
+// Response
+{ "message": "OTP resent successfully" }
+```
+
+### POST /api/auth/reset-password
+
+Resets the password using the token from verify-otp. No auth required.
+
+```json
+// Request
+{
+  "token": "string",
+  "password": "string",
+  "password_confirmation": "string"
+}
+
+// Response
+{ "message": "Password reset successfully" }
+```
+
+### POST /api/auth/logout
+
+Invalidates the current token. Requires auth.
+
+```json
+// Response
+{ "message": "Logged out successfully" }
+```
 
 ---
 
@@ -482,13 +541,14 @@ Returns available grade levels for dropdown.
 
 ## Priority Order
 
-1. **Fix** `GET /api/Sessions/dashboard` (currently 500)
-2. **User Profile** APIs (GET, PUT, password change, delete)
-3. **Devices** CRUD
-4. **Live Session WebSocket** (or polling fallback)
-5. **Reports** generation and listing
-6. **Lookups** (subjects, grade levels)
-7. **Support contact** endpoint
+1. **Auth remaining** (forgot-password, verify-otp, resend-otp, reset-password, logout)
+2. **Fix** `GET /api/Sessions/dashboard` (currently 500)
+3. **User Profile** APIs (GET, PUT, password change, delete)
+4. **Devices** CRUD
+5. **Live Session WebSocket** (or polling fallback)
+6. **Reports** generation and listing
+7. **Lookups** (subjects, grade levels)
+8. **Support contact** endpoint
 
 ---
 
