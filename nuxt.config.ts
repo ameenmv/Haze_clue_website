@@ -219,8 +219,8 @@ export default defineNuxtConfig({
     },
     bundle: {
       fullInstall: false,
-      dropMessageCompiler: true,
-      runtimeOnly: true
+      dropMessageCompiler: false,
+      runtimeOnly: false
     },
     vueI18n: './i18n.config.ts'
   },
