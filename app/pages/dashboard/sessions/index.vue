@@ -29,8 +29,7 @@ useHead({
 
 // ─── Handlers ──────────────────────────────────────
 const handleCreate = () => {
-   // TODO: navigate to session creation flow
-   console.log('Create session')
+   navigateTo('/dashboard/sessions/create')
 }
 
 const handleUseTemplate = (templateId: string) => {

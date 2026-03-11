@@ -409,5 +409,49 @@ export default {
       cancel: 'إلغاء',
       create: 'إنشاء الجلسة'
     }
+  },
+  liveSession: {
+    pageTitle: 'الجلسة المباشرة | هيز كلو',
+    sessionInfo: {
+      live: 'مباشر',
+      endSession: 'إنهاء الجلسة'
+    },
+    stats: {
+      attention: 'متوسط انتباه الفصل',
+      attentionChange: '+5% من آخر 5 دقائق',
+      devices: 'الأجهزة النشطة',
+      devicesOf: 'من أصل 24 جهاز مسجل',
+      duration: 'مدة الجلسة',
+      remaining: 'المتبقي: 19:30',
+      engagement: 'مستوى التفاعل',
+      engagementDetail: '12 تفاعل في آخر دقيقة'
+    },
+    meter: {
+      title: 'مقياس انتباه الفصل',
+      status: 'الحالة: ممتاز',
+      classAverage: 'متوسط الفصل',
+      description: 'مستوى انتباه الفصل الفوري بناءً على جميع الأجهزة المتصلة'
+    },
+    actions: {
+      title: 'إجراءات الجلسة',
+      addMarker: 'إضافة علامة جلسة',
+      pauseMonitoring: 'إيقاف المراقبة مؤقتًا',
+      sendAlert: 'إرسال تنبيه للفصل'
+    },
+    status: {
+      title: 'حالة الجلسة',
+      connectedDevices: 'الأجهزة المتصلة:',
+      dataQuality: 'جودة البيانات:',
+      lastUpdate: 'آخر تحديث:',
+      signalStrength: 'قوة الإشارة:',
+      excellent: 'ممتاز',
+      strong: 'قوية'
+    },
+    timeline: {
+      title: 'الجدول الزمني لانتباه الفصل',
+      subtitle: 'يوضح الرسم البياني متوسط انتباه الفصل الجماعي عبر الوقت',
+      last30: 'آخر 30 دقيقة',
+      exportData: 'تصدير البيانات'
+    }
   }
 }

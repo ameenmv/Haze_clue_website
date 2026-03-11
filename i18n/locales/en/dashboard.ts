@@ -409,5 +409,49 @@ export default {
       cancel: 'Cancel',
       create: 'Create Session'
     }
+  },
+  liveSession: {
+    pageTitle: 'Live Session | Haze Clue',
+    sessionInfo: {
+      live: 'LIVE',
+      endSession: 'End Session'
+    },
+    stats: {
+      attention: 'Class Average Attention',
+      attentionChange: '+5% from last 5 minutes',
+      devices: 'Active Devices',
+      devicesOf: 'out of 24 registered devices',
+      duration: 'Session Duration',
+      remaining: 'remaining: 19:30',
+      engagement: 'Engagement Level',
+      engagementDetail: '12 interactions in last minute'
+    },
+    meter: {
+      title: 'Class Attention Meter',
+      status: 'Status: Excellent',
+      classAverage: 'Class Average',
+      description: 'Real-time class attention level based on all connected devices'
+    },
+    actions: {
+      title: 'Session Actions',
+      addMarker: 'Add Session Marker',
+      pauseMonitoring: 'Pause Monitoring',
+      sendAlert: 'Send Class Alert'
+    },
+    status: {
+      title: 'Session Status',
+      connectedDevices: 'Connected Devices:',
+      dataQuality: 'Data Quality:',
+      lastUpdate: 'Last Update:',
+      signalStrength: 'Signal Strength:',
+      excellent: 'Excellent',
+      strong: 'Strong'
+    },
+    timeline: {
+      title: 'Class Attention Timeline',
+      subtitle: 'Chart shows collective class attention average over time',
+      last30: 'Last 30 minutes',
+      exportData: 'Export Data'
+    }
   }
 }
