@@ -370,5 +370,44 @@ export default {
       deleteWarning: 'بمجرد حذف حسابك، لا يمكن التراجع. يرجى التأكد.',
       deleteBtn: 'حذف الحساب'
     }
+  },
+  createSession: {
+    pageTitle: 'إنشاء جلسة جديدة | هيز كلو',
+    headerTitle: 'إنشاء جلسة جديدة',
+    headerSubtitle: 'إعداد جلسة مراقبة جديدة لفصلك',
+    details: {
+      title: 'تفاصيل الجلسة',
+      subtitle: 'املأ المعلومات أدناه لإنشاء جلسة المراقبة',
+      sessionName: 'اسم الجلسة',
+      sessionNamePlaceholder: 'مثال: حصة الرياضيات - الصف العاشر',
+      subject: 'المادة',
+      subjectPlaceholder: 'اختر المادة',
+      gradeLevel: 'المستوى الدراسي',
+      gradePlaceholder: 'اختر المستوى'
+    },
+    monitoring: {
+      title: 'إعدادات المراقبة',
+      realTimeAlerts: 'تنبيهات فورية',
+      realTimeAlertsDesc: 'احصل على إشعار عندما ينخفض مستوى الانتباه عن الحد',
+      autoSave: 'حفظ تلقائي',
+      autoSaveDesc: 'حفظ بيانات الجلسة تلقائيًا كل 5 دقائق',
+      generateReport: 'إنشاء تقرير',
+      generateReportDesc: 'إنشاء تقرير تلقائي عند انتهاء الجلسة'
+    },
+    devices: {
+      title: 'تعيين الأجهزة',
+      noDevices: 'لا توجد أجهزة متصلة',
+      noDevicesDesc: 'تحتاج إلى توصيل أجهزة EEG قبل بدء الجلسة. يمكنك إضافة أجهزة بعد إنشاء هذه الجلسة.',
+      addDevices: 'أضف أجهزة الآن'
+    },
+    notes: {
+      label: 'ملاحظات إضافية',
+      placeholder: 'أضف أي معلومات إضافية حول هذه الجلسة...'
+    },
+    actions: {
+      saveDraft: 'حفظ كمسودة',
+      cancel: 'إلغاء',
+      create: 'إنشاء الجلسة'
+    }
   }
 }

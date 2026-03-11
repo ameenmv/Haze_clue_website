@@ -370,5 +370,44 @@ export default {
       deleteWarning: 'Once you delete your account, there is no going back. Please be certain.',
       deleteBtn: 'Delete Account'
     }
+  },
+  createSession: {
+    pageTitle: 'Create New Session | Haze Clue',
+    headerTitle: 'Create New Session',
+    headerSubtitle: 'Set up a new monitoring session for your class',
+    details: {
+      title: 'Session Details',
+      subtitle: 'Fill in the information below to create your monitoring session',
+      sessionName: 'Session Name',
+      sessionNamePlaceholder: 'e.g., Math Class - Grade 10',
+      subject: 'Subject',
+      subjectPlaceholder: 'Select Subject',
+      gradeLevel: 'Grade Level',
+      gradePlaceholder: 'Select Grade'
+    },
+    monitoring: {
+      title: 'Monitoring Settings',
+      realTimeAlerts: 'Real-time Alerts',
+      realTimeAlertsDesc: 'Get notified when attention levels drop below threshold',
+      autoSave: 'Auto-save Data',
+      autoSaveDesc: 'Automatically save session data every 5 minutes',
+      generateReport: 'Generate Report',
+      generateReportDesc: 'Automatically generate report at session end'
+    },
+    devices: {
+      title: 'Device Assignment',
+      noDevices: 'No devices connected',
+      noDevicesDesc: 'You need to connect EEG devices before starting a session. You can add devices after creating this session.',
+      addDevices: 'Add Devices Now'
+    },
+    notes: {
+      label: 'Additional Notes',
+      placeholder: 'Add any additional information about this session...'
+    },
+    actions: {
+      saveDraft: 'Save as Draft',
+      cancel: 'Cancel',
+      create: 'Create Session'
+    }
   }
 }
