@@ -55,13 +55,22 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      // apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL,
+      apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL || '',
       appName: process.env.NUXT_PUBLIC_APP_NAME,
       cookieSecure: false
     }
   },
 
   compatibilityDate: '2025-10-23',
+
+  icon: {
+    serverBundle: 'local',
+    clientBundle: {
+      scan: true
+    },
+    provider: 'server',
+    fallbackToApi: false
+  },
 
   aos: {
     // Global settings:
@@ -130,5 +139,11 @@ export default defineNuxtConfig({
 
   pinia: {
     storesDirs: ['app/stores', 'app/stores/**']
+  },
+
+  routeRules: {
+    '/api/**': {
+      proxy: `${process.env.NUXT_PUBLIC_API_BASE_URL || 'http://eegattentionsystem.runasp.net/api'}/**`
+    }
   }
-}) // Trigger rebuild
+})
