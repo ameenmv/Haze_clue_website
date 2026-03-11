@@ -269,5 +269,106 @@ export default {
       description: 'Contact our support team for assistance with device setup',
       link: 'Contact Support'
     }
+  },
+  help: {
+    pageTitle: 'Help & Support | Haze Clue',
+    headerTitle: 'Contact Support',
+    headerSubtitle: 'Get help with device setup and system assistance',
+    contact: {
+      email: {
+        title: 'Email Support',
+        description: "Send us an email and we'll respond within 24 hours",
+        value: 'support@attentionai.com'
+      },
+      phone: {
+        title: 'Phone Support',
+        description: 'Call us Monday to Friday, 9 AM - 6 PM EST',
+        value: '+1 (555) 123-4567'
+      },
+      chat: {
+        title: 'Live Chat',
+        description: 'Chat with our support team in real-time',
+        value: 'Start Chat'
+      }
+    },
+    form: {
+      title: 'Send Us a Message',
+      fullName: 'Full Name',
+      fullNamePlaceholder: 'Enter your name',
+      email: 'Email Address',
+      emailPlaceholder: 'your.email@example.com',
+      subject: 'Subject',
+      subjectDefault: 'Device Setup Assistance',
+      message: 'Message',
+      messagePlaceholder: 'Describe your issue or question...',
+      agree: 'I agree to receive email notifications about my support request',
+      submit: 'Send Message'
+    },
+    faq: {
+      title: 'Frequently Asked Questions',
+      q1: 'How do I connect EEG devices?',
+      q2: "What if devices won't connect?",
+      q3: 'How do I start a monitoring session?',
+      q4: 'Can I export session data?',
+      q5: 'What are the system requirements?'
+    },
+    resources: {
+      title: 'Helpful Resources',
+      userGuide: 'User Guide',
+      videoTutorials: 'Video Tutorials',
+      documentation: 'Documentation',
+      communityForum: 'Community Forum'
+    },
+    hours: {
+      title: 'Support Hours',
+      weekdays: 'Monday - Friday: 9:00 AM - 6:00 PM EST',
+      saturday: 'Saturday: 10:00 AM - 4:00 PM EST',
+      sunday: 'Sunday: Closed',
+      emergency: 'Emergency support available 24/7 for critical issues'
+    }
+  },
+  settings: {
+    pageTitle: 'Profile Settings | Haze Clue',
+    headerTitle: 'Profile Settings',
+    headerSubtitle: 'Manage your account information and preferences',
+    cancel: 'Cancel',
+    saveChanges: 'Save Changes',
+    personal: {
+      title: 'Personal Information',
+      profilePhoto: 'Profile Photo',
+      photoHint: 'JPG, GIF or PNG. Max size of 800K',
+      uploadNew: 'Upload new photo',
+      firstName: 'First Name',
+      lastName: 'Last Name',
+      email: 'Email Address',
+      phone: 'Phone Number',
+      bio: 'Bio',
+      bioPlaceholder: 'Tell us about yourself...'
+    },
+    account: {
+      title: 'Account Settings',
+      twoFactor: 'Two-Factor Authentication',
+      twoFactorDesc: 'Add an extra layer of security to your account',
+      emailNotifications: 'Email Notifications',
+      emailNotificationsDesc: 'Receive email updates about your account',
+      marketing: 'Marketing Communications',
+      marketingDesc: 'Receive updates about new features and offers'
+    },
+    password: {
+      title: 'Password & Security',
+      current: 'Current Password',
+      currentPlaceholder: 'Enter current password',
+      new: 'New Password',
+      newPlaceholder: 'Enter new password',
+      confirm: 'Confirm New Password',
+      confirmPlaceholder: 'Confirm new password',
+      update: 'Update Password'
+    },
+    danger: {
+      title: 'Danger Zone',
+      deleteAccount: 'Delete Account',
+      deleteWarning: 'Once you delete your account, there is no going back. Please be certain.',
+      deleteBtn: 'Delete Account'
+    }
   }
 }

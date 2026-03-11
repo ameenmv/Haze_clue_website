@@ -269,5 +269,106 @@ export default {
       description: 'تواصل مع فريق الدعم للمساعدة في إعداد الأجهزة',
       link: 'تواصل مع الدعم'
     }
+  },
+  help: {
+    pageTitle: 'المساعدة والدعم | هيز كلو',
+    headerTitle: 'تواصل مع الدعم',
+    headerSubtitle: 'احصل على مساعدة في إعداد الأجهزة والنظام',
+    contact: {
+      email: {
+        title: 'الدعم عبر البريد',
+        description: 'أرسل لنا بريدًا إلكترونيًا وسنرد خلال 24 ساعة',
+        value: 'support@attentionai.com'
+      },
+      phone: {
+        title: 'الدعم الهاتفي',
+        description: 'اتصل بنا من الإثنين إلى الجمعة، 9 ص - 6 م',
+        value: '+1 (555) 123-4567'
+      },
+      chat: {
+        title: 'المحادثة المباشرة',
+        description: 'تحدث مع فريق الدعم في الوقت الفعلي',
+        value: 'ابدأ المحادثة'
+      }
+    },
+    form: {
+      title: 'أرسل لنا رسالة',
+      fullName: 'الاسم الكامل',
+      fullNamePlaceholder: 'أدخل اسمك',
+      email: 'البريد الإلكتروني',
+      emailPlaceholder: 'your.email@example.com',
+      subject: 'الموضوع',
+      subjectDefault: 'مساعدة في إعداد الأجهزة',
+      message: 'الرسالة',
+      messagePlaceholder: 'صف مشكلتك أو سؤالك...',
+      agree: 'أوافق على تلقي إشعارات بالبريد الإلكتروني حول طلب الدعم الخاص بي',
+      submit: 'إرسال الرسالة'
+    },
+    faq: {
+      title: 'الأسئلة الشائعة',
+      q1: 'كيف أوصل أجهزة EEG؟',
+      q2: 'ماذا لو لم تتصل الأجهزة؟',
+      q3: 'كيف أبدأ جلسة مراقبة؟',
+      q4: 'هل يمكنني تصدير بيانات الجلسة؟',
+      q5: 'ما هي متطلبات النظام؟'
+    },
+    resources: {
+      title: 'موارد مفيدة',
+      userGuide: 'دليل المستخدم',
+      videoTutorials: 'فيديوهات تعليمية',
+      documentation: 'التوثيق',
+      communityForum: 'منتدى المجتمع'
+    },
+    hours: {
+      title: 'ساعات الدعم',
+      weekdays: 'الإثنين - الجمعة: 9:00 ص - 6:00 م',
+      saturday: 'السبت: 10:00 ص - 4:00 م',
+      sunday: 'الأحد: مغلق',
+      emergency: 'دعم طوارئ متاح 24/7 للمشاكل الحرجة'
+    }
+  },
+  settings: {
+    pageTitle: 'إعدادات الملف الشخصي | هيز كلو',
+    headerTitle: 'إعدادات الملف الشخصي',
+    headerSubtitle: 'إدارة معلومات حسابك وتفضيلاتك',
+    cancel: 'إلغاء',
+    saveChanges: 'حفظ التغييرات',
+    personal: {
+      title: 'المعلومات الشخصية',
+      profilePhoto: 'صورة الملف الشخصي',
+      photoHint: 'JPG أو GIF أو PNG. الحجم الأقصى 800K',
+      uploadNew: 'رفع صورة جديدة',
+      firstName: 'الاسم الأول',
+      lastName: 'اسم العائلة',
+      email: 'البريد الإلكتروني',
+      phone: 'رقم الهاتف',
+      bio: 'نبذة',
+      bioPlaceholder: 'أخبرنا عن نفسك...'
+    },
+    account: {
+      title: 'إعدادات الحساب',
+      twoFactor: 'المصادقة الثنائية',
+      twoFactorDesc: 'أضف طبقة أمان إضافية لحسابك',
+      emailNotifications: 'إشعارات البريد الإلكتروني',
+      emailNotificationsDesc: 'تلقي تحديثات بالبريد الإلكتروني حول حسابك',
+      marketing: 'الاتصالات التسويقية',
+      marketingDesc: 'تلقي تحديثات حول الميزات والعروض الجديدة'
+    },
+    password: {
+      title: 'كلمة المرور والأمان',
+      current: 'كلمة المرور الحالية',
+      currentPlaceholder: 'أدخل كلمة المرور الحالية',
+      new: 'كلمة المرور الجديدة',
+      newPlaceholder: 'أدخل كلمة المرور الجديدة',
+      confirm: 'تأكيد كلمة المرور الجديدة',
+      confirmPlaceholder: 'أكد كلمة المرور الجديدة',
+      update: 'تحديث كلمة المرور'
+    },
+    danger: {
+      title: 'منطقة الخطر',
+      deleteAccount: 'حذف الحساب',
+      deleteWarning: 'بمجرد حذف حسابك، لا يمكن التراجع. يرجى التأكد.',
+      deleteBtn: 'حذف الحساب'
+    }
   }
 }
