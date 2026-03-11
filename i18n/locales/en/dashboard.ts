@@ -232,5 +232,42 @@ export default {
       tip3: 'Monitor real-time attention levels during your session',
       viewGuide: 'View Complete Setup Guide →'
     }
+  },
+  devices: {
+    pageTitle: 'Device Management | Haze Clue',
+    noDevices: {
+      title: 'No Devices Connected',
+      description: 'Connect your first EEG device to start monitoring classroom attention',
+      addFirst: 'Add Your First Device'
+    },
+    howToConnect: {
+      title: 'How to Connect Your Device',
+      step1: {
+        title: 'Power On',
+        description: "Turn on your EEG device and ensure it's charged"
+      },
+      step2: {
+        title: 'Pair Device',
+        description: 'Enable Bluetooth and pair with your computer'
+      },
+      step3: {
+        title: 'Add to System',
+        description: 'Click "Add Device" and follow the setup wizard'
+      },
+      step4: {
+        title: 'Start Monitoring',
+        description: 'Begin your first monitoring session'
+      }
+    },
+    setupGuide: {
+      title: 'Setup Guide',
+      description: 'Detailed instructions for connecting and configuring your devices',
+      link: 'View Guide'
+    },
+    needHelp: {
+      title: 'Need Help?',
+      description: 'Contact our support team for assistance with device setup',
+      link: 'Contact Support'
+    }
   }
 }
