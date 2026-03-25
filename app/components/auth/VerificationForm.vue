@@ -20,23 +20,14 @@
       <label class="text-sm font-semibold text-[#111827] dark:text-gray-200 text-center">
         {{ $t('auth.verification.codeLabel') }}
       </label>
-      
+
       <div class="flex justify-center gap-3" @paste.prevent="handlePaste">
-        <input
-          v-for="(digit, index) in 6"
-          :key="index"
-          ref="inputs"
-          v-model="otp[index]"
-          type="text"
-          inputmode="numeric"
-          maxlength="1"
+        <input v-for="(digit, index) in 6" :key="index" ref="inputs" v-model="otp[index]" type="text"
+          inputmode="numeric" maxlength="1"
           class="w-12 h-14 text-center text-xl font-bold rounded-lg border focus:ring-2 focus:ring-[#6C4EFD] focus:border-[#6C4EFD] outline-none transition-all dark:bg-gray-800 dark:text-white"
           :class="[
             otp[index] ? 'border-[#6C4EFD] bg-white' : 'border-gray-200 bg-white dark:border-gray-700'
-          ]"
-          @input="handleInput($event, index)"
-          @keydown="handleKeydown($event, index)"
-        />
+          ]" @input="handleInput($event, index)" @keydown="handleKeydown($event, index)" />
       </div>
 
       <p class="text-xs text-[#6C4EFD] text-center font-medium">
@@ -45,11 +36,8 @@
     </div>
 
     <!-- Verify Button -->
-    <button
-      @click="handleSubmit"
-      :disabled="!isComplete || isLoading"
-      class="w-full py-3.5 text-white font-medium rounded-xl bg-gradient-to-r from-[#6C4EFD] to-[#4C38AF] shadow-lg shadow-purple-500/20 hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm"
-    >
+    <button @click="handleSubmit" :disabled="!isComplete || isLoading"
+      class="w-full py-3.5 text-white font-medium rounded-xl bg-gradient-to-r from-[#6C4EFD] to-[#4C38AF] shadow-lg shadow-purple-500/20 hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm">
       <span v-if="isLoading">{{ $t('auth.login.signingIn') }}</span>
       <span v-else>{{ $t('auth.verification.submit') }}</span>
     </button>
@@ -58,21 +46,16 @@
     <div class="flex flex-col items-center gap-4 w-full">
       <div class="text-sm text-[#6B7280] dark:text-gray-400">
         {{ $t('auth.verification.resend') }}
-        <button 
-          @click="resendCode" 
-          :disabled="timer > 0"
-          class="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#6C4EFD] to-[#4C38AF] hover:opacity-80 transition-opacity disabled:opacity-50"
-        >
+        <button @click="resendCode" :disabled="timer > 0"
+          class="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#6C4EFD] to-[#4C38AF] hover:opacity-80 transition-opacity disabled:opacity-50">
           {{ $t('auth.verification.resendLink') }}
         </button>
       </div>
 
       <div class="w-full border-t border-gray-100 dark:border-gray-800"></div>
 
-      <NuxtLink 
-        to="/login"
-        class="text-sm font-medium text-[#6C4EFD] flex items-center gap-2 hover:opacity-80 transition-opacity"
-      >
+      <NuxtLink to="/login"
+        class="text-sm font-medium text-[#6C4EFD] flex items-center gap-2 hover:opacity-80 transition-opacity">
         <UIcon name="i-ph-arrow-left" class="w-4 h-4" />
         {{ $t('auth.verification.backToLogin') }}
       </NuxtLink>
@@ -105,7 +88,7 @@ onMounted(() => {
   startTimer()
   // Focus first input
   nextTick(() => inputs.value[0]?.focus())
-  
+
   if (route.query.email) {
     userEmail.value = route.query.email as string
   }
@@ -152,7 +135,7 @@ const handlePaste = (event: ClipboardEvent) => {
   if (!pasteData) return
 
   const digits = pasteData.replace(/\D/g, '').split('').slice(0, 6)
-  
+
   digits.forEach((digit, i) => {
     otp.value[i] = digit
   })
@@ -165,22 +148,21 @@ const handlePaste = (event: ClipboardEvent) => {
 // Actions
 const handleSubmit = async () => {
   if (!isComplete.value) return
-  
+
   const code = otp.value.join('')
-  // Implementation of verify
-  console.log('Verifying:', code)
-  
+
   const result = await verifyOtp(userEmail.value, code)
-  if (result.success) {
-      navigateTo('/dashboard')
+  if (result.success && result.resetToken) {
+    // Navigate to reset password page with the token
+    navigateTo({ path: '/reset-password', query: { token: result.resetToken } })
   } else {
-      alert('Verification Failed')
+    useToast().add({ title: result.error || 'Verification Failed', color: 'error' })
   }
 }
 
 const resendCode = async () => {
   if (timer.value > 0) return
-  
+
   // Call resend API
   console.log('Resending code...')
   await resendOtp(userEmail.value)

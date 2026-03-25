@@ -64,9 +64,8 @@ const handleSubmit = async () => {
   if (!result.success && result.error) {
      error.value = result.error
   } else {
-     // Success - show toast/alert and maybe redirect
-     alert(t('auth.forgotPassword.successDescription'))
-     navigateTo('/login')
+     // Navigate to OTP verification page with email
+     navigateTo({ path: '/verify', query: { email: email.value } })
   }
 }
 </script>

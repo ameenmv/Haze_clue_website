@@ -7,10 +7,10 @@
       <SettingsAccountToggles />
 
       <!-- Password & Security -->
-      <SettingsPassword @update-password="handleUpdatePassword" />
+      <SettingsPassword />
 
       <!-- Danger Zone -->
-      <SettingsDangerZone @delete-account="handleDeleteAccount" />
+      <SettingsDangerZone />
    </div>
 </template>
 
@@ -23,16 +23,6 @@ definePageMeta({
 useHead({
    title: 'Profile Settings | Haze Clue'
 })
-
-// ─── Handlers ──────────────────────────────────────
-const handleUpdatePassword = () => {
-   console.log('Update password')
-}
-
-const handleDeleteAccount = () => {
-   // TODO: show confirmation modal
-   console.log('Delete account')
-}
 </script>
 
 <style scoped>

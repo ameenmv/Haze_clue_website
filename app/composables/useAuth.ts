@@ -88,11 +88,11 @@ export function useAuth() {
     error.value = null
 
     try {
-      await authApi.verifyOtp({ email, code })
-      return { success: true }
+      const response = await authApi.verifyOtp({ email, code })
+      return { success: true as const, resetToken: (response as any).resetToken as string }
     } catch (e: any) {
       error.value = e?.message || e?.error || 'Verification failed'
-      return { success: false, error: error.value }
+      return { success: false as const, error: error.value, resetToken: undefined }
     } finally {
       isLoading.value = false
     }

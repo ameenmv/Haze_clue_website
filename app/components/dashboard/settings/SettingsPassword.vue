@@ -22,20 +22,52 @@
 
       <div class="password-card__divider" />
 
-      <button class="password-card__btn" @click="$emit('updatePassword')">
-         {{ $t('dashboard.settings.password.update') }}
+      <button class="password-card__btn" @click="handleSubmit" :disabled="saving">
+         {{ saving ? 'Updating...' : $t('dashboard.settings.password.update') }}
       </button>
    </section>
 </template>
 
 <script setup lang="ts">
-defineEmits<{ updatePassword: [] }>()
+import { usersApi } from '~/services/users'
 
 const form = reactive({
    current: '',
    newPass: '',
    confirm: ''
 })
+const saving = ref(false)
+
+const handleSubmit = async () => {
+   if (!form.current || !form.newPass || !form.confirm) {
+      useToast().add({ title: 'Please fill all fields', color: 'error' })
+      return
+   }
+   if (form.newPass !== form.confirm) {
+      useToast().add({ title: 'Passwords do not match', color: 'error' })
+      return
+   }
+   if (form.newPass.length < 6) {
+      useToast().add({ title: 'Password must be at least 6 characters', color: 'error' })
+      return
+   }
+
+   saving.value = true
+   try {
+      await usersApi.changePassword({
+         currentPassword: form.current,
+         newPassword: form.newPass
+      })
+      useToast().add({ title: 'Password changed successfully', color: 'success' })
+      form.current = ''
+      form.newPass = ''
+      form.confirm = ''
+   } catch (e: any) {
+      // Error is already shown by customFetch
+   } finally {
+      saving.value = false
+   }
+}
 </script>
 
 <style scoped>
@@ -149,5 +181,10 @@ const form = reactive({
 .password-card__btn:hover {
    opacity: 0.9;
    transform: translateY(-1px);
+}
+
+.password-card__btn:disabled {
+   opacity: 0.5;
+   cursor: not-allowed;
 }
 </style>
