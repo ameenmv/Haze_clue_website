@@ -5,15 +5,34 @@
       <div class="danger-zone__box">
          <h4 class="danger-zone__box-title">{{ $t('dashboard.settings.danger.deleteAccount') }}</h4>
          <p class="danger-zone__box-desc">{{ $t('dashboard.settings.danger.deleteWarning') }}</p>
-         <button class="danger-zone__btn" @click="$emit('deleteAccount')">
-            {{ $t('dashboard.settings.danger.deleteBtn') }}
+         <button class="danger-zone__btn" @click="handleDelete" :disabled="deleting">
+            {{ deleting ? 'Deleting...' : $t('dashboard.settings.danger.deleteBtn') }}
          </button>
       </div>
    </section>
 </template>
 
 <script setup lang="ts">
-defineEmits<{ deleteAccount: [] }>()
+import { usersApi } from '~/services/users'
+
+const authStore = useAuthStore()
+const deleting = ref(false)
+
+const handleDelete = async () => {
+   const confirmed = confirm('Are you sure you want to delete your account? This action cannot be undone.')
+   if (!confirmed) return
+
+   deleting.value = true
+   try {
+      await usersApi.deleteAccount()
+      useToast().add({ title: 'Account deleted', color: 'success' })
+      authStore.clearSession()
+   } catch {
+      // Error handled by customFetch
+   } finally {
+      deleting.value = false
+   }
+}
 </script>
 
 <style scoped>
@@ -105,5 +124,10 @@ defineEmits<{ deleteAccount: [] }>()
 .danger-zone__btn:hover {
    opacity: 0.9;
    transform: translateY(-1px);
+}
+
+.danger-zone__btn:disabled {
+   opacity: 0.5;
+   cursor: not-allowed;
 }
 </style>
