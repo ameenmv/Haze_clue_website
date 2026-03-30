@@ -9,18 +9,19 @@
 
       <!-- Action Buttons -->
       <div class="session-actions__buttons">
-         <button class="session-actions__draft" @click="$emit('saveDraft')">
-            <UIcon name="lucide:save" class="w-3.5 h-4" style="color: #334155" />
-            <span>{{ $t('dashboard.createSession.actions.saveDraft') }}</span>
+         <button class="session-actions__draft" :disabled="isSubmitting" @click="$emit('saveDraft')">
+            <UIcon v-if="!isSubmitting" name="lucide:save" class="w-3.5 h-4" style="color: #334155" />
+            <span>{{ isSubmitting ? 'Saving...' : $t('dashboard.createSession.actions.saveDraft') }}</span>
          </button>
 
          <div class="session-actions__right">
-            <button class="session-actions__cancel" @click="$emit('cancel')">
+            <button class="session-actions__cancel" :disabled="isSubmitting" @click="$emit('cancel')">
                {{ $t('dashboard.createSession.actions.cancel') }}
             </button>
-            <button class="session-actions__create" @click="$emit('create')">
-               <UIcon name="lucide:plus" class="w-3.5 h-4" style="color: #fff" />
-               <span>{{ $t('dashboard.createSession.actions.create') }}</span>
+            <button class="session-actions__create" :disabled="isSubmitting" @click="$emit('create')">
+               <UIcon v-if="!isSubmitting" name="lucide:plus" class="w-3.5 h-4" style="color: #fff" />
+               <span v-if="isSubmitting" class="session-actions__spinner"></span>
+               <span>{{ isSubmitting ? 'Creating...' : $t('dashboard.createSession.actions.create') }}</span>
             </button>
          </div>
       </div>
@@ -28,9 +29,14 @@
 </template>
 
 <script setup lang="ts">
+defineProps<{ isSubmitting?: boolean }>()
 defineEmits<{ saveDraft: []; cancel: []; create: [] }>()
 
-const notes = ref('')
+const sessionForm = inject<any>('sessionForm')!
+const notes = computed({
+   get: () => sessionForm.notes,
+   set: (v: string) => { sessionForm.notes = v }
+})
 </script>
 
 <style scoped>
@@ -131,12 +137,19 @@ const notes = ref('')
    color: #D1D5DB;
 }
 
-.session-actions__draft:hover {
+.session-actions__draft:hover:not(:disabled) {
    background: #F8FAFC;
 }
 
-:root.dark .session-actions__draft:hover {
+:root.dark .session-actions__draft:hover:not(:disabled) {
    background: #252836;
+}
+
+.session-actions__draft:disabled,
+.session-actions__cancel:disabled,
+.session-actions__create:disabled {
+   opacity: 0.6;
+   cursor: not-allowed;
 }
 
 .session-actions__right {
@@ -165,11 +178,11 @@ const notes = ref('')
    color: #D1D5DB;
 }
 
-.session-actions__cancel:hover {
+.session-actions__cancel:hover:not(:disabled) {
    background: #F8FAFC;
 }
 
-:root.dark .session-actions__cancel:hover {
+:root.dark .session-actions__cancel:hover:not(:disabled) {
    background: #252836;
 }
 
@@ -190,9 +203,23 @@ const notes = ref('')
    transition: opacity 0.2s, transform 0.15s;
 }
 
-.session-actions__create:hover {
+.session-actions__create:hover:not(:disabled) {
    opacity: 0.9;
    transform: translateY(-1px);
+}
+
+/* ─── Spinner ────────────────────────────────────── */
+.session-actions__spinner {
+   width: 16px;
+   height: 16px;
+   border: 2px solid rgba(255, 255, 255, 0.3);
+   border-top-color: #FFFFFF;
+   border-radius: 50%;
+   animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+   to { transform: rotate(360deg); }
 }
 
 @media (max-width: 640px) {

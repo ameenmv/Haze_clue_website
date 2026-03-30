@@ -8,8 +8,8 @@
                <h4 class="monitoring-settings__item-label">{{ $t(item.labelKey) }}</h4>
                <p class="monitoring-settings__item-desc">{{ $t(item.descKey) }}</p>
             </div>
-            <button class="monitoring-settings__toggle" :class="{ 'monitoring-settings__toggle--active': item.value }"
-               @click="item.value = !item.value">
+            <button class="monitoring-settings__toggle"
+               :class="{ 'monitoring-settings__toggle--active': isActive(item.key) }" @click="toggleSetting(item.key)">
                <span class="monitoring-settings__toggle-thumb" />
             </button>
          </div>
@@ -18,23 +18,31 @@
 </template>
 
 <script setup lang="ts">
-const toggles = reactive([
+const sessionForm = inject<any>('sessionForm')!
+
+const toggles = computed(() => [
    {
       labelKey: 'dashboard.createSession.monitoring.realTimeAlerts',
       descKey: 'dashboard.createSession.monitoring.realTimeAlertsDesc',
-      value: true
+      key: 'alerts'
    },
    {
       labelKey: 'dashboard.createSession.monitoring.autoSave',
       descKey: 'dashboard.createSession.monitoring.autoSaveDesc',
-      value: true
+      key: 'attentionTracking'
    },
    {
       labelKey: 'dashboard.createSession.monitoring.generateReport',
       descKey: 'dashboard.createSession.monitoring.generateReportDesc',
-      value: true
+      key: 'recording'
    }
 ])
+
+const toggleSetting = (key: string) => {
+   sessionForm.monitoringSettings[key] = !sessionForm.monitoringSettings[key]
+}
+
+const isActive = (key: string) => sessionForm.monitoringSettings[key]
 </script>
 
 <style scoped>
