@@ -9,35 +9,68 @@
       <div class="form-details__row">
          <div class="form-details__field">
             <label class="form-details__label">{{ $t('dashboard.createSession.details.sessionName') }} *</label>
-            <input v-model="form.sessionName" type="text" class="form-details__input"
-               :placeholder="$t('dashboard.createSession.details.sessionNamePlaceholder')" />
+            <input v-model="sessionForm.title" type="text"
+               class="form-details__input" :class="{ 'form-details__input--error': formErrors.title }"
+               :placeholder="$t('dashboard.createSession.details.sessionNamePlaceholder')"
+               @input="formErrors.title && delete formErrors.title" />
+            <span v-if="formErrors.title" class="form-details__error">{{ formErrors.title }}</span>
          </div>
          <div class="form-details__field">
-            <label class="form-details__label">{{ $t('dashboard.createSession.details.subject') }} *</label>
-            <select v-model="form.subject" class="form-details__select">
+            <label class="form-details__label">{{ $t('dashboard.createSession.details.subject') }}</label>
+            <select v-model="sessionForm.subject" class="form-details__select">
                <option value="" disabled>{{ $t('dashboard.createSession.details.subjectPlaceholder') }}</option>
+               <option value="Mathematics">Mathematics</option>
+               <option value="Science">Science</option>
+               <option value="Physics">Physics</option>
+               <option value="Chemistry">Chemistry</option>
+               <option value="Biology">Biology</option>
+               <option value="Computer Science">Computer Science</option>
+               <option value="English">English</option>
+               <option value="Arabic">Arabic</option>
+               <option value="History">History</option>
+               <option value="Geography">Geography</option>
+               <option value="Other">Other</option>
             </select>
          </div>
       </div>
 
-      <!-- Grade Level -->
+      <!-- Grade Level + Duration -->
       <div class="form-details__row">
          <div class="form-details__field">
-            <label class="form-details__label">{{ $t('dashboard.createSession.details.gradeLevel') }} *</label>
-            <select v-model="form.gradeLevel" class="form-details__select">
+            <label class="form-details__label">{{ $t('dashboard.createSession.details.gradeLevel') }}</label>
+            <select v-model="sessionForm.className" class="form-details__select">
                <option value="" disabled>{{ $t('dashboard.createSession.details.gradePlaceholder') }}</option>
+               <option value="Elementary">Elementary</option>
+               <option value="Middle School">Middle School</option>
+               <option value="High School">High School</option>
+               <option value="University - Year 1">University - Year 1</option>
+               <option value="University - Year 2">University - Year 2</option>
+               <option value="University - Year 3">University - Year 3</option>
+               <option value="University - Year 4">University - Year 4</option>
+               <option value="Graduate">Graduate</option>
             </select>
+         </div>
+         <div class="form-details__field">
+            <label class="form-details__label">Duration (minutes)</label>
+            <input v-model.number="sessionForm.duration" type="number" min="0" class="form-details__input"
+               placeholder="e.g. 45" />
+         </div>
+      </div>
+
+      <!-- Number of Students -->
+      <div class="form-details__row">
+         <div class="form-details__field">
+            <label class="form-details__label">Number of Students</label>
+            <input v-model.number="sessionForm.students" type="number" min="0" class="form-details__input"
+               placeholder="e.g. 30" />
          </div>
       </div>
    </div>
 </template>
 
 <script setup lang="ts">
-const form = reactive({
-   sessionName: '',
-   subject: '',
-   gradeLevel: ''
-})
+const sessionForm = inject<any>('sessionForm')!
+const formErrors = inject<Record<string, string>>('formErrors', {})
 </script>
 
 <style scoped>
@@ -156,5 +189,21 @@ const form = reactive({
    .form-details__row {
       grid-template-columns: 1fr;
    }
+}
+
+/* ─── Validation Error ───────────────────────────── */
+.form-details__input--error {
+   border-color: #DC2626 !important;
+}
+
+.form-details__error {
+   font-family: 'Inter', sans-serif;
+   font-size: 13px;
+   color: #DC2626;
+   margin-top: -4px;
+}
+
+:root.dark .form-details__error {
+   color: #F87171;
 }
 </style>

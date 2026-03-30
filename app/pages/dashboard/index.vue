@@ -37,6 +37,8 @@
 </template>
 
 <script setup lang="ts">
+import { dashboardApi } from '~/services/dashboard'
+
 definePageMeta({
    layout: 'dashboard',
    middleware: 'auth'
@@ -46,41 +48,47 @@ useHead({
    title: 'Dashboard | Haze Clue'
 })
 
-// ─── Stats Data (i18n keys) ────────────────────────
-const stats = [
-   {
-      icon: 'lucide:cpu',
-      iconBg: '#DBDBFE',
-      iconColor: '#6C4EFD',
-      labelKey: 'dashboard.stats.connectedDevices',
-      value: 0,
-      hintKey: 'dashboard.stats.noDevices'
-   },
-   {
-      icon: 'lucide:play-circle',
-      iconBg: '#DCFCE7',
-      iconColor: '#16A34A',
-      labelKey: 'dashboard.stats.activeSessions',
-      value: 0,
-      hintKey: 'dashboard.stats.startSession'
-   },
-   {
-      icon: 'lucide:brain',
-      iconBg: '#DBDBFE',
-      iconColor: '#6C4EFD',
-      labelKey: 'dashboard.stats.avgAttention',
-      value: '--',
-      hintKey: 'dashboard.stats.dataNotAvailable'
-   },
-   {
-      icon: 'lucide:bar-chart-3',
-      iconBg: '#FFEDD5',
-      iconColor: '#EA580C',
-      labelKey: 'dashboard.stats.reportsGenerated',
-      value: 0,
-      hintKey: 'dashboard.stats.noReports'
-   }
-]
+// ─── Fetch real stats from API ─────────────────────
+const { data: statsData } = await useAppFetch('dashboard-stats', () => dashboardApi.getStats())
+
+// ─── Stats Data (dynamic from API) ─────────────────
+const stats = computed(() => {
+   const s = statsData.value as any
+   return [
+      {
+         icon: 'lucide:cpu',
+         iconBg: '#DBDBFE',
+         iconColor: '#6C4EFD',
+         labelKey: 'dashboard.stats.connectedDevices',
+         value: s?.connectedDevices ?? 0,
+         hintKey: s?.connectedDevices ? 'dashboard.stats.connectedDevicesHint' : 'dashboard.stats.noDevices'
+      },
+      {
+         icon: 'lucide:play-circle',
+         iconBg: '#DCFCE7',
+         iconColor: '#16A34A',
+         labelKey: 'dashboard.stats.activeSessions',
+         value: s?.activeSessions ?? 0,
+         hintKey: s?.activeSessions ? 'dashboard.stats.activeSessionsHint' : 'dashboard.stats.startSession'
+      },
+      {
+         icon: 'lucide:brain',
+         iconBg: '#DBDBFE',
+         iconColor: '#6C4EFD',
+         labelKey: 'dashboard.stats.avgAttention',
+         value: s?.avgAttention != null ? `${s.avgAttention}%` : '--',
+         hintKey: 'dashboard.stats.dataNotAvailable'
+      },
+      {
+         icon: 'lucide:bar-chart-3',
+         iconBg: '#FFEDD5',
+         iconColor: '#EA580C',
+         labelKey: 'dashboard.stats.reportsGenerated',
+         value: s?.reportsGenerated ?? 0,
+         hintKey: s?.reportsGenerated ? 'dashboard.stats.reportsHint' : 'dashboard.stats.noReports'
+      }
+   ]
+})
 
 // ─── Quick Actions Data (i18n keys) ────────────────
 const quickActions = [
