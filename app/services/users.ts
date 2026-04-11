@@ -19,7 +19,7 @@ export const usersApi = {
   /**
    * PATCH /users/me — update profile
    */
-  updateProfile(payload: { fullName?: string; phone?: string; bio?: string }) {
+  updateProfile(payload: any) {
     const { $customFetch } = useNuxtApp()
     return $customFetch<any>('/users/me', {
       method: 'PATCH',
