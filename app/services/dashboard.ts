@@ -9,16 +9,10 @@
 export const dashboardApi = {
 
   /**
-   * GET /dashboard/stats — get dashboard statistics
+   * GET /sessions/dashboard — get dashboard statistics
    */
   getStats() {
     const { $customFetch } = useNuxtApp()
-    return $customFetch<{
-      connectedDevices: number
-      totalSessions: number
-      activeSessions: number
-      avgAttention: number | null
-      reportsGenerated: number
-    }>('/dashboard/stats')
+    return $customFetch<any>('/sessions/dashboard')
   }
 }

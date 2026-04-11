@@ -5,7 +5,7 @@
 
       <!-- Form + FAQ/Resources row -->
       <div class="help-page__row">
-         <HelpContactForm @submit="handleSubmit" />
+         <HelpContactForm @submit="handleSubmit" :loading="isSubmitting" />
          <HelpFaqResources />
       </div>
 
@@ -24,7 +24,10 @@ useHead({
    title: 'Help & Support | Haze Clue'
 })
 
-// ─── Handlers ──────────────────────────────────────
+import { supportApi } from '~/services/support'
+
+const isSubmitting = ref(false)
+
 const handleEmail = () => {
    window.open('mailto:support@attentionai.com')
 }
@@ -37,8 +40,17 @@ const handleChat = () => {
    console.log('Open live chat')
 }
 
-const handleSubmit = (form: Record<string, unknown>) => {
-   console.log('Submit support form:', form)
+const handleSubmit = async (form: any) => {
+   if (isSubmitting.value) return
+   isSubmitting.value = true
+   try {
+      await supportApi.submitContactForm(form)
+      useToast().add({ title: 'Message sent successfully. We will be in touch!', color: 'success' })
+   } catch {
+      useToast().add({ title: 'Failed to send message. Please try again later.', color: 'error' })
+   } finally {
+      isSubmitting.value = false
+   }
 }
 </script>
 

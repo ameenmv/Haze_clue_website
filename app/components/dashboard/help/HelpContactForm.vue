@@ -39,15 +39,17 @@
          </label>
 
          <!-- Submit -->
-         <button type="submit" class="contact-form__submit">
-            <UIcon name="lucide:send" class="w-4 h-4" />
-            <span>{{ $t('dashboard.help.form.submit') }}</span>
+         <button type="submit" class="contact-form__submit" :disabled="loading" :class="{ 'opacity-50 cursor-wait': loading }">
+            <UIcon v-if="loading" name="lucide:loader-2" class="w-4 h-4 animate-spin" />
+            <UIcon v-else name="lucide:send" class="w-4 h-4" />
+            <span>{{ loading ? 'Sending...' : $t('dashboard.help.form.submit') }}</span>
          </button>
       </form>
    </section>
 </template>
 
 <script setup lang="ts">
+defineProps<{ loading?: boolean }>()
 defineEmits<{ submit: [form: typeof form] }>()
 
 const form = reactive({

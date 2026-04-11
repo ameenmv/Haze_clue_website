@@ -8,8 +8,8 @@
                <h4 class="account-settings__item-label">{{ $t(item.labelKey) }}</h4>
                <p class="account-settings__item-desc">{{ $t(item.descKey) }}</p>
             </div>
-            <button class="account-settings__toggle" :class="{ 'account-settings__toggle--active': item.value }"
-               @click="item.value = !item.value">
+            <button class="account-settings__toggle" :class="{ 'account-settings__toggle--active': item.value, 'opacity-50 pointer-events-none': loadingInfo }"
+               @click="handleToggle(item)">
                <span class="account-settings__toggle-thumb" />
             </button>
          </div>
@@ -18,23 +18,59 @@
 </template>
 
 <script setup lang="ts">
+import { usersApi } from '~/services/users'
+
 const toggles = reactive([
    {
+      id: 'twoFactorEnabled',
       labelKey: 'dashboard.settings.account.twoFactor',
       descKey: 'dashboard.settings.account.twoFactorDesc',
       value: false
    },
    {
+      id: 'emailNotifications',
       labelKey: 'dashboard.settings.account.emailNotifications',
       descKey: 'dashboard.settings.account.emailNotificationsDesc',
       value: true
    },
    {
+      id: 'marketingEmails',
       labelKey: 'dashboard.settings.account.marketing',
       descKey: 'dashboard.settings.account.marketingDesc',
       value: false
    }
 ])
+
+const loadingInfo = ref(true)
+
+onMounted(async () => {
+   try {
+      const user = await usersApi.getProfile()
+      if (user) {
+         toggles[0].value = !!user.twoFactorEnabled
+         toggles[1].value = user.emailNotifications !== false
+         toggles[2].value = !!user.marketingEmails
+      }
+   } finally {
+      loadingInfo.value = false
+   }
+})
+
+const handleToggle = async (item: any) => {
+   const prev = item.value
+   item.value = !item.value
+   
+   try {
+      if (item.id === 'twoFactorEnabled') await usersApi.updateProfile({ twoFactorEnabled: item.value })
+      if (item.id === 'emailNotifications') await usersApi.updateProfile({ emailNotifications: item.value })
+      if (item.id === 'marketingEmails') await usersApi.updateProfile({ marketingEmails: item.value })
+      
+      useToast().add({ title: 'Setting updated successfully', color: 'success' })
+   } catch {
+      item.value = prev
+      useToast().add({ title: 'Failed to update setting', color: 'error' })
+   }
+}
 </script>
 
 <style scoped>
