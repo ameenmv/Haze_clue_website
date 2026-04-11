@@ -8,7 +8,7 @@
             <svg class="live-panels__gauge" viewBox="0 0 128 128">
                <circle cx="64" cy="64" r="52" fill="none" stroke="#E5E7EB" stroke-width="8" />
                <circle cx="64" cy="64" r="52" fill="none" stroke="url(#gaugeGradient)" stroke-width="8"
-                  stroke-linecap="round" :stroke-dasharray="`${circumference * 0.82} ${circumference}`"
+                  stroke-linecap="round" :stroke-dasharray="strokeDasharray"
                   :stroke-dashoffset="0" transform="rotate(-90 64 64)" />
                <defs>
                   <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -17,7 +17,7 @@
                   </linearGradient>
                </defs>
                <text x="64" y="68" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="24"
-                  fill="#1F2937">82%</text>
+                  fill="#1F2937">{{ liveData?.classAvgAttention ?? '--' }}%</text>
             </svg>
             <p class="live-panels__status" style="color: #16A34A;">{{ $t('dashboard.liveSession.meter.status') }}</p>
             <p class="live-panels__sub">{{ $t('dashboard.liveSession.meter.classAverage') }}</p>
@@ -50,7 +50,7 @@
          <div class="live-panels__status-list">
             <div class="live-panels__status-row">
                <span class="live-panels__status-label">{{ $t('dashboard.liveSession.status.connectedDevices') }}</span>
-               <span class="live-panels__status-value">18/24</span>
+               <span class="live-panels__status-value">{{ liveData?.connectedDevices ?? '--' }}/{{ liveData?.totalDevices ?? '--' }}</span>
             </div>
             <div class="live-panels__status-row">
                <span class="live-panels__status-label">{{ $t('dashboard.liveSession.status.dataQuality') }}</span>
@@ -72,7 +72,13 @@
 </template>
 
 <script setup lang="ts">
-const circumference = 2 * Math.PI * 52 // ~326.73
+const liveData = useState<any>('liveSessionData')
+const circumference = 2 * Math.PI * 52
+
+const strokeDasharray = computed(() => {
+   const avg = liveData.value?.classAvgAttention || 0
+   return `${circumference * (avg / 100)} ${circumference}`
+})
 </script>
 
 <style scoped>

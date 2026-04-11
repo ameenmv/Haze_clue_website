@@ -114,9 +114,9 @@ onMounted(async () => {
 const saveProfile = async () => {
    saving.value = true
    try {
-      const fullName = `${form.firstName} ${form.lastName}`.trim()
       const updated = await usersApi.updateProfile({
-         fullName,
+         firstName: form.firstName.trim() || undefined,
+         lastName: form.lastName.trim() || undefined,
          phone: form.phone || undefined,
          bio: form.bio || undefined
       })
