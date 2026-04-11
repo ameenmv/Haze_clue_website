@@ -86,5 +86,13 @@ export const sessionsApi = {
     return $customFetch<any>(`/sessions/${id}/end`, {
       method: 'POST'
     })
+  },
+
+  /**
+   * GET /sessions/:id/live-data — get live session stats (polling fallback)
+   */
+  getLiveData(id: string) {
+    const { $customFetch } = useNuxtApp()
+    return $customFetch<any>(`/sessions/${id}/live-data`)
   }
 }

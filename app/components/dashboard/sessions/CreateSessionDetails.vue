@@ -17,19 +17,10 @@
          </div>
          <div class="form-details__field">
             <label class="form-details__label">{{ $t('dashboard.createSession.details.subject') }}</label>
-            <select v-model="sessionForm.subject" class="form-details__select">
+            <USkeleton v-if="loadingSubjects" class="h-12 w-full rounded-lg" />
+            <select v-else v-model="sessionForm.subject" class="form-details__select">
                <option value="" disabled>{{ $t('dashboard.createSession.details.subjectPlaceholder') }}</option>
-               <option value="Mathematics">Mathematics</option>
-               <option value="Science">Science</option>
-               <option value="Physics">Physics</option>
-               <option value="Chemistry">Chemistry</option>
-               <option value="Biology">Biology</option>
-               <option value="Computer Science">Computer Science</option>
-               <option value="English">English</option>
-               <option value="Arabic">Arabic</option>
-               <option value="History">History</option>
-               <option value="Geography">Geography</option>
-               <option value="Other">Other</option>
+               <option v-for="sub in subjectsData" :key="sub.id" :value="sub.name">{{ sub.name }}</option>
             </select>
          </div>
       </div>
@@ -38,16 +29,10 @@
       <div class="form-details__row">
          <div class="form-details__field">
             <label class="form-details__label">{{ $t('dashboard.createSession.details.gradeLevel') }}</label>
-            <select v-model="sessionForm.className" class="form-details__select">
+            <USkeleton v-if="loadingGrades" class="h-12 w-full rounded-lg" />
+            <select v-else v-model="sessionForm.className" class="form-details__select">
                <option value="" disabled>{{ $t('dashboard.createSession.details.gradePlaceholder') }}</option>
-               <option value="Elementary">Elementary</option>
-               <option value="Middle School">Middle School</option>
-               <option value="High School">High School</option>
-               <option value="University - Year 1">University - Year 1</option>
-               <option value="University - Year 2">University - Year 2</option>
-               <option value="University - Year 3">University - Year 3</option>
-               <option value="University - Year 4">University - Year 4</option>
-               <option value="Graduate">Graduate</option>
+               <option v-for="grade in gradesData" :key="grade.id" :value="grade.name">{{ grade.name }}</option>
             </select>
          </div>
          <div class="form-details__field">
@@ -69,8 +54,14 @@
 </template>
 
 <script setup lang="ts">
+import { lookupsApi } from '~/services/lookups'
+
 const sessionForm = inject<any>('sessionForm')!
 const formErrors = inject<Record<string, string>>('formErrors', {})
+
+// ─── Fetch lookups dynamically ──────────────────────────────
+const { data: subjectsData, pending: loadingSubjects } = await useAsyncData('subjects', () => lookupsApi.getSubjects())
+const { data: gradesData, pending: loadingGrades } = await useAsyncData('grades', () => lookupsApi.getGradeLevels())
 </script>
 
 <style scoped>

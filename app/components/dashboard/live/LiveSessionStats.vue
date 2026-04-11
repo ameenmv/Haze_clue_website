@@ -5,43 +5,52 @@
             <span class="live-stats__card-label">{{ $t(card.labelKey) }}</span>
             <UIcon :name="card.icon" class="live-stats__card-icon" />
          </div>
-         <span class="live-stats__card-value">{{ card.value }}</span>
+         <span v-if="card.value === '--' || card.value === '--:--'" class="live-stats__card-value opacity-50 flex items-center h-9">
+            <USkeleton class="h-8 w-16" />
+         </span>
+         <span v-else class="live-stats__card-value">{{ card.value }}</span>
          <span class="live-stats__card-sub" :style="{ color: card.subColor }">{{ $t(card.subKey) }}</span>
       </div>
    </section>
 </template>
 
 <script setup lang="ts">
-const cards = [
-   {
-      labelKey: 'dashboard.liveSession.stats.attention',
-      icon: 'lucide:brain',
-      value: '82%',
-      subKey: 'dashboard.liveSession.stats.attentionChange',
-      subColor: '#16A34A'
-   },
-   {
-      labelKey: 'dashboard.liveSession.stats.devices',
-      icon: 'lucide:smartphone',
-      value: '18',
-      subKey: 'dashboard.liveSession.stats.devicesOf',
-      subColor: '#4B5563'
-   },
-   {
-      labelKey: 'dashboard.liveSession.stats.duration',
-      icon: 'lucide:clock',
-      value: '25:30',
-      subKey: 'dashboard.liveSession.stats.remaining',
-      subColor: '#4B5563'
-   },
-   {
-      labelKey: 'dashboard.liveSession.stats.engagement',
-      icon: 'lucide:trending-up',
-      value: 'High',
-      subKey: 'dashboard.liveSession.stats.engagementDetail',
-      subColor: '#4B5563'
-   }
-]
+const liveData = useState<any>('liveSessionData')
+
+const cards = computed(() => {
+   const data = liveData.value || {}
+   
+   return [
+      {
+         labelKey: 'dashboard.liveSession.stats.attention',
+         icon: 'lucide:brain',
+         value: data.classAvgAttention ? `${data.classAvgAttention}%` : '--',
+         subKey: 'dashboard.liveSession.stats.attentionChange',
+         subColor: '#16A34A'
+      },
+      {
+         labelKey: 'dashboard.liveSession.stats.devices',
+         icon: 'lucide:smartphone',
+         value: data.connectedDevices || '--',
+         subKey: 'dashboard.liveSession.stats.devicesOf',
+         subColor: '#4B5563'
+      },
+      {
+         labelKey: 'dashboard.liveSession.stats.duration',
+         icon: 'lucide:clock',
+         value: data.duration || '--:--',
+         subKey: 'dashboard.liveSession.stats.remaining',
+         subColor: '#4B5563'
+      },
+      {
+         labelKey: 'dashboard.liveSession.stats.engagement',
+         icon: 'lucide:trending-up',
+         value: data.engagementLevel || '--',
+         subKey: 'dashboard.liveSession.stats.engagementDetail',
+         subColor: '#4B5563'
+      }
+   ]
+})
 </script>
 
 <style scoped>
