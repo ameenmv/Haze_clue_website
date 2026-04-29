@@ -42,7 +42,7 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, LineCont
 const chartCanvas = ref<HTMLCanvasElement | null>(null)
 let chartInstance: ChartJS | null = null
 
-// Generate realistic attention data
+// Generate initial data
 const generateData = () => {
    const labels: string[] = []
    const data: number[] = []
@@ -50,12 +50,30 @@ const generateData = () => {
    for (let i = 30; i >= 0; i--) {
       const t = new Date(now.getTime() - i * 60000)
       labels.push(`${t.getHours().toString().padStart(2, '0')}:${t.getMinutes().toString().padStart(2, '0')}`)
-      // Simulate fluctuating attention between 65-95%
-      const base = 78 + Math.sin(i * 0.4) * 8
-      data.push(Math.round(base + (Math.random() - 0.5) * 10))
+      // Base level
+      data.push(70 + Math.random() * 10)
    }
    return { labels, data }
 }
+
+const liveData = useState<any>('liveSessionData')
+
+watch(liveData, (newVal) => {
+   if (newVal && chartInstance && newVal.classAvgAttention) {
+      const now = new Date()
+      const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`
+      
+      chartInstance.data.labels?.push(timeStr)
+      chartInstance.data.datasets[0].data.push(newVal.classAvgAttention)
+
+      if ((chartInstance.data.labels?.length || 0) > 30) {
+         chartInstance.data.labels?.shift()
+         chartInstance.data.datasets[0].data.shift()
+      }
+
+      chartInstance.update()
+   }
+}, { deep: true })
 
 const buildChart = () => {
    if (!chartCanvas.value) return

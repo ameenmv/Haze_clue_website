@@ -113,6 +113,7 @@ const handleSaveDraft = async () => {
    try {
       await sessionsApi.create(buildPayload())
       successMsg.value = 'Session saved as draft!'
+      clearNuxtData('/dashboard/sessions::sessions-list')
       setTimeout(() => navigateTo('/dashboard/sessions'), 800)
    } catch (e: any) {
       errorMsg.value = e?.data?.message || e?.message || 'Failed to save session. Please try again.'
@@ -135,6 +136,7 @@ const handleCreate = async () => {
          await sessionsApi.start(session.id)
       }
       successMsg.value = 'Session created & started!'
+      clearNuxtData('/dashboard/sessions::sessions-list')
       setTimeout(() => navigateTo('/dashboard/sessions'), 800)
    } catch (e: any) {
       errorMsg.value = e?.data?.message || e?.message || 'Failed to create session. Please try again.'

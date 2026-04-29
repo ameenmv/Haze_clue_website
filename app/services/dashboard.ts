@@ -9,10 +9,10 @@
 export const dashboardApi = {
 
   /**
-   * GET /sessions/dashboard — get dashboard statistics
+   * GET /dashboard/stats — get dashboard statistics
    */
   getStats() {
     const { $customFetch } = useNuxtApp()
-    return $customFetch<any>('/sessions/dashboard')
+    return $customFetch<any>('/dashboard/stats')
   }
 }

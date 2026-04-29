@@ -24,9 +24,12 @@ export default {
   },
   stats: {
     connectedDevices: 'Connected Devices',
+    connectedDevicesHint: 'Devices currently active',
     activeSessions: 'Active Sessions',
+    activeSessionsHint: 'Sessions running now',
     avgAttention: 'Avg Attention',
     reportsGenerated: 'Reports Generated',
+    reportsHint: 'Reports available for viewing',
     noDevices: 'No devices connected yet',
     startSession: 'Start your first session',
     dataNotAvailable: 'Data not available',

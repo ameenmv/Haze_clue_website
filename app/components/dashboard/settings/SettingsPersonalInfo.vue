@@ -88,27 +88,24 @@ const initials = computed(() => {
    return (first + last).toUpperCase() || '?'
 })
 
-// Load profile on mount
-onMounted(async () => {
-   try {
-      const user = await usersApi.getProfile()
-      if (user) {
-         const nameParts = (user.fullName || '').split(' ')
-         form.firstName = nameParts[0] || ''
-         form.lastName = nameParts.slice(1).join(' ') || ''
-         form.email = user.email || ''
-         form.phone = user.phone || ''
-         form.bio = user.bio || ''
-         if (user.avatar) {
-            avatarUrl.value = user.avatar.startsWith('http')
-               ? user.avatar
-               : `${config.public.apiBaseUrl?.replace('/api', '')}${user.avatar}`
-         }
-      }
-   } catch {
-      // User might not be logged in yet
+// Fetch profile data (SSR compatible)
+const { data: userProfile } = await useAsyncData('user-profile', () => usersApi.getProfile())
+
+// Initialize form data
+if (userProfile.value) {
+   const user = userProfile.value
+   const nameParts = (user.fullName || '').split(' ')
+   form.firstName = nameParts[0] || ''
+   form.lastName = nameParts.slice(1).join(' ') || ''
+   form.email = user.email || ''
+   form.phone = user.phone || ''
+   form.bio = user.bio || ''
+   if (user.avatar) {
+      avatarUrl.value = user.avatar.startsWith('http')
+         ? user.avatar
+         : `${config.public.apiBaseUrl?.replace('/api', '')}${user.avatar}`
    }
-})
+}
 
 // Save profile
 const saveProfile = async () => {
