@@ -33,8 +33,7 @@ const handleCreate = () => {
 }
 
 const handleUseTemplate = (templateId: string) => {
-   // TODO: pre-fill session form with template
-   console.log('Use template:', templateId)
+   navigateTo(`/dashboard/sessions/create?template=${templateId}`)
 }
 </script>
 

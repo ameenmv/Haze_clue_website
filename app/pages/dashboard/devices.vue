@@ -14,7 +14,7 @@
       </div>
 
       <div v-else-if="devices.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div v-for="device in devices" :key="device.id" class="device-card p-6 bg-white dark:bg-[#1a1d27] border border-gray-200 dark:border-[#2d3040] rounded-xl shadow-sm flex flex-col gap-4">
+        <div v-for="device in devices" :key="device.id" class="device-card">
           <div class="flex justify-between items-start">
             <div class="flex items-center gap-3">
               <div class="w-10 h-10 rounded-full bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center text-primary">
@@ -49,38 +49,45 @@
       <!-- Setup Guide + Need Help -->
       <DeviceHelpCards @view-guide="navigateTo('/dashboard/help')" @contact-support="navigateTo('/dashboard/help')" />
 
-      <!-- Add Device Modal -->
-      <UModal v-model="isAddModalOpen">
-        <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
-          <template #header>
-            <h3 class="text-lg font-semibold">Add New Device</h3>
-          </template>
+      <UModal v-model:open="isAddModalOpen" :ui="{ overlay: { background: 'bg-gray-900/75 dark:bg-slate-900/80 backdrop-blur-sm' } }">
+        <template #content>
+          <UCard :ui="{ 
+            ring: 'ring-1 ring-gray-200 dark:ring-white/5', 
+            divide: 'divide-y divide-gray-100 dark:divide-white/5',
+            background: 'bg-white dark:bg-slate-900/50 dark:backdrop-blur-xl',
+            shadow: 'shadow-xl'
+          }">
+            <template #header>
+              <h3 class="text-lg font-semibold">Add New Device</h3>
+            </template>
 
-          <form @submit.prevent="submitAddDevice" class="flex flex-col gap-4">
-            <UFormGroup label="Device Name" name="name" required>
-              <UInput v-model="newDevice.name" placeholder="e.g. My NeuroSky MindWave" />
-            </UFormGroup>
-            
-            <UFormGroup label="Device Type" name="type" required>
-              <USelect v-model="newDevice.type" :options="['EEG', 'BCI']" />
-            </UFormGroup>
-            
-            <UFormGroup label="Serial Number" name="serialNumber" required>
-              <UInput v-model="newDevice.serialNumber" placeholder="e.g. SN-123456789" />
-            </UFormGroup>
+            <form @submit.prevent="submitAddDevice" class="flex flex-col gap-4">
+              <UFormGroup label="Device Name" name="name" required>
+                <UInput v-model="newDevice.name" placeholder="e.g. My NeuroSky MindWave" />
+              </UFormGroup>
+              
+              <UFormGroup label="Device Type" name="type" required>
+                <USelect v-model="newDevice.type" :options="['EEG', 'BCI']" />
+              </UFormGroup>
+              
+              <UFormGroup label="Serial Number" name="serialNumber" required>
+                <UInput v-model="newDevice.serialNumber" placeholder="e.g. SN-123456789" />
+              </UFormGroup>
 
-            <div class="flex justify-end gap-3 mt-4">
-              <UButton color="gray" variant="ghost" @click="isAddModalOpen = false">Cancel</UButton>
-              <UButton type="submit" color="primary" :loading="isSubmitting">Add Device</UButton>
-            </div>
-          </form>
-        </UCard>
+              <div class="flex justify-end gap-3 mt-4">
+                <UButton color="gray" variant="ghost" @click="isAddModalOpen = false">Cancel</UButton>
+                <UButton type="submit" color="primary" :loading="isSubmitting">Add Device</UButton>
+              </div>
+            </form>
+          </UCard>
+        </template>
       </UModal>
    </div>
 </template>
 
 <script setup lang="ts">
 import { devicesApi } from '~/services/devices'
+import Swal from 'sweetalert2'
 
 definePageMeta({
    layout: 'dashboard',
@@ -128,13 +135,41 @@ const submitAddDevice = async () => {
 }
 
 const handleRemove = async (id: string) => {
-  if (!confirm('Are you sure you want to remove this device?')) return
+  const isDark = document.documentElement.classList.contains('dark')
+  const result = await Swal.fire({
+     title: 'Are you sure?',
+     text: "You want to remove this device?",
+     icon: 'warning',
+     showCancelButton: true,
+     confirmButtonColor: '#DC2626',
+     cancelButtonColor: '#6B7280',
+     confirmButtonText: 'Yes, remove it!',
+     background: isDark ? '#1a1d27' : '#fff',
+     color: isDark ? '#fff' : '#000',
+  })
+
+  if (!result.isConfirmed) return
+
   try {
     await devicesApi.remove(id)
-    toast.add({ title: 'Device removed', color: 'green' })
+    Swal.fire({
+       title: 'Removed!',
+       text: 'The device has been removed.',
+       icon: 'success',
+       confirmButtonColor: '#6C4EFD',
+       background: isDark ? '#1a1d27' : '#fff',
+       color: isDark ? '#fff' : '#000',
+    })
     await refresh()
   } catch (err: any) {
-    toast.add({ title: 'Error removing device', description: err.message || 'Unknown error', color: 'red' })
+    Swal.fire({
+       title: 'Error!',
+       text: err.message || 'Failed to remove device.',
+       icon: 'error',
+       confirmButtonColor: '#6C4EFD',
+       background: isDark ? '#1a1d27' : '#fff',
+       color: isDark ? '#fff' : '#000',
+    })
   }
 }
 </script>
@@ -153,5 +188,32 @@ const handleRemove = async (id: string) => {
       padding: 16px;
       gap: 24px;
    }
+}
+
+.device-card {
+   background: #FFFFFF;
+   border: 1px solid #E5E7EB;
+   border-radius: 16px;
+   padding: 24px;
+   transition: all 0.2s ease;
+   display: flex;
+   flex-direction: column;
+   gap: 16px;
+}
+
+:root.dark .device-card {
+   background: rgba(30, 41, 59, 0.5);
+   border: 1px solid rgba(255, 255, 255, 0.05);
+   backdrop-filter: blur(10px);
+}
+
+.device-card:hover {
+   transform: translateY(-2px);
+   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+}
+
+:root.dark .device-card:hover {
+   background: rgba(30, 41, 59, 0.8);
+   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
 }
 </style>

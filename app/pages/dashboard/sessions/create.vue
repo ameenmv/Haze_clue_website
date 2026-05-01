@@ -78,6 +78,28 @@ const isSubmitting = ref(false)
 const errorMsg = ref('')
 const successMsg = ref('')
 
+// ── Template Pre-fill ────────────────────────────
+const route = useRoute()
+
+onMounted(() => {
+   if (route.query.template) {
+      const tpl = route.query.template as string
+      if (tpl === 'math') {
+         sessionForm.title = 'Math Class'
+         sessionForm.subject = 'Mathematics'
+         sessionForm.duration = 45
+      } else if (tpl === 'science') {
+         sessionForm.title = 'Science Lab'
+         sessionForm.subject = 'Science'
+         sessionForm.duration = 60
+      } else if (tpl === 'literature') {
+         sessionForm.title = 'Literature'
+         sessionForm.subject = 'Literature'
+         sessionForm.duration = 50
+      }
+   }
+})
+
 // ── Validation ───────────────────────────────────
 const validate = (): boolean => {
    // Reset errors
