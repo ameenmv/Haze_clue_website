@@ -7,17 +7,19 @@
     <template #panel>
       <div class="w-80 flex flex-col bg-white dark:bg-[#1a1d27] border border-gray-200 dark:border-[#2d3040] rounded-lg shadow-lg">
         <div class="flex items-center justify-between p-3 border-b border-gray-100 dark:border-[#2d3040]">
-          <h3 class="font-semibold text-sm">Notifications</h3>
-          <UButton v-if="unreadCount > 0" variant="ghost" size="xs" color="primary" @click="markAllAsRead">Mark all read</UButton>
+          <span class="font-semibold text-gray-900 dark:text-white">{{ $t('dashboard.notifications.title') }}</span>
+          <UButton v-if="unreadCount > 0" color="primary" variant="ghost" size="xs" @click="markAllAsRead">
+            {{ $t('dashboard.notifications.markAllRead') }}
+          </UButton>
         </div>
 
         <div class="flex-1 max-h-80 overflow-y-auto">
           <div v-if="pending" class="flex justify-center p-4">
              <UIcon name="lucide:loader-2" class="animate-spin w-5 h-5 text-gray-400" />
           </div>
-          <div v-else-if="!notifications.length" class="flex flex-col items-center justify-center p-6 text-gray-400">
-            <UIcon name="lucide:bell-off" class="w-8 h-8 mb-2 opacity-50" />
-            <span class="text-sm">No new notifications</span>
+          <div v-else-if="!notifications.length" class="p-8 text-center text-sm text-gray-500 flex flex-col items-center gap-2">
+            <UIcon name="i-lucide-bell-off" class="w-8 h-8 text-gray-400" />
+            <p>{{ $t('dashboard.notifications.noNew') }}</p>
           </div>
           <div v-else class="flex flex-col">
             <div 

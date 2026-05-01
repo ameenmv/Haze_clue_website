@@ -2,9 +2,9 @@
    <div class="devices-page">
       <!-- Header -->
       <div class="flex justify-between items-center w-full mb-4">
-        <h1 class="text-2xl font-bold">My Devices</h1>
+        <h1 class="text-2xl font-bold">{{ $t('dashboard.devices.myDevices') }}</h1>
         <UButton v-if="devices.length > 0" icon="i-lucide-plus" color="primary" @click="isAddModalOpen = true">
-          Add Device
+          {{ $t('dashboard.devices.addDevice') }}
         </UButton>
       </div>
 
@@ -14,30 +14,35 @@
       </div>
 
       <div v-else-if="devices.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div v-for="device in devices" :key="device.id" class="device-card">
-          <div class="flex justify-between items-start">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-full bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center text-primary">
-                <UIcon name="i-lucide-cpu" class="w-5 h-5" />
+        <UCard v-for="device in devices" :key="device.id" class="hover:-translate-y-1 transition-all duration-300 hover:shadow-xl dark:bg-[#1f2230] border-transparent dark:border-[#2d3040]">
+          <div class="flex justify-between items-start mb-4 gap-3">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="w-12 h-12 rounded-xl bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center text-primary shrink-0">
+                <UIcon name="i-lucide-cpu" class="w-6 h-6" />
               </div>
-              <div>
-                <h3 class="font-semibold text-lg">{{ device.name }}</h3>
-                <span class="text-sm text-gray-500">{{ device.type }}</span>
+              <div class="min-w-0">
+                <h3 class="font-bold text-lg dark:text-gray-100 truncate" :title="device.name">{{ device.name }}</h3>
+                <span class="text-sm font-medium text-gray-500">{{ device.type }}</span>
               </div>
             </div>
-            <UBadge :color="device.status === 'connected' ? 'green' : 'gray'" variant="subtle">
+            <UBadge :color="device.status === 'connected' ? 'green' : 'red'" variant="soft" class="capitalize font-semibold tracking-wide shrink-0">
               {{ device.status }}
             </UBadge>
           </div>
-          <div class="text-sm text-gray-600 dark:text-gray-400">
-            <strong>SN:</strong> {{ device.serialNumber }}
+          
+          <div class="flex items-center gap-2 px-3 py-2 bg-gray-50 dark:bg-[#1a1d27] rounded-lg border border-gray-100 dark:border-[#2d3040] mb-6">
+            <UIcon name="i-lucide-hash" class="w-4 h-4 text-gray-400" />
+            <span class="text-sm font-mono text-gray-600 dark:text-gray-300">{{ device.serialNumber }}</span>
           </div>
-          <div class="mt-auto pt-4 border-t border-gray-100 dark:border-[#2d3040] flex justify-end">
-            <UButton color="red" variant="ghost" icon="i-lucide-trash-2" size="sm" @click="handleRemove(device.id)">
-              Remove
-            </UButton>
-          </div>
-        </div>
+
+          <template #footer>
+            <div class="flex justify-end w-full">
+              <UButton color="red" variant="soft" icon="i-lucide-trash-2" size="sm" @click="handleRemove(device.id)">
+                {{ $t('dashboard.devices.remove') }}
+              </UButton>
+            </div>
+          </template>
+        </UCard>
       </div>
 
       <!-- No Devices Empty State -->
@@ -49,34 +54,33 @@
       <!-- Setup Guide + Need Help -->
       <DeviceHelpCards @view-guide="navigateTo('/dashboard/help')" @contact-support="navigateTo('/dashboard/help')" />
 
-      <UModal v-model:open="isAddModalOpen" :ui="{ overlay: { background: 'bg-gray-900/75 dark:bg-slate-900/80 backdrop-blur-sm' } }">
+      <UModal v-model:open="isAddModalOpen">
         <template #content>
-          <UCard :ui="{ 
-            ring: 'ring-1 ring-gray-200 dark:ring-white/5', 
-            divide: 'divide-y divide-gray-100 dark:divide-white/5',
-            background: 'bg-white dark:bg-slate-900/50 dark:backdrop-blur-xl',
-            shadow: 'shadow-xl'
-          }">
+          <UCard class="w-full max-w-md mx-auto overflow-hidden bg-white/95 dark:bg-[#1a1d27]/95 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-2xl rounded-2xl">
             <template #header>
-              <h3 class="text-lg font-semibold">Add New Device</h3>
+              <div class="flex items-center justify-between">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">{{ $t('dashboard.devices.modal.title') }}</h3>
+                <UButton color="gray" variant="ghost" icon="i-lucide-x" class="-my-1" @click="isAddModalOpen = false" />
+              </div>
+              <p class="text-sm text-gray-500 mt-1">{{ $t('dashboard.devices.modal.description') }}</p>
             </template>
 
-            <form @submit.prevent="submitAddDevice" class="flex flex-col gap-4">
-              <UFormGroup label="Device Name" name="name" required>
-                <UInput v-model="newDevice.name" placeholder="e.g. My NeuroSky MindWave" />
-              </UFormGroup>
+            <form @submit.prevent="submitAddDevice" class="flex flex-col gap-5 p-2">
+              <UFormField :label="$t('dashboard.devices.modal.deviceName')" name="name" required class="w-full">
+                <UInput v-model="newDevice.name" :placeholder="$t('dashboard.devices.modal.deviceNamePlaceholder')" icon="i-lucide-cpu" class="w-full" size="lg" />
+              </UFormField>
               
-              <UFormGroup label="Device Type" name="type" required>
-                <USelect v-model="newDevice.type" :options="['EEG', 'BCI']" />
-              </UFormGroup>
+              <UFormField :label="$t('dashboard.devices.modal.deviceType')" name="type" required class="w-full">
+                <USelect v-model="newDevice.type" :options="['EEG', 'BCI']" icon="i-lucide-activity" class="w-full" size="lg" />
+              </UFormField>
               
-              <UFormGroup label="Serial Number" name="serialNumber" required>
-                <UInput v-model="newDevice.serialNumber" placeholder="e.g. SN-123456789" />
-              </UFormGroup>
+              <UFormField :label="$t('dashboard.devices.modal.serialNumber')" name="serialNumber" required class="w-full">
+                <UInput v-model="newDevice.serialNumber" :placeholder="$t('dashboard.devices.modal.serialNumberPlaceholder')" icon="i-lucide-key" class="w-full" size="lg" />
+              </UFormField>
 
-              <div class="flex justify-end gap-3 mt-4">
-                <UButton color="gray" variant="ghost" @click="isAddModalOpen = false">Cancel</UButton>
-                <UButton type="submit" color="primary" :loading="isSubmitting">Add Device</UButton>
+              <div class="flex justify-end gap-3 mt-6">
+                <UButton color="gray" variant="soft" size="lg" @click="isAddModalOpen = false">{{ $t('dashboard.devices.modal.cancel') }}</UButton>
+                <UButton type="submit" color="primary" size="lg" :loading="isSubmitting" icon="i-lucide-plus">{{ $t('dashboard.devices.modal.addBtn') }}</UButton>
               </div>
             </form>
           </UCard>
@@ -188,32 +192,5 @@ const handleRemove = async (id: string) => {
       padding: 16px;
       gap: 24px;
    }
-}
-
-.device-card {
-   background: #FFFFFF;
-   border: 1px solid #E5E7EB;
-   border-radius: 16px;
-   padding: 24px;
-   transition: all 0.2s ease;
-   display: flex;
-   flex-direction: column;
-   gap: 16px;
-}
-
-:root.dark .device-card {
-   background: rgba(30, 41, 59, 0.5);
-   border: 1px solid rgba(255, 255, 255, 0.05);
-   backdrop-filter: blur(10px);
-}
-
-.device-card:hover {
-   transform: translateY(-2px);
-   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
-}
-
-:root.dark .device-card:hover {
-   background: rgba(30, 41, 59, 0.8);
-   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
 }
 </style>

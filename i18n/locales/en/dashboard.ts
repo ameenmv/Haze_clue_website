@@ -238,6 +238,20 @@ export default {
   },
   devices: {
     pageTitle: 'Device Management | Haze Clue',
+    myDevices: 'My Devices',
+    addDevice: 'Add Device',
+    remove: 'Remove',
+    modal: {
+      title: 'Add New Device',
+      description: 'Connect a new EEG or BCI headset to your account.',
+      deviceName: 'Device Name',
+      deviceNamePlaceholder: 'e.g. My NeuroSky MindWave',
+      deviceType: 'Device Type',
+      serialNumber: 'Serial Number',
+      serialNumberPlaceholder: 'e.g. SN-123456789',
+      cancel: 'Cancel',
+      addBtn: 'Add Device'
+    },
     noDevices: {
       title: 'No Devices Connected',
       description: 'Connect your first EEG device to start monitoring classroom attention',
@@ -456,5 +470,10 @@ export default {
       last30: 'Last 30 minutes',
       exportData: 'Export Data'
     }
+  },
+  notifications: {
+    title: 'Notifications',
+    markAllRead: 'Mark all read',
+    noNew: 'No new notifications'
   }
 }
