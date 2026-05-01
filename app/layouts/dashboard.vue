@@ -28,9 +28,7 @@
                   <UIcon :name="isDark ? 'lucide:sun' : 'lucide:moon'" class="w-5 h-5" />
                </button>
 
-               <button class="dashboard-topbar__icon-btn">
-                  <UIcon name="lucide:bell" class="w-5 h-5" />
-               </button>
+               <NotificationDropdown />
             </div>
          </header>
 
