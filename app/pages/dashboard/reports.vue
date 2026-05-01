@@ -23,7 +23,7 @@
                {{ new Date(row.createdAt).toLocaleDateString() }}
             </template>
             <template #actions-data="{ row }">
-               <UButton color="primary" variant="soft" size="sm" icon="i-lucide-download" @click="downloadReport(row.id)">
+               <UButton color="primary" variant="soft" size="sm" icon="i-lucide-download" @click="downloadReport(row)">
                   Download
                </UButton>
             </template>
@@ -46,6 +46,7 @@
 
 <script setup lang="ts">
 import { reportsApi } from '~/services/reports'
+import { sessionsApi } from '~/services/sessions'
 
 definePageMeta({
    layout: 'dashboard',
@@ -67,13 +68,24 @@ const columns = [
 ]
 
 const toast = useToast()
-const downloadReport = async (id: string) => {
+const downloadReport = async (row: any) => {
+   const sessionId = row.sessionId
    try {
-      // It returns JSON mock right now, ideally returns Blob
-      const res = await reportsApi.export(id)
-      toast.add({ title: 'Report download started', description: res.message || 'Downloading...', color: 'green' })
+      toast.add({ title: 'Downloading Report', description: 'Generating PDF...', color: 'blue' })
+      const blob = await sessionsApi.exportPdf(sessionId)
+      
+      const url = window.URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = `session-report-${sessionId}.pdf`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      window.URL.revokeObjectURL(url)
+      
+      toast.add({ title: 'Success', description: 'Report downloaded successfully', color: 'green' })
    } catch (e: any) {
-      toast.add({ title: 'Failed to download report', color: 'red' })
+      toast.add({ title: 'Download Failed', description: 'Could not generate report', color: 'red' })
    }
 }
 </script>

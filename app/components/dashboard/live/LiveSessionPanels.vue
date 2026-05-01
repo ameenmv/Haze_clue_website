@@ -29,15 +29,15 @@
       <div class="live-panels__card">
          <h4 class="live-panels__title">{{ $t('dashboard.liveSession.actions.title') }}</h4>
          <div class="live-panels__actions">
-            <button class="live-panels__action-btn live-panels__action-btn--purple">
+            <button class="live-panels__action-btn live-panels__action-btn--purple" @click="addMarker">
                <UIcon name="lucide:bookmark" class="w-3 h-4" style="color: #fff" />
                <span>{{ $t('dashboard.liveSession.actions.addMarker') }}</span>
             </button>
-            <button class="live-panels__action-btn live-panels__action-btn--yellow">
+            <button class="live-panels__action-btn live-panels__action-btn--yellow" @click="pauseMonitoring">
                <UIcon name="lucide:pause" class="w-2.5 h-4" style="color: #fff" />
-               <span>{{ $t('dashboard.liveSession.actions.pauseMonitoring') }}</span>
+               <span>{{ isPaused ? 'Resume Monitoring' : $t('dashboard.liveSession.actions.pauseMonitoring') }}</span>
             </button>
-            <button class="live-panels__action-btn live-panels__action-btn--orange">
+            <button class="live-panels__action-btn live-panels__action-btn--orange" @click="sendAlert">
                <UIcon name="lucide:bell" class="w-3.5 h-4" style="color: #fff" />
                <span>{{ $t('dashboard.liveSession.actions.sendAlert') }}</span>
             </button>
@@ -72,13 +72,91 @@
 </template>
 
 <script setup lang="ts">
+import Swal from 'sweetalert2'
+import { sessionsApi } from '~/services/sessions'
+
 const liveData = useState<any>('liveSessionData')
 const circumference = 2 * Math.PI * 52
+const route = useRoute()
+const toast = useToast()
+
+const sessionId = (route.query.id as string) || 'demo-session'
+const isPaused = ref(false)
 
 const strokeDasharray = computed(() => {
    const avg = liveData.value?.classAvgAttention || 0
    return `${circumference * (avg / 100)} ${circumference}`
 })
+
+const getSwalTheme = () => {
+   const isDark = document.documentElement.classList.contains('dark')
+   return {
+      background: isDark ? '#1a1d27' : '#fff',
+      color: isDark ? '#fff' : '#000',
+   }
+}
+
+const addMarker = async () => {
+   const { value: label } = await Swal.fire({
+      title: 'Add Session Marker',
+      input: 'text',
+      inputPlaceholder: 'e.g., Started Group Work',
+      showCancelButton: true,
+      confirmButtonText: 'Save Marker',
+      confirmButtonColor: '#6C4EFD',
+      ...getSwalTheme()
+   })
+
+   if (label && sessionId !== 'demo-session') {
+      try {
+         await sessionsApi.addMarker(sessionId, label)
+         toast.add({ title: 'Marker Added', description: `Saved: ${label}`, color: 'green' })
+      } catch (e: any) {
+         toast.add({ title: 'Error', description: 'Failed to save marker', color: 'red' })
+      }
+   }
+}
+
+const pauseMonitoring = async () => {
+   const emitAction = inject<((action: string) => void)>('emitAction')
+
+   if (sessionId === 'demo-session') {
+      isPaused.value = !isPaused.value
+      if (emitAction) emitAction(isPaused.value ? 'pause' : 'resume')
+      toast.add({ title: isPaused.value ? 'Monitoring Paused' : 'Monitoring Resumed', color: 'blue' })
+      return
+   }
+   
+   try {
+      await sessionsApi.pause(sessionId)
+      isPaused.value = !isPaused.value
+      if (emitAction) emitAction(isPaused.value ? 'pause' : 'resume')
+      toast.add({ title: isPaused.value ? 'Monitoring Paused' : 'Monitoring Resumed', color: 'blue' })
+   } catch (e: any) {
+      toast.add({ title: 'Error', description: 'Failed to toggle pause', color: 'red' })
+   }
+}
+
+const sendAlert = async () => {
+   const { value: message } = await Swal.fire({
+      title: 'Send Class Alert',
+      input: 'textarea',
+      inputPlaceholder: 'Enter alert message...',
+      showCancelButton: true,
+      confirmButtonText: 'Send Alert',
+      confirmButtonColor: '#F97316',
+      ...getSwalTheme()
+   })
+
+   if (message && sessionId !== 'demo-session') {
+      try {
+         await sessionsApi.sendAlert(sessionId, message)
+         toast.add({ title: 'Alert Sent', description: 'Broadcasted to all connected devices', color: 'orange' })
+      } catch (e: any) {
+         toast.add({ title: 'Error', description: 'Failed to send alert', color: 'red' })
+      }
+   }
+}
 </script>
 
 <style scoped>

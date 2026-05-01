@@ -27,11 +27,9 @@
       <div class="form-details__row">
          <div class="form-details__field">
             <label class="form-details__label">{{ $t('dashboard.createSession.details.gradeLevel') }}</label>
-            <USkeleton v-if="loadingGrades" class="h-12 w-full rounded-lg" />
-            <select v-else v-model="sessionForm.className" class="form-details__select">
-               <option value="" disabled>{{ $t('dashboard.createSession.details.gradePlaceholder') }}</option>
-               <option v-for="grade in gradesData" :key="grade.id" :value="grade.name">{{ grade.name }}</option>
-            </select>
+            <input v-model="sessionForm.className" type="text"
+               class="form-details__input"
+               :placeholder="$t('dashboard.createSession.details.gradePlaceholder')" />
          </div>
          <div class="form-details__field">
             <label class="form-details__label">Duration (minutes)</label>
@@ -56,9 +54,6 @@ import { lookupsApi } from '~/services/lookups'
 
 const sessionForm = inject<any>('sessionForm')!
 const formErrors = inject<Record<string, string>>('formErrors', {})
-
-// ─── Fetch lookups dynamically ──────────────────────────────
-const { data: gradesData, pending: loadingGrades } = await useAsyncData('grades', () => lookupsApi.getGradeLevels())
 </script>
 
 <style scoped>

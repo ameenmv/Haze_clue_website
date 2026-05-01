@@ -159,7 +159,7 @@ const handleCreate = async () => {
       }
       successMsg.value = 'Session created & started!'
       clearNuxtData('/dashboard/sessions::sessions-list')
-      setTimeout(() => navigateTo('/dashboard/sessions'), 800)
+      setTimeout(() => navigateTo(session?.id ? `/dashboard/live-session?id=${session.id}` : '/dashboard/sessions'), 800)
    } catch (e: any) {
       errorMsg.value = e?.data?.message || e?.message || 'Failed to create session. Please try again.'
    } finally {

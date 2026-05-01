@@ -90,7 +90,7 @@ const filteredSessions = computed(() => {
 const handleStart = async (id: string) => {
    try {
       await sessionsApi.start(id)
-      refresh()
+      navigateTo(`/dashboard/live-session?id=${id}`)
    } catch (e) {
       console.error('Failed to start session:', e)
    }
