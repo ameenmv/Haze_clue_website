@@ -12,18 +12,18 @@
       </div>
 
       <div v-else-if="reports.length > 0" class="reports-container">
-         <UTable :rows="reports" :columns="columns" class="w-full bg-white dark:bg-[#1a1d27] border border-gray-200 dark:border-[#2d3040] rounded-xl shadow-sm">
-            <template #sessionName-data="{ row }">
-               <span class="font-medium">{{ row.sessionName || 'Unknown Session' }}</span>
+         <UTable :data="reports" :columns="columns" class="w-full bg-white dark:bg-[#1a1d27] border border-gray-200 dark:border-[#2d3040] rounded-xl shadow-sm">
+            <template #sessionName-cell="{ row }">
+               <span class="font-medium">{{ (row.original || row).sessionName || 'Unknown Session' }}</span>
             </template>
-            <template #type-data="{ row }">
-               <UBadge color="blue" variant="subtle">{{ row.type.replace('_', ' ').toUpperCase() }}</UBadge>
+            <template #type-cell="{ row }">
+               <UBadge color="blue" variant="subtle">{{ ((row.original || row).type || 'session_summary').replace('_', ' ').toUpperCase() }}</UBadge>
             </template>
-            <template #createdAt-data="{ row }">
-               {{ new Date(row.createdAt).toLocaleDateString() }}
+            <template #createdAt-cell="{ row }">
+               {{ new Date((row.original || row).createdAt).toLocaleDateString() }}
             </template>
-            <template #actions-data="{ row }">
-               <UButton color="primary" variant="soft" size="sm" icon="i-lucide-download" @click="downloadReport(row)">
+            <template #actions-cell="{ row }">
+               <UButton color="primary" variant="soft" size="sm" icon="i-lucide-download" @click="downloadReport(row.original || row)">
                   Download
                </UButton>
             </template>
@@ -61,10 +61,10 @@ const { data: reportsData, pending, refresh } = useAsyncData('reportsList', () =
 const reports = computed(() => reportsData.value?.data || [])
 
 const columns = [
-   { key: 'sessionName', label: 'Session Name' },
-   { key: 'type', label: 'Report Type' },
-   { key: 'createdAt', label: 'Date Generated' },
-   { key: 'actions', label: 'Actions' }
+   { key: 'sessionName', id: 'sessionName', accessorKey: 'sessionName', label: 'Session Name', header: 'Session Name' },
+   { key: 'type', id: 'type', accessorKey: 'type', label: 'Report Type', header: 'Report Type' },
+   { key: 'createdAt', id: 'createdAt', accessorKey: 'createdAt', label: 'Date Generated', header: 'Date Generated' },
+   { key: 'actions', id: 'actions', accessorKey: 'actions', label: 'Actions', header: 'Actions' }
 ]
 
 const toast = useToast()
