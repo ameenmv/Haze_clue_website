@@ -14,21 +14,49 @@
 
 <script setup lang="ts">
 import { usersApi } from '~/services/users'
+import Swal from 'sweetalert2'
 
 const authStore = useAuthStore()
 const deleting = ref(false)
 
 const handleDelete = async () => {
-   const confirmed = confirm('Are you sure you want to delete your account? This action cannot be undone.')
-   if (!confirmed) return
+   const isDark = document.documentElement.classList.contains('dark')
+   const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: "You want to delete your account? This action cannot be undone.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#DC2626',
+      cancelButtonColor: '#6B7280',
+      confirmButtonText: 'Yes, delete it!',
+      background: isDark ? '#1a1d27' : '#fff',
+      color: isDark ? '#fff' : '#000',
+   })
+   
+   if (!result.isConfirmed) return
 
    deleting.value = true
    try {
       await usersApi.deleteAccount()
-      useToast().add({ title: 'Account deleted', color: 'success' })
+      Swal.fire({
+         title: 'Deleted!',
+         text: 'Your account has been deleted.',
+         icon: 'success',
+         confirmButtonColor: '#6C4EFD',
+         background: isDark ? '#1a1d27' : '#fff',
+         color: isDark ? '#fff' : '#000',
+      })
       authStore.clearSession()
    } catch {
       // Error handled by customFetch
+      Swal.fire({
+         title: 'Error!',
+         text: 'Failed to delete account.',
+         icon: 'error',
+         confirmButtonColor: '#6C4EFD',
+         background: isDark ? '#1a1d27' : '#fff',
+         color: isDark ? '#fff' : '#000',
+      })
    } finally {
       deleting.value = false
    }

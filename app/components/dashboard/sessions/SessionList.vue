@@ -70,6 +70,7 @@
 
 <script setup lang="ts">
 import { sessionsApi } from '~/services/sessions';
+import Swal from 'sweetalert2';
 
 defineEmits<{ createFirst: [] }>()
 
@@ -89,7 +90,7 @@ const filteredSessions = computed(() => {
 const handleStart = async (id: string) => {
    try {
       await sessionsApi.start(id)
-      refresh()
+      navigateTo(`/dashboard/live-session?id=${id}`)
    } catch (e) {
       console.error('Failed to start session:', e)
    }
@@ -105,12 +106,42 @@ const handleEnd = async (id: string) => {
 }
 
 const handleDelete = async (id: string) => {
-   if (!confirm('Are you sure you want to delete this session?')) return
+   const isDark = document.documentElement.classList.contains('dark');
+   const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: "You want to delete this session?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#6C4EFD',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+      background: isDark ? '#1a1d27' : '#fff',
+      color: isDark ? '#fff' : '#000',
+   });
+   
+   if (!result.isConfirmed) return;
+
    try {
       await sessionsApi.remove(id)
       refresh()
+      Swal.fire({
+         title: 'Deleted!',
+         text: 'The session has been deleted.',
+         icon: 'success',
+         confirmButtonColor: '#6C4EFD',
+         background: isDark ? '#1a1d27' : '#fff',
+         color: isDark ? '#fff' : '#000',
+      })
    } catch (e) {
       console.error('Failed to delete session:', e)
+      Swal.fire({
+         title: 'Error!',
+         text: 'Failed to delete session.',
+         icon: 'error',
+         confirmButtonColor: '#6C4EFD',
+         background: isDark ? '#1a1d27' : '#fff',
+         color: isDark ? '#fff' : '#000',
+      })
    }
 }
 </script>

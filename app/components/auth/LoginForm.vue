@@ -10,6 +10,20 @@
       </p>
     </div>
 
+    <!-- Social Login -->
+    <div class="flex flex-col gap-5 mt-2">
+      <div class="flex flex-col gap-3">
+        <SocialButton provider="google" />
+        <SocialButton provider="facebook" />
+      </div>
+
+      <div class="relative flex items-center gap-4">
+        <div class="h-px bg-[#E5E7EB] dark:bg-gray-700 flex-1"></div>
+        <span class="text-sm font-medium text-[#6B7280] dark:text-gray-400">{{ $t('auth.labels.or') }}</span>
+        <div class="h-px bg-[#E5E7EB] dark:bg-gray-700 flex-1"></div>
+      </div>
+    </div>
+
     <!-- Form -->
     <form @submit.prevent="handleSubmit" class="flex flex-col gap-6">
       <BaseInput v-model="form.email" :label="$t('auth.labels.email')" type="email"
@@ -45,28 +59,13 @@
     </form>
 
     <!-- Footer -->
-    <div class="flex flex-col items-center gap-6">
+    <div class="flex flex-col items-center gap-6 mt-2">
       <div class="text-center">
         <span class="text-[#4B5563] dark:text-gray-400 font-poppins">{{ $t('auth.login.noAccount') }} </span>
         <NuxtLink to="/register"
           class="font-semibold font-poppins text-transparent bg-clip-text bg-gradient-to-r from-[#6C4EFD] to-[#4C38AF]">
           {{ $t('auth.login.signUp') }}
         </NuxtLink>
-      </div>
-
-      <!-- Divider -->
-      <div class="relative w-full flex items-center justify-center">
-        <div class="absolute w-full border-t border-gray-300 dark:border-gray-700"></div>
-        <div class="relative bg-white dark:bg-gray-900 px-3">
-          <span class="text-sm text-[#6B7280] dark:text-gray-400 font-poppins">{{ $t('auth.login.continueWith')
-            }}</span>
-        </div>
-      </div>
-
-      <!-- Social Login - Icon Only -->
-      <div class="flex items-center gap-3">
-        <SocialButton provider="google" mode="icon" />
-        <SocialButton provider="facebook" mode="icon" />
       </div>
     </div>
   </div>

@@ -9,10 +9,13 @@
             <select class="timeline-card__select">
                <option>{{ $t('dashboard.liveSession.timeline.last30') }}</option>
             </select>
-            <button class="timeline-card__export">
-               <UIcon name="lucide:download" class="w-3.5 h-3.5" style="color: #fff" />
-               <span>{{ $t('dashboard.liveSession.timeline.exportData') }}</span>
-            </button>
+            <UDropdown :items="exportOptions" :popper="{ placement: 'bottom-end' }">
+               <button class="timeline-card__export" :disabled="isExporting" :style="{ opacity: isExporting ? 0.7 : 1 }">
+                  <UIcon v-if="!isExporting" name="lucide:download" class="w-3.5 h-3.5" style="color: #fff" />
+                  <UIcon v-else name="lucide:loader-2" class="w-3.5 h-3.5 animate-spin" style="color: #fff" />
+                  <span>{{ isExporting ? 'Exporting...' : $t('dashboard.liveSession.timeline.exportData') }}</span>
+               </button>
+            </UDropdown>
          </div>
       </div>
 
@@ -39,10 +42,51 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, LineController, Filler, Tooltip, Legend)
 
+import { sessionsApi } from '~/services/sessions'
+
 const chartCanvas = ref<HTMLCanvasElement | null>(null)
 let chartInstance: ChartJS | null = null
+const route = useRoute()
+const toast = useToast()
+const sessionId = (route.query.id as string) || 'demo-session'
 
-// Generate realistic attention data
+const isExporting = ref(false)
+
+const handleExport = async (type: 'pdf' | 'csv') => {
+   if (sessionId === 'demo-session') {
+      toast.add({ title: 'Export Not Available', description: 'Cannot export demo session data.', color: 'red' })
+      return
+   }
+   
+   isExporting.value = true
+   try {
+      const blob = type === 'pdf' ? await sessionsApi.exportPdf(sessionId) : await sessionsApi.exportCsv(sessionId)
+      
+      const url = window.URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = `session-report-${sessionId}.${type}`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      window.URL.revokeObjectURL(url)
+      
+      toast.add({ title: 'Export Successful', description: `Your ${type.toUpperCase()} file has been downloaded.`, color: 'green' })
+   } catch (error) {
+      toast.add({ title: 'Export Failed', description: `There was an error generating the ${type.toUpperCase()} report.`, color: 'red' })
+   } finally {
+      isExporting.value = false
+   }
+}
+
+const exportOptions = [
+   [
+      { label: 'Export as PDF', icon: 'i-lucide-file-text', click: () => handleExport('pdf') },
+      { label: 'Export as CSV', icon: 'i-lucide-file-spreadsheet', click: () => handleExport('csv') }
+   ]
+]
+
+// Generate initial data
 const generateData = () => {
    const labels: string[] = []
    const data: number[] = []
@@ -50,12 +94,30 @@ const generateData = () => {
    for (let i = 30; i >= 0; i--) {
       const t = new Date(now.getTime() - i * 60000)
       labels.push(`${t.getHours().toString().padStart(2, '0')}:${t.getMinutes().toString().padStart(2, '0')}`)
-      // Simulate fluctuating attention between 65-95%
-      const base = 78 + Math.sin(i * 0.4) * 8
-      data.push(Math.round(base + (Math.random() - 0.5) * 10))
+      // Base level
+      data.push(70 + Math.random() * 10)
    }
    return { labels, data }
 }
+
+const liveData = useState<any>('liveSessionData')
+
+watch(liveData, (newVal) => {
+   if (newVal && chartInstance && newVal.classAvgAttention) {
+      const now = new Date()
+      const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`
+      
+      chartInstance.data.labels?.push(timeStr)
+      chartInstance.data.datasets[0].data.push(newVal.classAvgAttention)
+
+      if ((chartInstance.data.labels?.length || 0) > 30) {
+         chartInstance.data.labels?.shift()
+         chartInstance.data.datasets[0].data.shift()
+      }
+
+      chartInstance.update()
+   }
+}, { deep: true })
 
 const buildChart = () => {
    if (!chartCanvas.value) return

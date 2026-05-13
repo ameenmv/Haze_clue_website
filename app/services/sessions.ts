@@ -94,5 +94,63 @@ export const sessionsApi = {
   getLiveData(id: string) {
     const { $customFetch } = useNuxtApp()
     return $customFetch<any>(`/sessions/${id}/live-data`)
+  },
+
+  /**
+   * POST /sessions/:id/markers — add session marker
+   */
+  addMarker(id: string, label: string) {
+    const { $customFetch } = useNuxtApp()
+    return $customFetch<any>(`/sessions/${id}/markers`, {
+      method: 'POST',
+      body: { label }
+    })
+  },
+
+  /**
+   * POST /sessions/:id/pause — toggle pause monitoring
+   */
+  pause(id: string) {
+    const { $customFetch } = useNuxtApp()
+    return $customFetch<any>(`/sessions/${id}/pause`, {
+      method: 'POST'
+    })
+  },
+
+  /**
+   * POST /sessions/:id/alert — send class alert
+   */
+  sendAlert(id: string, message: string) {
+    const { $customFetch } = useNuxtApp()
+    return $customFetch<any>(`/sessions/${id}/alert`, {
+      method: 'POST',
+      body: { message }
+    })
+  },
+
+  /**
+   * GET /sessions/:id/export/pdf
+   */
+  async exportPdf(id: string) {
+    const config = useRuntimeConfig()
+    const token = useCookie('auth_token').value
+    const res = await fetch(`${config.public.apiBaseUrl}/sessions/${id}/export/pdf`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    if (!res.ok) throw new Error('Failed to export PDF')
+    return res.blob()
+  },
+
+  /**
+   * GET /sessions/:id/export/csv
+   */
+  async exportCsv(id: string) {
+    const config = useRuntimeConfig()
+    const token = useCookie('auth_token').value
+    const res = await fetch(`${config.public.apiBaseUrl}/sessions/${id}/export/csv`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    if (!res.ok) throw new Error('Failed to export CSV')
+    return res.blob()
   }
 }

@@ -1,6 +1,6 @@
 <template>
-  <button
-    type="button"
+  <a
+    :href="`/api/auth/${provider}`"
     :class="[
       'flex items-center justify-center transition-colors bg-white dark:bg-gray-900 border border-[#E5E7EB] dark:border-gray-700 shadow-sm',
       mode === 'icon' 
@@ -23,7 +23,7 @@
     <span v-if="mode === 'full'" class="text-[#374151] dark:text-gray-200 font-semibold text-base">
       {{ $t(`auth.register.social.${provider}`) }}
     </span>
-  </button>
+  </a>
 </template>
 
 <script setup lang="ts">

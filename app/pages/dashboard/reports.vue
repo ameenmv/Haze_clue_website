@@ -1,18 +1,53 @@
 <template>
    <div class="reports-page">
-      <!-- No Reports Empty State -->
-      <ReportsEmptyState @create-session="navigateTo('/dashboard/sessions/create')"
-         @learn-more="navigateTo('/dashboard/help')" />
+      <div class="flex justify-between items-center w-full mb-4">
+         <h1 class="text-2xl font-bold">My Reports</h1>
+         <UButton v-if="reports.length > 0" icon="i-lucide-refresh-cw" color="gray" variant="ghost" @click="refresh">
+            Refresh
+         </UButton>
+      </div>
 
-      <!-- Getting Started Banner -->
-      <ReportsGettingStarted />
+      <div v-if="pending" class="flex justify-center p-8">
+         <UIcon name="i-lucide-loader-2" class="w-8 h-8 animate-spin" />
+      </div>
 
-      <!-- What You'll Get -->
-      <ReportsWhatYouGet />
+      <div v-else-if="reports.length > 0" class="reports-container">
+         <UTable :data="reports" :columns="columns" class="w-full bg-white dark:bg-[#1a1d27] border border-gray-200 dark:border-[#2d3040] rounded-xl shadow-sm">
+            <template #sessionName-cell="{ row }">
+               <span class="font-medium">{{ (row.original || row).sessionName || 'Unknown Session' }}</span>
+            </template>
+            <template #type-cell="{ row }">
+               <UBadge color="blue" variant="subtle">{{ ((row.original || row).type || 'session_summary').replace('_', ' ').toUpperCase() }}</UBadge>
+            </template>
+            <template #createdAt-cell="{ row }">
+               {{ new Date((row.original || row).createdAt).toLocaleDateString() }}
+            </template>
+            <template #actions-cell="{ row }">
+               <UButton color="primary" variant="soft" size="sm" icon="i-lucide-download" @click="downloadReport(row.original || row)">
+                  Download
+               </UButton>
+            </template>
+         </UTable>
+      </div>
+
+      <template v-else>
+         <!-- No Reports Empty State -->
+         <ReportsEmptyState @create-session="navigateTo('/dashboard/sessions/create')"
+            @learn-more="navigateTo('/dashboard/help')" />
+
+         <!-- Getting Started Banner -->
+         <ReportsGettingStarted />
+
+         <!-- What You'll Get -->
+         <ReportsWhatYouGet />
+      </template>
    </div>
 </template>
 
 <script setup lang="ts">
+import { reportsApi } from '~/services/reports'
+import { sessionsApi } from '~/services/sessions'
+
 definePageMeta({
    layout: 'dashboard',
    middleware: 'auth'
@@ -21,6 +56,38 @@ definePageMeta({
 useHead({
    title: 'Reports | Haze Clue'
 })
+
+const { data: reportsData, pending, refresh } = useAsyncData('reportsList', () => reportsApi.list(1, 50))
+const reports = computed(() => reportsData.value?.data || [])
+
+const columns = [
+   { key: 'sessionName', id: 'sessionName', accessorKey: 'sessionName', label: 'Session Name', header: 'Session Name' },
+   { key: 'type', id: 'type', accessorKey: 'type', label: 'Report Type', header: 'Report Type' },
+   { key: 'createdAt', id: 'createdAt', accessorKey: 'createdAt', label: 'Date Generated', header: 'Date Generated' },
+   { key: 'actions', id: 'actions', accessorKey: 'actions', label: 'Actions', header: 'Actions' }
+]
+
+const toast = useToast()
+const downloadReport = async (row: any) => {
+   const sessionId = row.sessionId
+   try {
+      toast.add({ title: 'Downloading Report', description: 'Generating PDF...', color: 'blue' })
+      const blob = await sessionsApi.exportPdf(sessionId)
+      
+      const url = window.URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = `session-report-${sessionId}.pdf`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      window.URL.revokeObjectURL(url)
+      
+      toast.add({ title: 'Success', description: 'Report downloaded successfully', color: 'green' })
+   } catch (e: any) {
+      toast.add({ title: 'Download Failed', description: 'Could not generate report', color: 'red' })
+   }
+}
 </script>
 
 <style scoped>

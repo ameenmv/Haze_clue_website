@@ -29,11 +29,41 @@ useHead({
    title: 'Live Monitoring | Haze Clue'
 })
 
+import { sessionsApi } from '~/services/sessions'
+
+const toast = useToast()
+
+// Fetch active sessions to see if we should redirect
+const { data: sessionsData } = await useAppFetch('active-sessions-check', () => sessionsApi.list(1, 10))
+const activeSession = computed(() => {
+   const sessions = (sessionsData.value as any)?.data || []
+   return sessions.find((s: any) => s.status === 'active')
+})
+
+onMounted(() => {
+   if (activeSession.value) {
+      navigateTo(`/dashboard/live-session?id=${activeSession.value.id}`)
+   }
+})
+
 // ─── Handlers ──────────────────────────────────────
-const handleStartSession = (form: { className: string; subject: string; duration: string; students: string }) => {
-   console.log('Starting session:', form)
-   // Navigate to live session
-   navigateTo('/dashboard/live-session')
+const handleStartSession = async (form: { className: string; subject: string; duration: string; students: string }) => {
+   try {
+      const payload = {
+         title: `${form.subject || 'Quick'} Session - ${form.className || new Date().toLocaleDateString()}`,
+         className: form.className || undefined,
+         subject: form.subject || undefined,
+         duration: parseInt(form.duration) || undefined,
+         students: parseInt(form.students) || undefined,
+      }
+      const session = await sessionsApi.create(payload)
+      if (session?.id) {
+         await sessionsApi.start(session.id)
+         navigateTo(`/dashboard/live-session?id=${session.id}`)
+      }
+   } catch (e: any) {
+      toast.add({ title: 'Failed to start quick session', description: e.message || 'Unknown error', color: 'red' })
+   }
 }
 </script>
 
