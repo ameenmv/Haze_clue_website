@@ -51,6 +51,7 @@
 
 <script setup lang="ts">
 import { useSocket } from '~/composables/useSocket'
+import { notificationsApi } from '~/services/notifications'
 
 const authStore = useAuthStore()
 const toast = useToast()
@@ -64,12 +65,9 @@ const unreadCount = computed(() => notifications.value.filter(n => !n.read).leng
 // Fetch initial notifications
 const fetchNotifications = async () => {
   try {
-    const { data } = await useFetch('/api/notifications', {
-      baseURL: 'http://localhost:3001',
-      headers: { Authorization: `Bearer ${authStore.token}` }
-    })
-    if (data.value) {
-      notifications.value = data.value as any[]
+    const data = await notificationsApi.list()
+    if (data) {
+      notifications.value = data as any[]
     }
   } catch (e) {
     console.error('Failed to load notifications')
@@ -87,11 +85,7 @@ const markAsRead = async (id: string) => {
   notif.read = true
   
   try {
-    await useFetch(`/api/notifications/${id}/read`, {
-      method: 'PATCH',
-      baseURL: 'http://localhost:3001',
-      headers: { Authorization: `Bearer ${authStore.token}` }
-    })
+    await notificationsApi.markAsRead(id)
   } catch (e) {
     notif.read = false // revert on fail
   }
@@ -102,11 +96,7 @@ const markAllAsRead = async () => {
   notifications.value.forEach(n => n.read = true)
   
   try {
-    await useFetch(`/api/notifications/read-all`, {
-      method: 'PATCH',
-      baseURL: 'http://localhost:3001',
-      headers: { Authorization: `Bearer ${authStore.token}` }
-    })
+    await notificationsApi.markAllAsRead()
   } catch (e) {
     console.error('Failed to mark all as read')
   }

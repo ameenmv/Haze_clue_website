@@ -44,7 +44,8 @@
 import RegisterForm from '~/components/auth/RegisterForm.vue'
 
 definePageMeta({
-  layout: false
+  layout: false,
+  middleware: 'guest'
 })
 
 useHead({

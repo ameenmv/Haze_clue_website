@@ -63,6 +63,7 @@
 
 <script setup lang="ts">
 import { useAuthStore } from '~/stores/auth'
+import { usersApi } from '~/services/users'
 import { computed } from 'vue'
 
 definePageMeta({
@@ -75,7 +76,11 @@ useHead({
 })
 
 const authStore = useAuthStore()
-const user = computed(() => authStore.user)
+
+// Fetch fresh user data from API
+const { data: userProfile } = await useAsyncData('profile-data', () => usersApi.getProfile())
+
+const user = computed(() => userProfile.value || authStore.user)
 
 const initials = computed(() => {
    const name = user.value?.fullName || 'U'
@@ -83,8 +88,8 @@ const initials = computed(() => {
 })
 
 const formattedDate = computed(() => {
-   if (!user.value?.created_at) return 'Unknown'
-   return new Date(user.value.created_at).toLocaleDateString('en-US', {
+   if (!user.value?.createdAt) return 'Unknown'
+   return new Date(user.value.createdAt).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric'

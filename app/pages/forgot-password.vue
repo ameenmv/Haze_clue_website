@@ -47,7 +47,8 @@
 import ForgotPasswordForm from '~/components/auth/ForgotPasswordForm.vue'
 
 definePageMeta({
-  layout: false
+  layout: false,
+  middleware: 'guest'
 })
 
 useHead({

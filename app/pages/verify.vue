@@ -47,7 +47,8 @@
 import VerificationForm from '~/components/auth/VerificationForm.vue'
 
 definePageMeta({
-  layout: false
+  layout: false,
+  middleware: 'guest'
 })
 
 useHead({
