@@ -132,9 +132,8 @@ export const sessionsApi = {
    * GET /sessions/:id/export/pdf
    */
   async exportPdf(id: string) {
-    const config = useRuntimeConfig()
     const token = useCookie('auth_token').value
-    const res = await fetch(`${config.public.apiBaseUrl}/sessions/${id}/export/pdf`, {
+    const res = await fetch(`/api/sessions/${id}/export/pdf`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     if (!res.ok) throw new Error('Failed to export PDF')
@@ -145,9 +144,8 @@ export const sessionsApi = {
    * GET /sessions/:id/export/csv
    */
   async exportCsv(id: string) {
-    const config = useRuntimeConfig()
     const token = useCookie('auth_token').value
-    const res = await fetch(`${config.public.apiBaseUrl}/sessions/${id}/export/csv`, {
+    const res = await fetch(`/api/sessions/${id}/export/csv`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     if (!res.ok) throw new Error('Failed to export CSV')

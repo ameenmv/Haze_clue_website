@@ -47,7 +47,8 @@
 import ResetPasswordForm from '~/components/auth/ResetPasswordForm.vue'
 
 definePageMeta({
-  layout: false
+  layout: false,
+  middleware: 'guest'
 })
 
 useHead({

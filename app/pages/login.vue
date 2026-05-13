@@ -44,7 +44,8 @@
 import LoginForm from '~/components/auth/LoginForm.vue'
 
 definePageMeta({
-  layout: false
+  layout: false,
+  middleware: 'guest'
 })
 
 useHead({
