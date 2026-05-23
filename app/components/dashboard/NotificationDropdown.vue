@@ -112,13 +112,13 @@
 </template>
 
 <script setup lang="ts">
-import { useSocket } from '~/composables/useSocket'
+import { usePusher } from '~/composables/usePusher'
 import { notificationsApi } from '~/services/notifications'
 import { formatDistanceToNow } from 'date-fns'
 
 const authStore = useAuthStore()
 const toast = useToast()
-const { socket } = useSocket()
+const { pusher } = usePusher()
 const router = useRouter()
 
 const notifications = ref<any[]>([])
@@ -198,9 +198,10 @@ const markAllAsRead = async () => {
 onMounted(() => {
   fetchNotifications()
   
-  if (socket.value && authStore.user) {
-    // Listen for real-time notifications
-    socket.value.on(`notification:${authStore.user.id}`, (newNotif) => {
+  if (pusher.value && authStore.user) {
+    const channel = pusher.value.subscribe(`private-user-${authStore.user.id}`)
+    
+    channel.bind('notification', (newNotif: any) => {
       notifications.value.unshift(newNotif)
       
       // Keep max 50 in state
