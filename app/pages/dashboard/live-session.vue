@@ -47,6 +47,8 @@ provide('emitAction', async (action: string) => {
    }
 })
 
+let simInterval: ReturnType<typeof setInterval> | null = null
+
 onMounted(() => {
    if (pusher.value) {
       const channel = pusher.value.subscribe(`session_${sessionId}`)
@@ -68,12 +70,21 @@ onMounted(() => {
          })
       })
    }
+
+   // Drive the simulation from the client side because Vercel Serverless
+   // doesn't support background setIntervals.
+   if (sessionId !== 'demo-session') {
+      simInterval = setInterval(() => {
+         sessionsApi.tick(sessionId).catch(() => {})
+      }, 2000)
+   }
 })
 
 onUnmounted(() => {
    if (pusher.value) {
       pusher.value.unsubscribe(`session_${sessionId}`)
    }
+   if (simInterval) clearInterval(simInterval)
 })
 
 import { reportsApi } from '~/services/reports'
