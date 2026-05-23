@@ -15,7 +15,8 @@
 </template>
 
 <script setup lang="ts">
-import { io, Socket } from 'socket.io-client'
+import { usePusher } from '~/composables/usePusher'
+import { sessionsApi } from '~/services/sessions'
 
 definePageMeta({
    layout: 'dashboard',
@@ -31,57 +32,47 @@ const route = useRoute()
 const config = useRuntimeConfig()
 const sessionId = (route.query.id as string) || 'demo-session'
 
-let socket: Socket | null = null
+const { pusher } = usePusher()
 
 // Provide an emitter method for child components (like panels)
-provide('emitAction', (action: string) => {
-   if (socket) {
-      socket.emit('action', { action })
+provide('emitAction', async (action: string) => {
+   try {
+      if (action === 'pause') {
+         await sessionsApi.togglePause(sessionId)
+      } else if (action === 'end') {
+         await sessionsApi.end(sessionId)
+      }
+   } catch (e) {
+      console.error('Failed to perform action:', action, e)
    }
 })
 
 onMounted(() => {
-   // Establish Socket.io Connection
-   const baseUrl = (config.public.apiBaseUrl as string).replace('/api', '')
-   
-   socket = io(baseUrl, {
-      path: '/socket.io', // Default nestjs socket.io path
-      query: {
-         sessionId: sessionId
-      },
-      transports: ['websocket', 'polling'] // Try WS first
-   })
+   if (pusher.value) {
+      const channel = pusher.value.subscribe(`session_${sessionId}`)
 
-   socket.on('connect', () => {
-      console.log('🟢 WebSocket Connected to Live Session:', sessionId)
-   })
-
-   // Listen for real-time updates from NestJS
-   socket.on('attention_update', (payload) => {
-      if (payload && payload.data) {
-         liveData.value = payload.data
-      }
-   })
-
-   socket.on('class_alert', (payload) => {
-      const toast = useToast()
-      toast.add({
-         title: '📢 Class Alert Broadcasted!',
-         description: payload.message,
-         color: 'orange',
-         icon: 'i-lucide-bell',
-         timeout: 6000
+      channel.bind('attention_update', (payload: any) => {
+         if (payload && payload.data) {
+            liveData.value = payload.data
+         }
       })
-   })
 
-   socket.on('disconnect', () => {
-      console.log('🔴 WebSocket Disconnected.')
-   })
+      channel.bind('class_alert', (payload: any) => {
+         const toast = useToast()
+         toast.add({
+            title: '📢 Class Alert Broadcasted!',
+            description: payload.message,
+            color: 'orange',
+            icon: 'i-lucide-bell',
+            timeout: 6000
+         })
+      })
+   }
 })
 
 onUnmounted(() => {
-   if (socket) {
-      socket.disconnect()
+   if (pusher.value) {
+      pusher.value.unsubscribe(`session_${sessionId}`)
    }
 })
 
@@ -110,10 +101,8 @@ const handleEndSession = async () => {
 
    if (!result.isConfirmed) return
 
-   if (socket) {
-      // Send end action over WS to stop simulation
-      socket.emit('action', { action: 'end' })
-   }
+   // Session end logic is handled below via REST API
+
 
    if (sessionId !== 'demo-session') {
       try {
