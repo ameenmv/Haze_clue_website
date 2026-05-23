@@ -38,7 +38,7 @@ const { pusher } = usePusher()
 provide('emitAction', async (action: string) => {
    try {
       if (action === 'pause') {
-         await sessionsApi.togglePause(sessionId)
+         await sessionsApi.pause(sessionId)
       } else if (action === 'end') {
          await sessionsApi.end(sessionId)
       }
@@ -64,7 +64,7 @@ onMounted(() => {
          toast.add({
             title: '📢 Class Alert Broadcasted!',
             description: payload.message,
-            color: 'orange',
+            color: 'warning',
             icon: 'i-lucide-bell',
             timeout: 6000
          })

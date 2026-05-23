@@ -2,7 +2,7 @@
    <div class="reports-page">
       <div class="flex justify-between items-center w-full mb-4">
          <h1 class="text-2xl font-bold">My Reports</h1>
-         <UButton v-if="reports.length > 0" icon="i-lucide-refresh-cw" color="gray" variant="ghost" @click="refresh">
+         <UButton v-if="reports.length > 0" icon="i-lucide-refresh-cw" color="neutral" variant="ghost" @click="refresh">
             Refresh
          </UButton>
       </div>
@@ -17,7 +17,7 @@
                <span class="font-medium">{{ (row.original || row).sessionName || 'Unknown Session' }}</span>
             </template>
             <template #type-cell="{ row }">
-               <UBadge color="blue" variant="subtle">{{ ((row.original || row).type || 'session_summary').replace('_', ' ').toUpperCase() }}</UBadge>
+               <UBadge color="info" variant="subtle">{{ ((row.original || row).type || 'session_summary').replace('_', ' ').toUpperCase() }}</UBadge>
             </template>
             <template #createdAt-cell="{ row }">
                {{ new Date((row.original || row).createdAt).toLocaleDateString() }}
@@ -71,7 +71,7 @@ const toast = useToast()
 const downloadReport = async (row: any) => {
    const sessionId = row.sessionId
    try {
-      toast.add({ title: 'Downloading Report', description: 'Generating PDF...', color: 'blue' })
+      toast.add({ title: 'Downloading Report', description: 'Generating PDF...', color: 'info' })
       const blob = await sessionsApi.exportPdf(sessionId)
       
       const url = window.URL.createObjectURL(blob)
@@ -83,9 +83,9 @@ const downloadReport = async (row: any) => {
       document.body.removeChild(link)
       window.URL.revokeObjectURL(url)
       
-      toast.add({ title: 'Success', description: 'Report downloaded successfully', color: 'green' })
+      toast.add({ title: 'Success', description: 'Report downloaded successfully', color: 'success' })
    } catch (e: any) {
-      toast.add({ title: 'Download Failed', description: 'Could not generate report', color: 'red' })
+      toast.add({ title: 'Download Failed', description: 'Could not generate report', color: 'error' })
    }
 }
 </script>

@@ -131,8 +131,6 @@ export default defineNuxtConfig({
 
   // ── Experimental Performance Features ───────────────────────────
   experimental: {
-    // Tree-shake client-only components on server
-    treeshakeClientOnly: true
   },
 
   // ── Nitro Server Optimization ──────────────────────────────────

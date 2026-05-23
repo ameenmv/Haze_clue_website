@@ -8,7 +8,8 @@ import type {
     MessageResponse,
     RegisterPayload,
     ResetPasswordPayload,
-    VerifyOtpPayload
+    VerifyOtpPayload,
+    LoginResponse
 } from '~/types/api/auth'
 
 /**
