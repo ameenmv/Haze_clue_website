@@ -10,8 +10,18 @@ export const usePusher = () => {
     const key = config.public.pusherKey as string || 'default-key'
     const cluster = config.public.pusherCluster as string || 'default-cluster'
 
+    const authStore = useAuthStore()
+    // Always use the /api prefix so it gets routed properly by Nuxt's server proxy
+    const authEndpoint = '/api/pusher/auth'
+    
     pusherInstance = new Pusher(key, {
       cluster,
+      authEndpoint,
+      auth: {
+        headers: {
+          Authorization: `Bearer ${authStore.token}`
+        }
+      }
     })
 
     pusherInstance.connection.bind('connected', () => {
