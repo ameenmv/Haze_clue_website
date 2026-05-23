@@ -278,7 +278,7 @@ export default {
       email: {
         title: 'الدعم عبر البريد',
         description: 'أرسل لنا بريدًا إلكترونيًا وسنرد خلال 24 ساعة',
-        value: 'support@attentionai.com'
+        value: 'support{\'@\'}attentionai.com'
       },
       phone: {
         title: 'الدعم الهاتفي',
@@ -296,7 +296,7 @@ export default {
       fullName: 'الاسم الكامل',
       fullNamePlaceholder: 'أدخل اسمك',
       email: 'البريد الإلكتروني',
-      emailPlaceholder: 'your.email@example.com',
+      emailPlaceholder: 'your.email{\'@\'}example.com',
       subject: 'الموضوع',
       subjectDefault: 'مساعدة في إعداد الأجهزة',
       message: 'الرسالة',
