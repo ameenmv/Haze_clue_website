@@ -299,6 +299,13 @@ export default {
       emailPlaceholder: 'your.email{\'@\'}example.com',
       subject: 'الموضوع',
       subjectDefault: 'مساعدة في إعداد الأجهزة',
+      subjects: {
+        setup: 'مساعدة في إعداد الأجهزة',
+        technical: 'مشكلة فنية / تبليغ عن خطأ',
+        billing: 'الفواتير والاشتراكات',
+        feature: 'طلب ميزة جديدة',
+        general: 'استفسار عام'
+      },
       message: 'الرسالة',
       messagePlaceholder: 'صف مشكلتك أو سؤالك...',
       agree: 'أوافق على تلقي إشعارات بالبريد الإلكتروني حول طلب الدعم الخاص بي',

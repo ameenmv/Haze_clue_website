@@ -66,7 +66,7 @@ onMounted(() => {
             description: payload.message,
             color: 'warning',
             icon: 'i-lucide-bell',
-            timeout: 6000
+            duration: 6000
          })
       })
    }

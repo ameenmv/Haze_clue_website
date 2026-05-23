@@ -44,7 +44,9 @@ const handleSubmit = async (form: any) => {
    if (isSubmitting.value) return
    isSubmitting.value = true
    try {
-      await supportApi.submitContactForm(form)
+      const payload = { ...form }
+      delete payload.agree // Don't send agree to backend to avoid 400 Bad Request
+      await supportApi.submitContactForm(payload)
       useToast().add({ title: 'Message sent successfully. We will be in touch!', color: 'success' })
    } catch {
       useToast().add({ title: 'Failed to send message. Please try again later.', color: 'error' })

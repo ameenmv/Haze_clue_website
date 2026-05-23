@@ -1,7 +1,7 @@
 <template>
   <UPopover :popper="{ placement: 'bottom-end', offsetDistance: 8 }" v-model:open="isPopoverOpen">
     <UButton 
-      color="gray" 
+      color="neutral" 
       variant="ghost" 
       class="relative w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:bg-gray-100 dark:hover:bg-[#252836]"
       :class="{ 'text-primary dark:text-[#8B7AFF]': isPopoverOpen, 'text-gray-600 dark:text-gray-400': !isPopoverOpen }"
@@ -101,7 +101,7 @@
 
         <!-- Footer -->
         <div class="p-3 border-t border-gray-100 dark:border-gray-800/60 bg-gray-50 dark:bg-[#151821]/80 text-center">
-          <UButton variant="link" color="gray" size="sm" class="text-xs hover:text-primary transition-colors">
+          <UButton variant="link" color="neutral" size="sm" class="text-xs hover:text-primary transition-colors">
             View all notifications
           </UButton>
         </div>
@@ -185,7 +185,7 @@ const markAllAsRead = async () => {
     toast.add({
       title: 'Success',
       description: 'All notifications marked as read',
-      color: 'green'
+      color: 'success'
     })
   } catch (e) {
     console.error('Failed to mark all as read')
@@ -213,7 +213,7 @@ onMounted(() => {
         toast.add({
           title: newNotif.title,
           description: newNotif.message,
-          color: newNotif.type === 'error' ? 'red' : (newNotif.type === 'warning' ? 'orange' : 'primary'),
+          color: newNotif.type === 'error' ? 'error' : (newNotif.type === 'warning' ? 'warning' : 'primary'),
           icon: newNotif.type === 'error' ? 'i-lucide-alert-octagon' : (newNotif.type === 'warning' ? 'i-lucide-alert-triangle' : 'i-lucide-bell')
         })
       }
