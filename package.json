@@ -51,6 +51,5 @@
   },
   "resolutions": {
     "unimport": "4.1.1"
-  },
-  "packageManager": "bun@1.1.20"
+  }
 }
