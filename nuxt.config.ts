@@ -54,7 +54,9 @@ export default defineNuxtConfig({
     public: {
       apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL || '',
       appName: process.env.NUXT_PUBLIC_APP_NAME,
-      cookieSecure: false
+      cookieSecure: false,
+      pusherKey: process.env.NUXT_PUBLIC_PUSHER_KEY,
+      pusherCluster: process.env.NUXT_PUBLIC_PUSHER_CLUSTER
     }
   },
 
