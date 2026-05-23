@@ -295,7 +295,7 @@ export default {
       email: {
         title: 'Email Support',
         description: "Send us an email and we'll respond within 24 hours",
-        value: 'support@attentionai.com'
+        value: 'support{\'@\'}attentionai.com'
       },
       phone: {
         title: 'Phone Support',
@@ -313,7 +313,7 @@ export default {
       fullName: 'Full Name',
       fullNamePlaceholder: 'Enter your name',
       email: 'Email Address',
-      emailPlaceholder: 'your.email@example.com',
+      emailPlaceholder: 'your.email{\'@\'}example.com',
       subject: 'Subject',
       subjectDefault: 'Device Setup Assistance',
       message: 'Message',

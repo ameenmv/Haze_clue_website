@@ -79,7 +79,7 @@ export default {
   forgotPassword: {
     title: 'Reset Your Password',
     description: "Enter the email address you registered with, and we'll send you instructions to reset your password.",
-    emailPlaceholder: 'your.email@example.com',
+    emailPlaceholder: 'your.email{\'@\'}example.com',
     submit: 'Send Reset Link',
     backToLogin: 'Back to Login',
     success: 'Reset Link Sent',
