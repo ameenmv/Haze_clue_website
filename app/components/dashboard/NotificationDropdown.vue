@@ -58,7 +58,7 @@
                 :key="notif._id" 
                 class="group relative p-4 border-b border-gray-50 dark:border-gray-800/40 hover:bg-gray-50/80 dark:hover:bg-[#1a1d27]/80 cursor-pointer flex gap-4 transition-all duration-300"
                 :class="{ 'bg-primary/5 dark:bg-primary/10': !notif.read }"
-                @click="handleNotificationClick(notif, close)"
+                @click="handleNotificationClick(notif)"
               >
                 <!-- Icon based on type -->
                 <div class="relative mt-0.5 shrink-0">
@@ -149,14 +149,14 @@ const fetchNotifications = async () => {
 }
 
 // Handle clicking a notification
-const handleNotificationClick = async (notif: any, closePopover: () => void) => {
+const handleNotificationClick = async (notif: any) => {
   if (!notif.read) {
     await markAsRead(notif._id)
   }
   
   // If notification has a link, navigate to it
   if (notif.link) {
-    closePopover()
+    isPopoverOpen.value = false
     router.push(notif.link)
   }
 }
