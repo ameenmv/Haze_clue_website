@@ -129,6 +129,16 @@ export const sessionsApi = {
   },
 
   /**
+   * POST /sessions/:id/tick — drive simulation tick
+   */
+  tick(id: string) {
+    const { $customFetch } = useNuxtApp()
+    return $customFetch<any>(`/sessions/${id}/tick`, {
+      method: 'POST'
+    })
+  },
+
+  /**
    * GET /sessions/:id/export/pdf
    */
   async exportPdf(id: string) {
