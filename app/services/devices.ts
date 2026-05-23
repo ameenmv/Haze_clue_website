@@ -9,11 +9,11 @@
 export const devicesApi = {
 
   /**
-   * GET /devices — list user's devices
+   * GET /devices — list user's devices with pagination
    */
-  list() {
+  list(page = 1, limit = 10, search = '') {
     const { $customFetch } = useNuxtApp()
-    return $customFetch<any[]>('/devices')
+    return $customFetch<any>(`/devices?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`)
   },
 
   /**
