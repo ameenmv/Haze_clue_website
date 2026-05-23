@@ -141,10 +141,10 @@ export default defineNuxtConfig({
   // ── Font Optimization ─────────────────────────────────────────
   fonts: {
     families: [
-      { name: 'Plus Jakarta Sans', provider: 'google', weights: [200, 300, 400, 500, 600, 700, 800] },
-      { name: 'Tajawal', provider: 'google', weights: [200, 300, 400, 500, 700, 800, 900] },
-      { name: 'Poppins', provider: 'google', weights: [300, 400, 500, 600, 700] },
-      { name: 'Inter', provider: 'google', weights: [300, 400, 500, 600, 700] }
+      { name: 'Plus Jakarta Sans', provider: 'bunny', weights: [200, 300, 400, 500, 600, 700, 800] },
+      { name: 'Tajawal', provider: 'bunny', weights: [200, 300, 400, 500, 700, 800, 900] },
+      { name: 'Poppins', provider: 'bunny', weights: [300, 400, 500, 600, 700] },
+      { name: 'Inter', provider: 'bunny', weights: [300, 400, 500, 600, 700] }
     ],
     defaults: {
       preload: true
