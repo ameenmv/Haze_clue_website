@@ -316,6 +316,13 @@ export default {
       emailPlaceholder: 'your.email{\'@\'}example.com',
       subject: 'Subject',
       subjectDefault: 'Device Setup Assistance',
+      subjects: {
+        setup: 'Device Setup Assistance',
+        technical: 'Technical Issue / Bug Report',
+        billing: 'Billing & Subscription',
+        feature: 'Feature Request',
+        general: 'General Inquiry'
+      },
       message: 'Message',
       messagePlaceholder: 'Describe your issue or question...',
       agree: 'I agree to receive email notifications about my support request',

@@ -21,7 +21,9 @@
          <div class="contact-form__field">
             <label class="contact-form__label">{{ $t('dashboard.help.form.subject') }}</label>
             <select v-model="form.subject" class="contact-form__select">
-               <option>{{ $t('dashboard.help.form.subjectDefault') }}</option>
+               <option v-for="sub in subjects" :key="sub.value" :value="sub.value">
+                  {{ sub.label }}
+               </option>
             </select>
          </div>
 
@@ -52,10 +54,20 @@
 defineProps<{ loading?: boolean }>()
 defineEmits<{ submit: [form: typeof form] }>()
 
+const { t } = useI18n()
+
+const subjects = computed(() => [
+   { value: t('dashboard.help.form.subjects.setup'), label: t('dashboard.help.form.subjects.setup') },
+   { value: t('dashboard.help.form.subjects.technical'), label: t('dashboard.help.form.subjects.technical') },
+   { value: t('dashboard.help.form.subjects.billing'), label: t('dashboard.help.form.subjects.billing') },
+   { value: t('dashboard.help.form.subjects.feature'), label: t('dashboard.help.form.subjects.feature') },
+   { value: t('dashboard.help.form.subjects.general'), label: t('dashboard.help.form.subjects.general') }
+])
+
 const form = reactive({
    fullName: '',
    email: '',
-   subject: '',
+   subject: subjects.value[0]?.value || '',
    message: '',
    agree: false
 })
