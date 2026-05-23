@@ -1,11 +1,10 @@
 <template>
-  <UPopover :popper="{ placement: 'bottom-end', offsetDistance: 8 }">
+  <UPopover :popper="{ placement: 'bottom-end', offsetDistance: 8 }" v-model:open="isPopoverOpen">
     <UButton 
       color="gray" 
       variant="ghost" 
       class="relative w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:bg-gray-100 dark:hover:bg-[#252836]"
       :class="{ 'text-primary dark:text-[#8B7AFF]': isPopoverOpen, 'text-gray-600 dark:text-gray-400': !isPopoverOpen }"
-      @click="isPopoverOpen = !isPopoverOpen"
     >
       <UIcon name="lucide:bell" class="w-5 h-5 transition-transform duration-300" :class="{ 'scale-110': isPopoverOpen }" />
       <span v-if="unreadCount > 0" class="absolute top-2 right-2 flex items-center justify-center">
@@ -14,7 +13,7 @@
       </span>
     </UButton>
 
-    <template #panel="{ close }">
+    <template #content>
       <div class="w-80 sm:w-96 flex flex-col bg-white/90 dark:bg-[#151821]/90 backdrop-blur-xl border border-gray-100 dark:border-gray-800 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.4)] overflow-hidden">
         
         <!-- Header -->
