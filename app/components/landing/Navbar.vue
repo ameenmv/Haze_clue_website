@@ -84,7 +84,7 @@ const isActiveLink = (to: string) => {
       >
         <!-- Logo -->
         <NuxtLink :to="localePath('/')" class="flex items-center gap-2 group shrink-0">
-          <img src="/logo.png" alt="Haze Clue Logo" class="h-12 w-auto object-contain group-hover:scale-105 transition-transform duration-300" />
+          <img src="/logo.jpeg" alt="Haze Clue Logo" class="h-12 w-auto object-contain group-hover:scale-105 transition-transform duration-300" />
         </NuxtLink>
 
         <!-- Desktop Navigation -->
