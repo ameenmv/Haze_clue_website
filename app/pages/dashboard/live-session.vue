@@ -1,5 +1,31 @@
 <template>
    <div class="live-session-page">
+      <!-- Bluetooth Connection Bar -->
+      <div class="flex items-center justify-between p-4 mb-4 bg-white/5 rounded-xl border border-white/10">
+         <div class="flex items-center gap-3">
+            <UIcon name="i-lucide-bluetooth" class="w-5 h-5 text-indigo-400" />
+            <span class="text-sm font-medium">{{ isConnected ? 'Headset Connected' : 'Headset Disconnected' }}</span>
+         </div>
+         <UButton 
+            v-if="!isConnected"
+            :loading="isConnecting" 
+            color="primary" 
+            size="sm" 
+            icon="i-lucide-link" 
+            @click="connect">
+            Connect EEG Headset
+         </UButton>
+         <UButton 
+            v-else
+            color="red" 
+            variant="soft" 
+            size="sm" 
+            icon="i-lucide-link-2-off" 
+            @click="disconnect">
+            Disconnect
+         </UButton>
+      </div>
+
       <!-- Session Info Bar -->
       <LiveSessionInfo @end-session="handleEndSession" />
 
@@ -22,6 +48,9 @@ definePageMeta({
    layout: 'dashboard',
    middleware: 'auth'
 })
+
+// Initialize Bluetooth composable
+const { connect, disconnect, isConnected, isConnecting } = useBluetooth()
 
 useHead({
    title: 'Live Session | Haze Clue'
