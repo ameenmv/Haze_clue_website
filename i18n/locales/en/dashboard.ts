@@ -176,7 +176,10 @@ export default {
         title: 'Session Timeline',
         description: 'Review detailed timeline of attention levels and key moments during class'
       }
-    }
+    },
+    myReports: 'My Reports',
+    refresh: 'Refresh',
+    download: 'Download'
   },
   sessions: {
     pageTitle: 'Session Management | Haze Clue',
@@ -234,7 +237,13 @@ export default {
       tip2: 'Ensure all EEG devices are connected before starting',
       tip3: 'Monitor real-time attention levels during your session',
       viewGuide: 'View Complete Setup Guide →'
-    }
+    },
+    draft: 'Draft',
+    active: 'Active',
+    completed: 'Completed',
+    loading: 'Loading sessions...',
+    start: 'Start',
+    end: 'End'
   },
   devices: {
     pageTitle: 'Device Management | Haze Clue',
@@ -432,7 +441,9 @@ export default {
       saveDraft: 'Save as Draft',
       cancel: 'Cancel',
       create: 'Create Session'
-    }
+    },
+    duration: 'Duration (minutes)',
+    studentsCount: 'Number of Students'
   },
   liveSession: {
     pageTitle: 'Live Session | Haze Clue',
@@ -476,11 +487,30 @@ export default {
       subtitle: 'Chart shows collective class attention average over time',
       last30: 'Last 30 minutes',
       exportData: 'Export Data'
-    }
+    },
+    connectEeg: 'Connect EEG Headset',
+    disconnect: 'Disconnect'
   },
   notifications: {
     title: 'Notifications',
     markAllRead: 'Mark all read',
-    noNew: 'No new notifications'
+    noNew: 'No new notifications',
+    loading: 'Loading notifications...',
+    allCaughtUp: 'All caught up!',
+    viewAll: 'View all notifications'
+  },
+  profile: {
+    role: 'Admin / Teacher',
+    email: 'Email Address',
+    phone: 'Phone Number',
+    joinedAt: 'Joined At',
+    edit: 'Edit Profile'
+  },
+  liveSessionInfo: {
+    mathClass: 'Math Class - Grade 10',
+    subject: 'Mathematics'
+  },
+  liveSessionPanels: {
+    '2secAgo': '2 sec ago'
   }
 }

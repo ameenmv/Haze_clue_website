@@ -12,19 +12,19 @@ const handleSubscribe = () => {
 <template>
   <section id="cta" class="py-28 relative overflow-hidden">
     <!-- Background -->
-    <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-indigo-950 to-purple-950 -z-20" />
+    <div class="absolute inset-0 bg-gradient-to-br from-indigo-50 via-purple-50/50 to-slate-50 dark:from-slate-900 dark:via-indigo-950 dark:to-purple-950 -z-20" />
     
     <!-- Animated gradient mesh -->
     <div class="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
-      <div class="absolute -top-[30%] -right-[15%] w-[60rem] h-[60rem] bg-indigo-500/20 rounded-full blur-[120px] animate-pulse-glow" />
-      <div class="absolute bottom-[0%] -left-[10%] w-[40rem] h-[40rem] bg-purple-500/20 rounded-full blur-[100px] animate-float" style="animation-delay: -3s;" />
-      <div class="absolute top-[40%] right-[30%] w-[20rem] h-[20rem] bg-primary-500/15 rounded-full blur-[80px] animate-breathe" />
+      <div class="absolute -top-[30%] -right-[15%] w-[60rem] h-[60rem] bg-indigo-500/10 dark:bg-indigo-500/20 rounded-full blur-[120px] animate-pulse-glow" />
+      <div class="absolute bottom-[0%] -left-[10%] w-[40rem] h-[40rem] bg-purple-500/10 dark:bg-purple-500/20 rounded-full blur-[100px] animate-float" style="animation-delay: -3s;" />
+      <div class="absolute top-[40%] right-[30%] w-[20rem] h-[20rem] bg-primary-500/10 dark:bg-primary-500/15 rounded-full blur-[80px] animate-breathe" />
     </div>
 
     <!-- Star particles -->
-    <div class="absolute inset-0 pointer-events-none -z-5">
+    <div class="absolute inset-0 pointer-events-none -z-5 dark:opacity-100 opacity-50">
       <div v-for="n in 20" :key="n"
-           class="absolute w-1 h-1 bg-white/20 rounded-full animate-twinkle"
+           class="absolute w-1 h-1 bg-primary-500/30 dark:bg-white/20 rounded-full animate-twinkle"
            :style="{
              top: Math.random() * 100 + '%',
              left: Math.random() * 100 + '%',
@@ -35,17 +35,17 @@ const handleSubscribe = () => {
     </div>
 
     <UContainer class="relative z-10">
-      <div class="text-center text-white max-w-3xl mx-auto" data-aos="zoom-in" data-aos-duration="800">
+      <div class="text-center max-w-3xl mx-auto text-gray-900 dark:text-white" data-aos="zoom-in" data-aos-duration="800">
         <!-- Badge -->
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm text-white/80 text-sm font-semibold mb-8 border border-white/10">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gray-100/80 dark:bg-white/10 backdrop-blur-sm text-gray-700 dark:text-white/80 text-sm font-semibold mb-8 border border-gray-200 dark:border-white/10">
           <span class="w-2 h-2 rounded-full bg-primary-500 animate-pulse" />
           <span>{{ t('landing.cta.trust.noCreditCard') }}</span>
         </div>
 
-        <h2 class="text-4xl md:text-5xl lg:text-6xl font-display font-extrabold mb-6 leading-tight text-white">
+        <h2 class="text-4xl md:text-5xl lg:text-6xl font-display font-extrabold mb-6 leading-tight text-gray-900 dark:text-white">
           {{ t('landing.cta.title') }}
         </h2>
-        <p class="text-xl text-indigo-100/70 mb-12 max-w-2xl mx-auto leading-relaxed">
+        <p class="text-xl text-gray-600 dark:text-indigo-100/70 mb-12 max-w-2xl mx-auto leading-relaxed">
           {{ t('landing.cta.subtitle') }}
         </p>
         
@@ -56,11 +56,11 @@ const handleSubscribe = () => {
             type="email" 
             placeholder="example@email.com" 
             size="xl"
-            :ui="{ base: 'rounded-full bg-white/10 backdrop-blur-sm border-white/10 text-white placeholder-white/40 focus:border-primary-500 focus:ring-primary-500/20' }"
+            :ui="{ base: 'rounded-full bg-white dark:bg-white/10 backdrop-blur-sm border-gray-200 dark:border-white/10 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-white/40 focus:border-primary-500 focus:ring-primary-500/20 shadow-sm dark:shadow-none' }"
             class="flex-1"
           >
             <template #leading>
-              <UIcon name="i-ph-envelope" class="text-white/40" />
+              <UIcon name="i-ph-envelope" class="text-gray-400 dark:text-white/40" />
             </template>
           </UInput>
           
@@ -76,17 +76,17 @@ const handleSubscribe = () => {
         </div>
 
         <!-- Trust indicators -->
-        <div class="flex flex-wrap items-center justify-center gap-6 text-sm text-indigo-200/50">
+        <div class="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500 dark:text-indigo-200/50">
           <div class="flex items-center gap-2">
             <UIcon name="i-ph-shield-check" class="w-4 h-4" />
             <span>{{ t('landing.cta.trust.ssl') }}</span>
           </div>
-          <div class="w-px h-4 bg-indigo-200/20 hidden sm:block" />
+          <div class="w-px h-4 bg-gray-200 dark:bg-indigo-200/20 hidden sm:block" />
           <div class="flex items-center gap-2">
             <UIcon name="i-ph-lock" class="w-4 h-4" />
             <span>{{ t('landing.cta.trust.gdpr') }}</span>
           </div>
-          <div class="w-px h-4 bg-indigo-200/20 hidden sm:block" />
+          <div class="w-px h-4 bg-gray-200 dark:bg-indigo-200/20 hidden sm:block" />
           <div class="flex items-center gap-2">
             <UIcon name="i-ph-x-circle" class="w-4 h-4" />
             <span>{{ t('landing.cta.trust.cancel') }}</span>
