@@ -4,7 +4,7 @@
       <div class="flex items-center justify-between p-4 mb-4 bg-white/5 rounded-xl border border-white/10">
          <div class="flex items-center gap-3">
             <UIcon name="i-lucide-bluetooth" class="w-5 h-5 text-indigo-400" />
-            <span class="text-sm font-medium">{{ isConnected ? 'Headset Connected' : 'Headset {{ $t('dashboard.liveSession.disconnect') }}ed' }}</span>
+            <span class="text-sm font-medium">{{ isConnected ? 'Headset Connected' : 'Headset Disconnected' }}</span>
          </div>
          <UButton 
             v-if="!isConnected"
