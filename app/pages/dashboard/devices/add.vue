@@ -55,46 +55,57 @@
       </div>
 
       <!-- STATE 2 & 3: Found & Connecting -->
-      <div v-else-if="scanState >= 2" class="flex flex-col items-center w-full animate-fade-in z-10 py-12">
+      <div v-else-if="scanState >= 2" class="flex flex-col items-center w-full animate-fade-in z-10 py-12 px-4">
         <div class="w-16 h-16 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-full flex items-center justify-center mb-6">
           <UIcon name="i-lucide-check-circle-2" class="w-8 h-8" />
         </div>
-        <h2 class="text-2xl font-semibold mb-2 text-gray-900 dark:text-white">Device Found!</h2>
-        <p class="text-gray-500 mb-8">1 device is available for pairing.</p>
+        <h2 class="text-2xl font-semibold mb-2 text-gray-900 dark:text-white">Devices Found!</h2>
+        <p class="text-gray-500 mb-8">{{ scannedDevices.length }} {{ scannedDevices.length === 1 ? 'device is' : 'devices are' }} available for pairing.</p>
 
-        <!-- Device Card -->
-        <div class="w-full max-w-md p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 flex items-center justify-between transition-all hover:border-primary-500 dark:hover:border-primary-500 group shadow-sm">
-          <div class="flex items-center gap-4">
-            <div class="p-3 bg-white dark:bg-gray-700 rounded-lg shadow-sm border border-gray-100 dark:border-gray-600">
-              <UIcon name="i-lucide-cpu" class="w-6 h-6 text-primary-500" />
-            </div>
-            <div>
-              <h4 class="font-semibold text-gray-900 dark:text-white">{{ mockDevice.name }}</h4>
-              <div class="flex items-center gap-2 text-xs text-gray-500 font-mono mt-1">
-                <span>IP: {{ mockDevice.ip }}</span>
-                <span>&bull;</span>
-                <span class="flex items-center gap-1 text-green-500"><UIcon name="i-lucide-signal" class="w-3 h-3" /> Strong</span>
+        <!-- Device List -->
+        <div class="w-full max-w-md flex flex-col gap-3 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
+          <div v-for="device in scannedDevices" :key="device.id" 
+               class="w-full p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-all hover:border-primary-500 dark:hover:border-primary-500 group shadow-sm">
+            
+            <div class="flex items-center gap-4 w-full">
+              <div class="p-3 bg-white dark:bg-gray-700 rounded-lg shadow-sm border border-gray-100 dark:border-gray-600 flex-shrink-0">
+                <UIcon name="i-lucide-cpu" class="w-6 h-6 text-primary-500" />
+              </div>
+              <div class="min-w-0 flex-1">
+                <h4 class="font-semibold text-gray-900 dark:text-white truncate" :title="device.name">{{ device.name }}</h4>
+                <div class="flex items-center gap-2 text-xs text-gray-500 font-mono mt-1">
+                  <span class="truncate">IP: {{ device.ip }}</span>
+                  <span class="hidden sm:inline">&bull;</span>
+                  <span class="flex items-center gap-1 text-green-500 flex-shrink-0"><UIcon name="i-lucide-signal" class="w-3 h-3" /> {{ device.signal }}%</span>
+                </div>
               </div>
             </div>
+            
+            <UButton 
+              v-if="connectingDeviceId !== device.id"
+              color="primary" 
+              variant="solid" 
+              :disabled="connectingDeviceId !== null"
+              @click="connectDevice(device)"
+              class="w-full sm:w-auto justify-center"
+            >
+              Connect
+            </UButton>
+            <UButton 
+              v-else
+              color="primary" 
+              variant="soft" 
+              loading
+              class="w-full sm:w-auto justify-center"
+            >
+              Connecting...
+            </UButton>
           </div>
-          
-          <UButton 
-            v-if="scanState === 2"
-            color="primary" 
-            variant="solid" 
-            @click="connectDevice"
-          >
-            Connect
-          </UButton>
-          <UButton 
-            v-else-if="scanState === 3"
-            color="primary" 
-            variant="soft" 
-            loading
-          >
-            Connecting...
-          </UButton>
         </div>
+        
+        <UButton color="neutral" variant="ghost" size="sm" class="mt-6" @click="startScan" :disabled="connectingDeviceId !== null">
+          Scan Again
+        </UButton>
       </div>
       
       <!-- Ambient Background Glow -->
@@ -151,36 +162,42 @@ useHead({
 const { t } = useI18n()
 const toast = useToast()
 
-// 0: Idle, 1: Scanning, 2: Found, 3: Connecting
+// 0: Idle, 1: Scanning, 2: Found
 const scanState = ref(0)
+const connectingDeviceId = ref<string | null>(null)
+const scannedDevices = ref<any[]>([])
 
-const mockDevice = {
-  name: 'NeuroSky MindWave - EEG',
-  ip: '192.168.1.45',
-  type: 'EEG',
-  serialNumber: 'NW-98XF2-4A'
-}
-
-const startScan = () => {
+const startScan = async () => {
   scanState.value = 1
-  
-  // Simulate network scanning delay
-  setTimeout(() => {
-    scanState.value = 2
-  }, 4000) // 4 seconds of scanning
-}
-
-const connectDevice = async () => {
-  scanState.value = 3
+  scannedDevices.value = []
+  connectingDeviceId.value = null
   
   try {
-    // Simulate connection delay then API call
-    await new Promise(resolve => setTimeout(resolve, 2000))
+    // Artificial delay for better UX
+    const [devices] = await Promise.all([
+      devicesApi.scan(),
+      new Promise(resolve => setTimeout(resolve, 3000))
+    ])
+    
+    scannedDevices.value = devices
+    scanState.value = 2
+  } catch (err: any) {
+    toast.add({ title: 'Scan Failed', description: err.message || 'Could not reach the network', color: 'error' })
+    scanState.value = 0
+  }
+}
+
+const connectDevice = async (device: any) => {
+  connectingDeviceId.value = device.id
+  
+  try {
+    // Simulate connection delay
+    await new Promise(resolve => setTimeout(resolve, 1500))
     
     await devicesApi.create({
-      name: mockDevice.name,
-      type: mockDevice.type as 'EEG' | 'BCI',
-      serialNumber: mockDevice.serialNumber
+      name: device.name,
+      type: device.type as 'EEG' | 'BCI',
+      serialNumber: device.serialNumber
     })
     
     toast.add({
@@ -189,7 +206,6 @@ const connectDevice = async () => {
       icon: 'i-lucide-check-circle'
     })
     
-    // Redirect back to devices page
     navigateTo('/dashboard/devices')
   } catch (error: any) {
     toast.add({
@@ -197,7 +213,7 @@ const connectDevice = async () => {
       description: error.message || 'Network error',
       color: 'error'
     })
-    scanState.value = 2 // Go back to Found state
+    connectingDeviceId.value = null
   }
 }
 
