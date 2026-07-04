@@ -63,32 +63,38 @@ const sessionId = (route.query.id as string) || 'demo-session'
 
 const { pusher } = usePusher()
 
+const isMonitoringPaused = ref(false)
+provide('isPaused', isMonitoringPaused)
+
 // Provide an emitter method for child components (like panels)
 provide('emitAction', async (action: string) => {
    try {
       if (action === 'pause') {
-         await sessionsApi.pause(sessionId)
+         isMonitoringPaused.value = true
+      } else if (action === 'resume') {
+         isMonitoringPaused.value = false
       } else if (action === 'end') {
-         await sessionsApi.end(sessionId)
+         isMonitoringPaused.value = true
+         // handleEndSession already handles API call
       }
    } catch (e) {
       console.error('Failed to perform action:', action, e)
    }
 })
 
-let simInterval: ReturnType<typeof setInterval> | null = null
-
-onMounted(() => {
+onMounted(async () => {
    if (pusher.value) {
       const channel = pusher.value.subscribe(`session_${sessionId}`)
 
       channel.bind('attention_update', (payload: any) => {
+         console.log('[Pusher] Received real-time update:', payload)
          if (payload && payload.data) {
             liveData.value = payload.data
          }
       })
 
       channel.bind('class_alert', (payload: any) => {
+         console.log('[Pusher] Class alert received:', payload)
          const toast = useToast()
          toast.add({
             title: '📢 Class Alert Broadcasted!',
@@ -100,12 +106,21 @@ onMounted(() => {
       })
    }
 
-   // Drive the simulation from the client side because Vercel Serverless
-   // doesn't support background setIntervals.
-   if (sessionId !== 'demo-session') {
-      simInterval = setInterval(() => {
-         sessionsApi.tick(sessionId).catch(() => {})
-      }, 2000)
+   // Fetch initial data & kickstart backend simulation if it stopped (e.g. server restart)
+   try {
+      if (sessionId !== 'demo-session') {
+         console.log('[API] Requesting initial live data to sync state...')
+         const initialData = await sessionsApi.getLiveData(sessionId)
+         console.log('[API] Received initial data:', initialData)
+         if (initialData) {
+            if (initialData.data) liveData.value = initialData.data
+            if (typeof initialData.isPaused === 'boolean') {
+               isMonitoringPaused.value = initialData.isPaused
+            }
+         }
+      }
+   } catch (e) {
+      console.error('[API] Failed to get initial live data:', e)
    }
 })
 
@@ -113,7 +128,6 @@ onUnmounted(() => {
    if (pusher.value) {
       pusher.value.unsubscribe(`session_${sessionId}`)
    }
-   if (simInterval) clearInterval(simInterval)
 })
 
 import { reportsApi } from '~/services/reports'

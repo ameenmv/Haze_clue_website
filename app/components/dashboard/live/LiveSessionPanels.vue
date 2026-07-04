@@ -81,7 +81,14 @@ const route = useRoute()
 const toast = useToast()
 
 const sessionId = (route.query.id as string) || 'demo-session'
-const isPaused = ref(false)
+
+const parentIsPaused = inject<Ref<boolean>>('isPaused')
+const isPaused = computed({
+   get: () => parentIsPaused?.value ?? false,
+   set: (val) => {
+      if (parentIsPaused) parentIsPaused.value = val
+   }
+})
 
 const strokeDasharray = computed(() => {
    const avg = liveData.value?.classAvgAttention || 0
@@ -118,11 +125,8 @@ const addMarker = async () => {
 }
 
 const pauseMonitoring = async () => {
-   const emitAction = inject<((action: string) => void)>('emitAction')
-
    if (sessionId === 'demo-session') {
       isPaused.value = !isPaused.value
-      if (emitAction) emitAction(isPaused.value ? 'pause' : 'resume')
       toast.add({ title: isPaused.value ? 'Monitoring Paused' : 'Monitoring Resumed', color: 'blue' })
       return
    }
@@ -130,7 +134,6 @@ const pauseMonitoring = async () => {
    try {
       await sessionsApi.pause(sessionId)
       isPaused.value = !isPaused.value
-      if (emitAction) emitAction(isPaused.value ? 'pause' : 'resume')
       toast.add({ title: isPaused.value ? 'Monitoring Paused' : 'Monitoring Resumed', color: 'blue' })
    } catch (e: any) {
       toast.add({ title: 'Error', description: 'Failed to toggle pause', color: 'red' })

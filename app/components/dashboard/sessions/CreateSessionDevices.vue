@@ -2,8 +2,12 @@
    <div class="device-assignment">
       <h3 class="device-assignment__title">{{ $t('dashboard.createSession.devices.title') }}</h3>
 
-      <!-- Warning Box -->
-      <div class="device-assignment__warning">
+      <div v-if="pending" class="flex justify-center p-4">
+        <UIcon name="lucide:loader-2" class="w-6 h-6 animate-spin text-primary-500" />
+      </div>
+
+      <!-- Warning Box if no devices -->
+      <div v-else-if="devices.length === 0" class="device-assignment__warning">
          <div class="device-assignment__warning-content">
             <UIcon name="lucide:alert-triangle" class="device-assignment__warning-icon" />
             <div class="device-assignment__warning-text">
@@ -11,6 +15,25 @@
                <p class="device-assignment__warning-desc">{{ $t('dashboard.createSession.devices.noDevicesDesc') }}</p>
             </div>
          </div>
+      </div>
+
+      <!-- Device List if connected -->
+      <div v-else class="flex flex-col gap-3">
+        <div v-for="device in devices" :key="device.id" class="p-3 bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700 flex items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <div class="p-2 bg-white dark:bg-gray-700 rounded-lg shadow-sm border border-gray-100 dark:border-gray-600">
+              <UIcon name="lucide:cpu" class="w-5 h-5 text-primary-500" />
+            </div>
+            <div>
+              <h4 class="font-medium text-sm text-gray-900 dark:text-white">{{ device.name }}</h4>
+              <p class="text-xs text-gray-500 font-mono mt-0.5">SN: {{ device.serialNumber }}</p>
+            </div>
+          </div>
+          <UBadge color="success" variant="soft" size="sm" class="flex items-center gap-1">
+            <UIcon name="lucide:check-circle" class="w-3 h-3" />
+            Ready
+          </UBadge>
+        </div>
       </div>
 
       <!-- Add Devices Button -->
@@ -22,6 +45,11 @@
 </template>
 
 <script setup lang="ts">
+defineProps<{
+  devices: any[]
+  pending: boolean
+}>()
+
 defineEmits<{ addDevices: [] }>()
 </script>
 

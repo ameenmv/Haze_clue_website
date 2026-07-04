@@ -26,7 +26,11 @@
          <CreateSessionMonitoring />
 
          <!-- Device Assignment Warning -->
-         <CreateSessionDevices @add-devices="handleAddDevices" />
+         <CreateSessionDevices 
+           :devices="devices" 
+           :pending="pendingDevices"
+           @add-devices="handleAddDevices" 
+         />
 
          <!-- Notes + Action Buttons -->
          <CreateSessionActions
@@ -41,6 +45,7 @@
 
 <script setup lang="ts">
 import { sessionsApi } from '~/services/sessions'
+import { devicesApi } from '~/services/devices'
 
 definePageMeta({
    layout: 'dashboard',
@@ -109,8 +114,24 @@ const validate = (): boolean => {
       formErrors.title = 'Session name is required'
    }
 
+   if (devices.value.length === 0) {
+      errorMsg.value = 'You must have at least one connected device to start a session.'
+      return false
+   }
+
    return Object.keys(formErrors).length === 0
 }
+
+// ── Fetch Devices ────────────────────────────────
+const { data: devicesResponse, pending: pendingDevices } = useAsyncData(
+  'create-session-devices',
+  () => devicesApi.list(1, 50, '')
+)
+
+const devices = computed(() => {
+  if (Array.isArray(devicesResponse.value)) return devicesResponse.value
+  return devicesResponse.value?.data || []
+})
 
 // ── Build payload ────────────────────────────────
 const buildPayload = () => ({
