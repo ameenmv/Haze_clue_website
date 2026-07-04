@@ -109,5 +109,27 @@ export default {
   showPassword: 'Show Password',
   hidePassword: 'Hide Password',
   hasAccount: 'Already have an account?',
-  noAccount: 'Don’t have an account?'
+  noAccount: 'Don’t have an account?',
+  layout: {
+    welcomeTitle: 'Unlocking Potential,',
+    welcomeSubtitle: 'One Session at a Time.',
+    features: {
+      insight: {
+        title: 'Deep Cognitive Insight',
+        desc: 'Real-time attention and mental effort tracking.'
+      },
+      monitoring: {
+        title: 'Seamless Monitoring',
+        desc: 'Non-intrusive wearable tech integration.'
+      },
+      security: {
+        title: 'Data Security',
+        desc: 'Enterprise-grade encryption for all neural data.'
+      },
+      integration: {
+        title: 'Smart Integration',
+        desc: 'Easily connects with your existing learning systems.'
+      }
+    }
+  }
 }

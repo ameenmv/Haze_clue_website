@@ -38,7 +38,7 @@
       </div>
 
       <button type="submit" :disabled="isLoading"
-        class="w-full py-4 mt-2 text-[#0a0a0a] font-semibold rounded-xl bg-white hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-base font-poppins">
+        class="w-full py-4 mt-2 text-white font-semibold rounded-xl bg-primary-600 hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-base font-poppins">
         <span v-if="isLoading">{{ $t('auth.login.signingIn') }}</span>
         <span v-else>{{ $t('auth.login.submit') }}</span>
       </button>
