@@ -8,16 +8,13 @@ import navigation from './en/navigation'
 import validation from './en/validation'
 
 import auth_layout from './en/auth_layout.json'
-import landing_new from './en/landing_new.json'
-import dashboard_new from './en/dashboard_new.json'
-
 export default {
-  auth: { ...auth, layout: auth_layout },
+  auth,
   app,
   common,
-  dashboard: { ...dashboard, ...dashboard_new },
+  dashboard,
   error,
-  landing: { ...landing, ...landing_new },
+  landing,
   navigation,
   validation
 }

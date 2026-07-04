@@ -13,7 +13,22 @@ export default {
     subtitle: 'An intelligent platform combining neuroscience and AI to enhance focus and cognitive performance.',
     cta_primary: 'Start Your Journey',
     cta_secondary: 'Learn More',
-    badge: 'Next-Gen Brain Tech'
+    badge: 'Next-Gen Brain Tech',
+    visual: {
+      liveSession: 'Live Session',
+      focus: 'Focus',
+      session: 'Session',
+      level: 'Level',
+      aiActive: 'AI Active',
+      eegConnected: 'EEG Connected',
+      scroll: 'Scroll'
+    }
+  },
+  stats: {
+    users: 'Active Users',
+    accuracy: 'Accuracy Rate',
+    sessions: 'Sessions Completed',
+    rating: 'User Rating'
   },
   features: {
     title: 'Exceptional Features',
@@ -57,7 +72,13 @@ export default {
   cta: {
     title: 'Ready to Maximize Your Potential?',
     subtitle: 'Join thousands of users who have transformed how they think and work.',
-    button: 'Join Us for Free'
+    button: 'Join Us for Free',
+    trust: {
+      noCreditCard: 'Start Free — No credit card needed',
+      ssl: 'SSL Encrypted',
+      gdpr: 'GDPR Compliant',
+      cancel: 'Cancel Anytime'
+    }
   },
   footer: {
     rights: 'All rights reserved © 2026 Haze Clue',
