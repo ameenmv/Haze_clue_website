@@ -9,6 +9,14 @@
 export const devicesApi = {
 
   /**
+   * GET /devices/scan — simulate scanning local network for devices
+   */
+  scan() {
+    const { $customFetch } = useNuxtApp()
+    return $customFetch<any[]>('/devices/scan')
+  },
+
+  /**
    * GET /devices — list user's devices with pagination
    */
   list(page = 1, limit = 10, search = '') {
