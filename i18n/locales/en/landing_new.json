@@ -1,0 +1,27 @@
+{
+  "hero": {
+    "visual": {
+      "liveSession": "Live Session",
+      "focus": "Focus",
+      "session": "Session",
+      "level": "Level",
+      "aiActive": "AI Active",
+      "eegConnected": "EEG Connected",
+      "scroll": "Scroll"
+    }
+  },
+  "stats": {
+    "users": "Active Users",
+    "accuracy": "Accuracy Rate",
+    "sessions": "Sessions Completed",
+    "rating": "User Rating"
+  },
+  "cta": {
+    "trust": {
+      "noCreditCard": "Start Free — No credit card needed",
+      "ssl": "SSL Encrypted",
+      "gdpr": "GDPR Compliant",
+      "cancel": "Cancel Anytime"
+    }
+  }
+}

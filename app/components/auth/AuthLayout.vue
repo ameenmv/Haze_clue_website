@@ -14,10 +14,10 @@
         <!-- Content Area -->
         <div class="z-10 max-w-xl">
           <h1 class="text-4xl xl:text-5xl font-bold text-white mb-4 leading-tight">
-            Welcome to Haze Clue System
+            {{ $t('auth.layout.welcomeTitle') }}
           </h1>
           <p class="text-[#a1a1aa] text-lg mb-12 max-w-lg">
-            Secure, advanced, and automated platform for your cognitive enhancement needs.
+            {{ $t('auth.layout.welcomeSubtitle') }}
           </p>
 
           <!-- Feature List -->
@@ -58,9 +58,9 @@
 
 <script setup lang="ts">
 const features = [
-  { title: 'AI-Powered Insights', desc: 'Gain deep, actionable insights with our advanced neuro-analysis engine.' },
-  { title: 'Advanced Brain Monitoring', desc: 'Real-time cognitive tracking and emotional state evaluation.' },
-  { title: 'Enterprise-Grade Security', desc: 'Your data is protected by industry-leading encryption and compliance.' },
-  { title: 'Seamless Integration', desc: 'Connect your entire workflow with role-based access control.' }
+  { title: $t('auth.layout.features.insight.title'), desc: $t('auth.layout.features.insight.desc') },
+  { title: $t('auth.layout.features.monitoring.title'), desc: $t('auth.layout.features.monitoring.desc') },
+  { title: $t('auth.layout.features.security.title'), desc: $t('auth.layout.features.security.desc') },
+  { title: $t('auth.layout.features.integration.title'), desc: $t('auth.layout.features.integration.desc') }
 ]
 </script>

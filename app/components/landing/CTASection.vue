@@ -39,7 +39,7 @@ const handleSubscribe = () => {
         <!-- Badge -->
         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm text-white/80 text-sm font-semibold mb-8 border border-white/10">
           <span class="w-2 h-2 rounded-full bg-primary-500 animate-pulse" />
-          <span>Start Free — No credit card needed</span>
+          <span>{{ t('landing.cta.trust.noCreditCard') }}</span>
         </div>
 
         <h2 class="text-4xl md:text-5xl lg:text-6xl font-display font-extrabold mb-6 leading-tight text-white">
@@ -79,17 +79,17 @@ const handleSubscribe = () => {
         <div class="flex flex-wrap items-center justify-center gap-6 text-sm text-indigo-200/50">
           <div class="flex items-center gap-2">
             <UIcon name="i-ph-shield-check" class="w-4 h-4" />
-            <span>SSL Encrypted</span>
+            <span>{{ t('landing.cta.trust.ssl') }}</span>
           </div>
           <div class="w-px h-4 bg-indigo-200/20 hidden sm:block" />
           <div class="flex items-center gap-2">
             <UIcon name="i-ph-lock" class="w-4 h-4" />
-            <span>GDPR Compliant</span>
+            <span>{{ t('landing.cta.trust.gdpr') }}</span>
           </div>
           <div class="w-px h-4 bg-indigo-200/20 hidden sm:block" />
           <div class="flex items-center gap-2">
             <UIcon name="i-ph-x-circle" class="w-4 h-4" />
-            <span>Cancel Anytime</span>
+            <span>{{ t('landing.cta.trust.cancel') }}</span>
           </div>
         </div>
       </div>
