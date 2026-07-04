@@ -7,7 +7,7 @@
          <div class="sidebar__header">
             <NuxtLink to="/dashboard" class="sidebar__logo">
                <div class="sidebar__logo-icon">
-                  <img src="/logo.png" alt="HazeClue" class="w-14 h-14 object-contain" />
+                  <img src="/logo-v2.png" alt="HazeClue" class="w-20 h-20 object-contain" />
                </div>
                <Transition name="fade-text">
                   <div v-show="!isSidebarCollapsed || isMobile" class="sidebar__logo-text">
@@ -126,10 +126,6 @@ const secondaryLinks: NavLink[] = [
 }
 
 .sidebar__logo-icon {
-   width: 40px;
-   height: 40px;
-   background: linear-gradient(87.77deg, #6C4EFD -48.65%, #4C38AF 109.96%);
-   border-radius: 8px;
    display: flex;
    align-items: center;
    justify-content: center;

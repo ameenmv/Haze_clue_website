@@ -33,7 +33,7 @@ const socialLinks = [
         <!-- Brand -->
         <div class="lg:col-span-2">
           <NuxtLink :to="localePath('/')" class="flex items-center gap-3 mb-5 group">
-            <img src="/logo.png" alt="Haze Clue Logo" class="w-16 h-16 object-contain group-hover:scale-105 transition-transform" />
+            <img src="/logo-v2.png" alt="Haze Clue Logo" class="w-24 h-24 object-contain group-hover:scale-105 transition-transform" />
             <span class="text-xl font-extrabold text-gradient-primary">
               Haze Clue
             </span>
