@@ -1,9 +1,9 @@
 <template>
    <div class="reports-page">
       <div class="flex justify-between items-center w-full mb-4">
-         <h1 class="text-2xl font-bold">My Reports</h1>
+         <h1 class="text-2xl font-bold">{{ $t('dashboard.reports.myReports') }}</h1>
          <UButton v-if="reports.length > 0" icon="i-lucide-refresh-cw" color="neutral" variant="ghost" @click="refresh">
-            Refresh
+            {{ $t('dashboard.reports.refresh') }}
          </UButton>
       </div>
 
@@ -24,7 +24,7 @@
             </template>
             <template #actions-cell="{ row }">
                <UButton color="primary" variant="soft" size="sm" icon="i-lucide-download" @click="downloadReport(row.original || row)">
-                  Download
+                  {{ $t('dashboard.reports.download') }}
                </UButton>
             </template>
          </UTable>

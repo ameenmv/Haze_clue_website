@@ -59,7 +59,7 @@
             </div>
             <div class="live-panels__status-row">
                <span class="live-panels__status-label">{{ $t('dashboard.liveSession.status.lastUpdate') }}</span>
-               <span class="live-panels__status-value">2 sec ago</span>
+               <span class="live-panels__status-value">{{ $t('dashboard.liveSessionPanels.2secAgo') }}</span>
             </div>
             <div class="live-panels__status-row">
                <span class="live-panels__status-label">{{ $t('dashboard.liveSession.status.signalStrength') }}</span>

@@ -1,0 +1,45 @@
+{
+  "reports": {
+    "myReports": "My Reports",
+    "refresh": "Refresh",
+    "download": "Download"
+  },
+  "profile": {
+    "role": "Admin / Teacher",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "joinedAt": "Joined At",
+    "edit": "Edit Profile"
+  },
+  "liveSession": {
+    "connectEeg": "Connect EEG Headset",
+    "disconnect": "Disconnect"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "markAllRead": "Mark all read",
+    "loading": "Loading notifications...",
+    "allCaughtUp": "All caught up!",
+    "noNew": "You have no new notifications right now.",
+    "viewAll": "View all notifications"
+  },
+  "liveSessionInfo": {
+    "mathClass": "Math Class - Grade 10",
+    "subject": "Mathematics"
+  },
+  "liveSessionPanels": {
+    "2secAgo": "2 sec ago"
+  },
+  "sessions": {
+    "draft": "Draft",
+    "active": "Active",
+    "completed": "Completed",
+    "loading": "Loading sessions...",
+    "start": "Start",
+    "end": "End"
+  },
+  "createSession": {
+    "duration": "Duration (minutes)",
+    "studentsCount": "Number of Students"
+  }
+}

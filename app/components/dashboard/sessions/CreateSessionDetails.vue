@@ -32,16 +32,16 @@
                :placeholder="$t('dashboard.createSession.details.gradePlaceholder')" />
          </div>
          <div class="form-details__field">
-            <label class="form-details__label">Duration (minutes)</label>
+            <label class="form-details__label">{{ $t('dashboard.createSession.duration') }}</label>
             <input v-model.number="sessionForm.duration" type="number" min="0" class="form-details__input"
                placeholder="e.g. 45" />
          </div>
       </div>
 
-      <!-- Number of Students -->
+      <!-- {{ $t('dashboard.createSession.studentsCount') }} -->
       <div class="form-details__row">
          <div class="form-details__field">
-            <label class="form-details__label">Number of Students</label>
+            <label class="form-details__label">{{ $t('dashboard.createSession.studentsCount') }}</label>
             <input v-model.number="sessionForm.students" type="number" min="0" class="form-details__input"
                placeholder="e.g. 30" />
          </div>

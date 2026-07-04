@@ -1,0 +1,45 @@
+{
+  "reports": {
+    "myReports": "تقاريري",
+    "refresh": "تحديث",
+    "download": "تنزيل"
+  },
+  "profile": {
+    "role": "مسؤول / معلم",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف",
+    "joinedAt": "تاريخ الانضمام",
+    "edit": "تعديل الملف الشخصي"
+  },
+  "liveSession": {
+    "connectEeg": "توصيل جهاز مستشعر الدماغ (EEG)",
+    "disconnect": "قطع الاتصال"
+  },
+  "notifications": {
+    "title": "الإشعارات",
+    "markAllRead": "تحديد الكل كمقروء",
+    "loading": "جاري تحميل الإشعارات...",
+    "allCaughtUp": "أنت على اطلاع دائم!",
+    "noNew": "ليس لديك أي إشعارات جديدة حالياً.",
+    "viewAll": "عرض كل الإشعارات"
+  },
+  "liveSessionInfo": {
+    "mathClass": "حصة الرياضيات - الصف العاشر",
+    "subject": "الرياضيات"
+  },
+  "liveSessionPanels": {
+    "2secAgo": "منذ ثانيتين"
+  },
+  "sessions": {
+    "draft": "مسودة",
+    "active": "نشط",
+    "completed": "مكتمل",
+    "loading": "جاري تحميل الجلسات...",
+    "start": "بدء",
+    "end": "إنهاء"
+  },
+  "createSession": {
+    "duration": "المدة (بالدقائق)",
+    "studentsCount": "عدد الطلاب"
+  }
+}
