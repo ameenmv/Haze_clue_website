@@ -11,7 +11,7 @@
             placeholder="Search devices..."
             class="w-full sm:w-64"
           />
-          <UButton icon="i-lucide-plus" color="primary" @click="isAddModalOpen = true">
+          <UButton icon="i-lucide-plus" color="primary" @click="navigateTo('/dashboard/devices/add')">
             {{ $t('dashboard.devices.addDevice') }}
           </UButton>
         </div>
@@ -49,46 +49,11 @@
       </UCard>
 
       <!-- No Devices Empty State -->
-      <DeviceEmptyState v-else @add-device="isAddModalOpen = true" />
+      <DeviceEmptyState v-else @add-device="navigateTo('/dashboard/devices/add')" />
 
       <!-- How to Connect -->
       <DeviceHowToConnect v-if="devices.length === 0" />
 
-      <!-- Setup Guide + Need Help -->
-      <DeviceHelpCards @view-guide="navigateTo('/dashboard/help')" @contact-support="navigateTo('/dashboard/help')" />
-
-      <UModal v-model:open="isAddModalOpen">
-        <template #content>
-          <UCard class="w-full max-w-md mx-auto overflow-hidden bg-white/95 dark:bg-[#1a1d27]/95 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-2xl rounded-2xl">
-            <template #header>
-              <div class="flex items-center justify-between">
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white">{{ $t('dashboard.devices.modal.title') }}</h3>
-                <UButton color="neutral" variant="ghost" icon="i-lucide-x" class="-my-1" @click="isAddModalOpen = false" />
-              </div>
-              <p class="text-sm text-gray-500 mt-1">{{ $t('dashboard.devices.modal.description') }}</p>
-            </template>
-
-            <form @submit.prevent="submitAddDevice" class="flex flex-col gap-5 p-2">
-              <UFormField :label="$t('dashboard.devices.modal.deviceName')" name="name" required class="w-full">
-                <UInput v-model="newDevice.name" :placeholder="$t('dashboard.devices.modal.deviceNamePlaceholder')" icon="i-lucide-cpu" class="w-full" size="lg" />
-              </UFormField>
-              
-              <UFormField :label="$t('dashboard.devices.modal.deviceType')" name="type" required class="w-full">
-                <USelect v-model="newDevice.type" :options="['EEG', 'BCI']" icon="i-lucide-activity" class="w-full" size="lg" />
-              </UFormField>
-              
-              <UFormField :label="$t('dashboard.devices.modal.serialNumber')" name="serialNumber" required class="w-full">
-                <UInput v-model="newDevice.serialNumber" :placeholder="$t('dashboard.devices.modal.serialNumberPlaceholder')" icon="i-lucide-key" class="w-full" size="lg" />
-              </UFormField>
-
-              <div class="flex justify-end gap-3 mt-6">
-                <UButton color="neutral" variant="soft" size="lg" @click="isAddModalOpen = false">{{ $t('dashboard.devices.modal.cancel') }}</UButton>
-                <UButton type="submit" color="primary" size="lg" :loading="isSubmitting" icon="i-lucide-plus">{{ $t('dashboard.devices.modal.addBtn') }}</UButton>
-              </div>
-            </form>
-          </UCard>
-        </template>
-      </UModal>
    </div>
 </template>
 
@@ -144,36 +109,7 @@ const columns = [
   { accessorKey: 'actions', header: 'Actions', id: 'actions' }
 ]
 
-// Modal state
-const isAddModalOpen = ref(false)
-const isSubmitting = ref(false)
-const newDevice = reactive({
-  name: '',
-  type: 'EEG' as 'EEG' | 'BCI',
-  serialNumber: ''
-})
-
-const submitAddDevice = async () => {
-  if (!newDevice.name || !newDevice.serialNumber) {
-    toast.add({ title: 'Validation Error', description: 'Name and Serial Number are required', color: 'error' })
-    return
-  }
-  isSubmitting.value = true
-  try {
-    await devicesApi.create({ ...newDevice })
-    toast.add({ title: 'Device added successfully', color: 'success' })
-    isAddModalOpen.value = false
-    newDevice.name = ''
-    newDevice.serialNumber = ''
-    newDevice.type = 'EEG'
-    await refresh()
-  } catch (err: any) {
-    toast.add({ title: 'Error adding device', description: err.message || 'Unknown error', color: 'error' })
-  } finally {
-    isSubmitting.value = false
-  }
-}
-
+// Removed Modal state and logic
 const handleRemove = async (id: string) => {
   const isDark = document.documentElement.classList.contains('dark')
   const result = await Swal.fire({
