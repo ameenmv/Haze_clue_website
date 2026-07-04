@@ -1,0 +1,22 @@
+{
+  "welcomeTitle": "Welcome to Haze Clue System",
+  "welcomeSubtitle": "Secure, advanced, and automated platform for your cognitive enhancement needs.",
+  "features": {
+    "insight": {
+      "title": "AI-Powered Insights",
+      "desc": "Gain deep, actionable insights with our advanced neuro-analysis engine."
+    },
+    "monitoring": {
+      "title": "Advanced Brain Monitoring",
+      "desc": "Real-time cognitive tracking and emotional state evaluation."
+    },
+    "security": {
+      "title": "Enterprise-Grade Security",
+      "desc": "Your data is protected by industry-leading encryption and compliance."
+    },
+    "integration": {
+      "title": "Seamless Integration",
+      "desc": "Connect your entire workflow with role-based access control."
+    }
+  }
+}

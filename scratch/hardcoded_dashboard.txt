@@ -1,0 +1,140 @@
+pages/dashboard/devices.vue:
+  0 || searchInput" class="w-full">
+  limit">
+
+pages/dashboard/reports.vue:
+  My Reports
+  0" icon="i-lucide-refresh-cw" color="neutral" variant="ghost" @click="refresh">
+            Refresh
+  0" class="reports-container">
+  Download
+
+pages/dashboard/profile.vue:
+  Admin / Teacher
+  Email Address
+  Phone Number
+  Joined At
+  Edit Profile
+
+pages/dashboard/live-session.vue:
+  Connect EEG Headset
+  Disconnect
+
+components/dashboard/NotificationDropdown.vue:
+  0" class="absolute top-2 right-2 flex items-center justify-center">
+  Notifications
+  0" 
+            color="primary" 
+            variant="ghost" 
+            size="xs" 
+            class="text-xs font-medium hover:bg-primary/5 rounded-full transition-colors"
+            @click="markAllAsRead"
+          >
+            Mark all read
+  Loading notifications...
+  All caught up!
+  You have no new notifications right now.
+  View all notifications
+
+components/dashboard/WelcomeBanner.vue:
+  defineEmits
+
+components/dashboard/EmptyState.vue:
+  defineProps
+
+components/dashboard/live/LiveSessionStats.vue:
+  const liveData = useState
+
+components/dashboard/live/LiveSessionInfo.vue:
+  Math Class - Grade 10
+  Mathematics
+  defineEmits
+
+components/dashboard/live/LiveSessionPanels.vue:
+  2 sec ago
+
+components/dashboard/monitoring/MonitoringDeviceStatus.vue:
+  defineEmits
+
+components/dashboard/monitoring/MonitoringReadyBanner.vue:
+  defineEmits
+  ()
+
+const steps = [
+   'dashboard.liveMonitoring.readyBanner.step1',
+   'dashboard.liveMonitoring.readyBanner.step2',
+   'dashboard.liveMonitoring.readyBanner.step3'
+]
+
+components/dashboard/monitoring/MonitoringQuickSetup.vue:
+  ()
+
+const form = reactive
+
+components/dashboard/monitoring/MonitoringNoSession.vue:
+  defineEmits
+
+components/dashboard/reports/ReportsEmptyState.vue:
+  defineEmits
+
+components/dashboard/devices/DeviceEmptyState.vue:
+  defineEmits
+
+components/dashboard/devices/DeviceHelpCards.vue:
+  defineEmits
+
+components/dashboard/sessions/CreateSessionActions.vue:
+  defineProps
+  ()
+defineEmits
+  ()
+
+const sessionForm = inject
+
+components/dashboard/sessions/SessionHeroBanner.vue:
+  defineEmits
+
+components/dashboard/sessions/CreateSessionDevices.vue:
+  defineEmits
+
+components/dashboard/sessions/SessionTemplates.vue:
+  defineEmits
+
+components/dashboard/sessions/CreateSessionMonitoring.vue:
+  const sessionForm = inject
+  sessionForm.monitoringSettings[key]
+
+components/dashboard/sessions/SessionList.vue:
+  Draft
+  Active
+  Completed
+  Loading sessions...
+  Start
+  End
+
+components/dashboard/sessions/CreateSessionDetails.vue:
+  Duration (minutes)
+  Number of Students
+  ('sessionForm')!
+const formErrors = inject
+
+components/dashboard/sessions/SessionCreateCard.vue:
+  defineEmits
+
+components/dashboard/sessions/SessionTips.vue:
+  defineEmits
+  ()
+
+const tips = [
+   'dashboard.sessions.tips.tip1',
+   'dashboard.sessions.tips.tip2',
+   'dashboard.sessions.tips.tip3'
+]
+
+components/dashboard/help/HelpContactCards.vue:
+  defineEmits
+
+components/dashboard/help/HelpContactForm.vue:
+  defineProps
+  ()
+defineEmits

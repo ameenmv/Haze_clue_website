@@ -239,7 +239,7 @@ onMounted(() => {
                 <div class="flex items-center justify-between mb-8 border-b border-white/5 pb-4">
                    <div class="flex items-center gap-3">
                      <div class="w-3 h-3 rounded-full bg-primary-500 shadow-lg shadow-primary-500/50 animate-pulse" />
-                     <span class="text-sm font-semibold text-slate-400">Live Session</span>
+                     <span class="text-sm font-semibold text-slate-400">{{ t('landing.hero.visual.liveSession') }}</span>
                    </div>
                    <div class="w-10 h-10 bg-primary-500/10 rounded-xl flex items-center justify-center text-primary-500 shadow-inner">
                      <UIcon name="i-ph-activity" class="w-5 h-5" />
@@ -273,15 +273,15 @@ onMounted(() => {
                   <!-- Stats Grid -->
                   <div class="grid grid-cols-3 gap-3">
                     <div class="bg-slate-50/50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-100 dark:border-slate-700/30 hover:border-primary-500/30 transition-colors group/stat">
-                      <div class="text-[10px] text-slate-500 uppercase font-bold tracking-wider mb-1">Focus</div>
+                      <div class="text-[10px] text-slate-500 uppercase font-bold tracking-wider mb-1">{{ t('landing.hero.visual.focus') }}</div>
                       <div class="text-xl font-bold font-mono text-primary-500 group-hover/stat:text-glow transition-all">87.5</div>
                     </div>
                     <div class="bg-slate-50/50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-100 dark:border-slate-700/30 hover:border-emerald-500/30 transition-colors">
-                       <div class="text-[10px] text-slate-500 uppercase font-bold tracking-wider mb-1">Session</div>
+                       <div class="text-[10px] text-slate-500 uppercase font-bold tracking-wider mb-1">{{ t('landing.hero.visual.session') }}</div>
                        <div class="text-xl font-bold font-mono text-slate-700 dark:text-slate-200">24:12</div>
                     </div>
                     <div class="bg-slate-50/50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-100 dark:border-slate-700/30 hover:border-amber-500/30 transition-colors">
-                       <div class="text-[10px] text-slate-500 uppercase font-bold tracking-wider mb-1">Level</div>
+                       <div class="text-[10px] text-slate-500 uppercase font-bold tracking-wider mb-1">{{ t('landing.hero.visual.level') }}</div>
                        <div class="text-xl font-bold font-mono text-amber-500">Pro</div>
                     </div>
                   </div>
@@ -295,13 +295,13 @@ onMounted(() => {
              <div class="absolute -top-4 -right-4 glass dark:bg-slate-800/60 p-4 rounded-2xl shadow-xl animate-float-slow" style="animation-delay: -1s;">
                <div class="flex items-center gap-2">
                  <UIcon name="i-ph-brain-duotone" class="w-7 h-7 text-primary-500" />
-                 <span class="text-xs font-bold text-primary-500">AI Active</span>
+                 <span class="text-xs font-bold text-primary-500">{{ t('landing.hero.visual.aiActive') }}</span>
                </div>
              </div>
              <div class="absolute bottom-16 -left-8 glass dark:bg-slate-800/60 p-4 rounded-2xl shadow-xl animate-float-slow" style="animation-delay: -3s;">
                <div class="flex items-center gap-2">
                  <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                 <span class="text-xs font-bold">EEG Connected</span>
+                 <span class="text-xs font-bold">{{ t('landing.hero.visual.eegConnected') }}</span>
                </div>
              </div>
              <div class="absolute top-1/2 -right-6 glass dark:bg-slate-800/60 p-3 rounded-xl shadow-xl animate-float" style="animation-delay: -5s;">
@@ -314,7 +314,7 @@ onMounted(() => {
 
     <!-- Scroll Indicator -->
     <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-float">
-      <span class="text-xs text-slate-400 uppercase tracking-widest font-medium">Scroll</span>
+      <span class="text-xs text-slate-400 uppercase tracking-widest font-medium">{{ t('landing.hero.visual.scroll') }}</span>
       <div class="w-6 h-10 rounded-full border-2 border-slate-300 dark:border-slate-600 flex justify-center pt-2">
         <div class="w-1.5 h-3 bg-primary-500 rounded-full animate-pulse" />
       </div>
