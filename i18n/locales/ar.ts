@@ -9,12 +9,13 @@ import validation from './ar/validation'
 
 import auth_layout from './ar/auth_layout.json'
 import landing_new from './ar/landing_new.json'
+import dashboard_new from './ar/dashboard_new.json'
 
 export default {
   auth: { ...auth, layout: auth_layout },
   app,
   common,
-  dashboard,
+  dashboard: { ...dashboard, ...dashboard_new },
   error,
   landing: { ...landing, ...landing_new },
   navigation,

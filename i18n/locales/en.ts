@@ -9,12 +9,13 @@ import validation from './en/validation'
 
 import auth_layout from './en/auth_layout.json'
 import landing_new from './en/landing_new.json'
+import dashboard_new from './en/dashboard_new.json'
 
 export default {
   auth: { ...auth, layout: auth_layout },
   app,
   common,
-  dashboard,
+  dashboard: { ...dashboard, ...dashboard_new },
   error,
   landing: { ...landing, ...landing_new },
   navigation,

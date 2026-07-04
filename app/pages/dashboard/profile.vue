@@ -15,7 +15,7 @@
             <div class="profile-info-main">
                <h2 class="profile-name">{{ user?.fullName || 'User' }}</h2>
                <p class="profile-email">{{ user?.email }}</p>
-               <span class="profile-role">Admin / Teacher</span>
+               <span class="profile-role">{{ $t('dashboard.profile.role') }}</span>
             </div>
 
             <div class="profile-details">
@@ -24,7 +24,7 @@
                      <UIcon name="lucide:mail" class="detail-icon" />
                   </div>
                   <div class="detail-text">
-                     <span class="detail-label">Email Address</span>
+                     <span class="detail-label">{{ $t('dashboard.profile.email') }}</span>
                      <span class="detail-val">{{ user?.email || 'N/A' }}</span>
                   </div>
                </div>
@@ -34,7 +34,7 @@
                      <UIcon name="lucide:phone" class="detail-icon" />
                   </div>
                   <div class="detail-text">
-                     <span class="detail-label">Phone Number</span>
+                     <span class="detail-label">{{ $t('dashboard.profile.phone') }}</span>
                      <span class="detail-val">{{ user?.phone || 'Not provided' }}</span>
                   </div>
                </div>
@@ -44,7 +44,7 @@
                      <UIcon name="lucide:calendar" class="detail-icon" />
                   </div>
                   <div class="detail-text">
-                     <span class="detail-label">Joined At</span>
+                     <span class="detail-label">{{ $t('dashboard.profile.joinedAt') }}</span>
                      <span class="detail-val">{{ formattedDate }}</span>
                   </div>
                </div>
@@ -53,7 +53,7 @@
             <div class="profile-actions">
                <button class="btn-edit" @click="navigateTo('/dashboard/settings')">
                   <UIcon name="lucide:edit-3" class="w-4 h-4" />
-                  Edit Profile
+                  {{ $t('dashboard.profile.edit') }}
                </button>
             </div>
          </div>

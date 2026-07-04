@@ -19,7 +19,7 @@
         <!-- Header -->
         <div class="relative flex items-center justify-between px-5 py-4 border-b border-gray-100 dark:border-gray-800/60 bg-gradient-to-r from-gray-50 to-white dark:from-[#1a1d27]/50 dark:to-[#151821]/50">
           <div class="flex items-center gap-2">
-            <h3 class="font-semibold text-gray-900 dark:text-white text-base">Notifications</h3>
+            <h3 class="font-semibold text-gray-900 dark:text-white text-base">{{ $t('dashboard.notifications.title') }}</h3>
             <span v-if="unreadCount > 0" class="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-xs font-medium border border-primary/20">
               {{ unreadCount }} new
             </span>
@@ -32,7 +32,7 @@
             class="text-xs font-medium hover:bg-primary/5 rounded-full transition-colors"
             @click="markAllAsRead"
           >
-            Mark all read
+            {{ $t('dashboard.notifications.markAllRead') }}
           </UButton>
         </div>
 
@@ -40,15 +40,15 @@
         <div class="flex-1 max-h-[400px] overflow-y-auto custom-scrollbar">
           <div v-if="pending" class="flex flex-col items-center justify-center py-12 gap-3">
              <UIcon name="lucide:loader-2" class="animate-spin w-6 h-6 text-primary" />
-             <span class="text-sm text-gray-500 dark:text-gray-400">Loading notifications...</span>
+             <span class="text-sm text-gray-500 dark:text-gray-400">{{ $t('dashboard.notifications.loading') }}</span>
           </div>
           
           <div v-else-if="!notifications.length" class="flex flex-col items-center justify-center py-16 px-6 text-center">
             <div class="w-16 h-16 mb-4 rounded-full bg-gray-50 dark:bg-[#1a1d27] flex items-center justify-center">
               <UIcon name="lucide:bell-off" class="w-8 h-8 text-gray-300 dark:text-gray-600" />
             </div>
-            <p class="text-gray-900 dark:text-white font-medium mb-1">All caught up!</p>
-            <p class="text-sm text-gray-500 dark:text-gray-400">You have no new notifications right now.</p>
+            <p class="text-gray-900 dark:text-white font-medium mb-1">{{ $t('dashboard.notifications.allCaughtUp') }}</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">{{ $t('dashboard.notifications.noNew') }}</p>
           </div>
           
           <div v-else class="flex flex-col">
@@ -102,7 +102,7 @@
         <!-- Footer -->
         <div class="p-3 border-t border-gray-100 dark:border-gray-800/60 bg-gray-50 dark:bg-[#151821]/80 text-center">
           <UButton variant="link" color="neutral" size="sm" class="text-xs hover:text-primary transition-colors">
-            View all notifications
+            {{ $t('dashboard.notifications.viewAll') }}
           </UButton>
         </div>
       </div>

@@ -1,8 +1,8 @@
 <template>
    <section class="session-info">
       <div class="session-info__left">
-         <h2 class="session-info__name">Math Class - Grade 10</h2>
-         <p class="session-info__subject">Mathematics</p>
+         <h2 class="session-info__name">{{ $t('dashboard.liveSessionInfo.mathClass') }}</h2>
+         <p class="session-info__subject">{{ $t('dashboard.liveSessionInfo.subject') }}</p>
       </div>
       <div class="session-info__right">
          <span class="session-info__live">

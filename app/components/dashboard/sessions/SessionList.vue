@@ -9,16 +9,16 @@
             </div>
             <select v-model="statusFilter" class="your-sessions__filter">
                <option value="">{{ $t('dashboard.sessions.yourSessions.filter') }}</option>
-               <option value="draft">Draft</option>
-               <option value="active">Active</option>
-               <option value="completed">Completed</option>
+               <option value="draft">{{ $t('dashboard.sessions.draft') }}</option>
+               <option value="active">{{ $t('dashboard.sessions.active') }}</option>
+               <option value="completed">{{ $t('dashboard.sessions.completed') }}</option>
             </select>
          </div>
       </div>
 
       <!-- Loading State -->
       <div v-if="pending" class="your-sessions__empty">
-         <p class="your-sessions__empty-desc">Loading sessions...</p>
+         <p class="your-sessions__empty-desc">{{ $t('dashboard.sessions.loading') }}</p>
       </div>
 
       <!-- Empty State -->
@@ -52,11 +52,11 @@
                <button v-if="session.status === 'draft'"
                   class="your-sessions__action-btn your-sessions__action-btn--start"
                   @click.stop="handleStart(session.id)">
-                  <UIcon name="lucide:play" class="w-3.5 h-3.5" /> Start
+                  <UIcon name="lucide:play" class="w-3.5 h-3.5" /> {{ $t('dashboard.sessions.start') }}
                </button>
                <button v-if="session.status === 'active'"
                   class="your-sessions__action-btn your-sessions__action-btn--end" @click.stop="handleEnd(session.id)">
-                  <UIcon name="lucide:square" class="w-3.5 h-3.5" /> End
+                  <UIcon name="lucide:square" class="w-3.5 h-3.5" /> {{ $t('dashboard.sessions.end') }}
                </button>
                <button class="your-sessions__action-btn your-sessions__action-btn--delete"
                   @click.stop="handleDelete(session.id)">
