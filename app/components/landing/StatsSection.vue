@@ -4,10 +4,10 @@ import { gsap } from 'gsap'
 const { t } = useI18n()
 
 const stats = [
-  { value: 2000, suffix: '+', label: 'Active Users', icon: 'i-ph-users-duotone', color: 'text-primary-500', bg: 'from-primary-500/10 to-primary-500/5' },
-  { value: 98, suffix: '%', label: 'Accuracy Rate', icon: 'i-ph-target-duotone', color: 'text-emerald-500', bg: 'from-emerald-500/10 to-emerald-500/5' },
-  { value: 50, suffix: 'K+', label: 'Sessions Completed', icon: 'i-ph-brain-duotone', color: 'text-cyan-500', bg: 'from-cyan-500/10 to-cyan-500/5' },
-  { value: 4.9, suffix: '/5', label: 'User Rating', icon: 'i-ph-star-duotone', color: 'text-amber-500', bg: 'from-amber-500/10 to-amber-500/5' }
+  { value: 0, suffix: '', label: 'Active Users', icon: 'i-ph-users-duotone', color: 'text-primary-500', bg: 'from-primary-500/10 to-primary-500/5' },
+  { value: 0, suffix: '%', label: 'Accuracy Rate', icon: 'i-ph-target-duotone', color: 'text-emerald-500', bg: 'from-emerald-500/10 to-emerald-500/5' },
+  { value: 0, suffix: '', label: 'Sessions Completed', icon: 'i-ph-brain-duotone', color: 'text-cyan-500', bg: 'from-cyan-500/10 to-cyan-500/5' },
+  { value: 0, suffix: '/5', label: 'User Rating', icon: 'i-ph-star-duotone', color: 'text-amber-500', bg: 'from-amber-500/10 to-amber-500/5' }
 ]
 
 const counters = ref(stats.map(() => 0))

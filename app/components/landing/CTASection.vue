@@ -42,7 +42,7 @@ const handleSubscribe = () => {
           <span>Start Free — No credit card needed</span>
         </div>
 
-        <h2 class="text-4xl md:text-5xl lg:text-6xl font-display font-extrabold mb-6 leading-tight">
+        <h2 class="text-4xl md:text-5xl lg:text-6xl font-display font-extrabold mb-6 leading-tight text-white">
           {{ t('landing.cta.title') }}
         </h2>
         <p class="text-xl text-indigo-100/70 mb-12 max-w-2xl mx-auto leading-relaxed">

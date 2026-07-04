@@ -188,7 +188,7 @@ onMounted(() => {
           </div>
 
           <!-- Social Proof -->
-          <div ref="statsRef" class="mt-14 flex items-center gap-6">
+          <div v-if="false" ref="statsRef" class="mt-14 flex items-center gap-6">
             <div class="flex -space-x-3">
                <div v-for="i in 4" :key="i" 
                     class="w-10 h-10 rounded-full border-2 border-white dark:border-slate-900 flex items-center justify-center overflow-hidden shadow-md"
