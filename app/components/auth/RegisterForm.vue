@@ -1,72 +1,59 @@
 <template>
-  <div class="w-full max-w-[559px] flex flex-col gap-12">
+  <div class="w-full max-w-[559px] flex flex-col gap-8">
     <!-- Header -->
-    <div class="flex flex-col gap-3">
-      <h1 class="text-4xl font-bold text-[#111827] dark:text-white font-poppins">
+    <div class="flex flex-col gap-3 mb-4 text-center items-center">
+      <h1 class="text-4xl font-bold text-white font-poppins">
         {{ $t('auth.register.title') }}
       </h1>
-      <p class="text-base text-[#4B5563] dark:text-gray-400 font-poppins">
+      <p class="text-base text-gray-400 font-poppins">
         {{ $t('auth.register.subtitle') }}
       </p>
     </div>
 
-    <!-- Social Login -->
-    <div class="flex flex-col gap-5">
-      <div class="flex flex-col gap-3">
-        <SocialButton provider="google" />
-        <SocialButton provider="facebook" />
-      </div>
-
-      <div class="relative flex items-center gap-4">
-        <div class="h-px bg-[#E5E7EB] dark:bg-gray-700 flex-1"></div>
-        <span class="text-sm font-medium text-[#6B7280] dark:text-gray-400">{{ $t('auth.labels.or') }}</span>
-        <div class="h-px bg-[#E5E7EB] dark:bg-gray-700 flex-1"></div>
-      </div>
-    </div>
 
     <!-- Form -->
     <form @submit.prevent="handleSubmit" class="flex flex-col gap-5">
       <div class="flex gap-4">
         <BaseInput v-model="form.firstName" :label="$t('auth.labels.firstName')"
-          :placeholder="$t('auth.placeholder.name')" class="flex-1" :error="errors.firstName" />
+          :placeholder="$t('auth.placeholder.name')" class="flex-1" :error="errors.firstName" forceDark />
         <BaseInput v-model="form.lastName" :label="$t('auth.labels.lastName')"
-          :placeholder="$t('auth.placeholder.name')" class="flex-1" :error="errors.lastName" />
+          :placeholder="$t('auth.placeholder.name')" class="flex-1" :error="errors.lastName" forceDark />
       </div>
 
       <BaseInput v-model="form.email" :label="$t('auth.labels.email')" type="email"
-        :placeholder="$t('auth.placeholder.email')" icon="ph:envelope-simple" :error="errors.email" />
+        :placeholder="$t('auth.placeholder.email')" icon="ph:envelope-simple" :error="errors.email" forceDark />
 
       <div class="flex flex-col gap-2">
         <BaseInput v-model="form.password" :label="$t('auth.labels.password')" type="password"
           :placeholder="$t('auth.placeholder.password')" icon="ph:lock-key" :error="errors.password"
-          @input="calculateStrength" />
+          @input="calculateStrength" forceDark />
 
         <!-- Password Strength Meter -->
         <div class="flex items-center gap-2 mt-1">
-          <div class="flex-1 h-1.5 bg-[#E5E7EB] dark:bg-gray-700 rounded-full overflow-hidden">
+          <div class="flex-1 h-1.5 bg-gray-800 rounded-full overflow-hidden">
             <div class="h-full transition-all duration-300 rounded-full" :class="strengthColor"
               :style="{ width: `${strengthScore * 25}%` }"></div>
           </div>
-          <span class="text-xs text-[#6B7280] dark:text-gray-400">{{ strengthLabel }}</span>
+          <span class="text-xs text-gray-400">{{ strengthLabel }}</span>
         </div>
       </div>
 
       <BaseInput v-model="form.confirmPassword" :label="$t('auth.labels.confirmPassword')" type="password"
-        :placeholder="$t('auth.placeholder.confirmPassword')" icon="ph:lock-key" :error="errors.confirmPassword" />
+        :placeholder="$t('auth.placeholder.confirmPassword')" icon="ph:lock-key" :error="errors.confirmPassword" forceDark />
 
       <!-- Terms Checkbox -->
-      <div class="flex items-start gap-3">
+      <div class="flex items-start gap-3 mt-2">
         <div class="flex items-center h-5">
           <input id="terms" v-model="form.agreeToTerms" type="checkbox"
-            class="w-5 h-5 border border-gray-300 rounded focus:ring-2 focus:ring-[#6C4EFD] dark:bg-gray-700 dark:border-gray-600" />
+            class="w-5 h-5 border-gray-600 rounded bg-gray-800 focus:ring-[#6C4EFD] text-[#6C4EFD]" />
         </div>
-        <label for="terms" class="text-sm text-[#4B5563] dark:text-gray-300">
+        <label for="terms" class="text-sm text-gray-300">
           {{ $t('auth.labels.agreeTo') }}
-          <a href="#" class="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#6C4EFD] to-[#4C38AF]">
+          <a href="#" class="font-semibold text-white hover:text-gray-300 transition-colors">
             {{ $t('auth.labels.terms') }}
           </a>
           {{ $t('auth.labels.and') }}
-          <a href="#" class="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#6C4EFD] to-[#4C38AF]">
+          <a href="#" class="font-semibold text-white hover:text-gray-300 transition-colors">
             {{ $t('auth.labels.privacy') }}
           </a>
         </label>
@@ -74,16 +61,16 @@
       <span v-if="errors.agreeToTerms" class="text-xs text-red-500">{{ errors.agreeToTerms }}</span>
 
       <button type="submit" :disabled="isLoading"
-        class="w-full py-4 text-white font-semibold rounded-xl bg-gradient-to-r from-[#6C4EFD] to-[#4C38AF] shadow-lg shadow-purple-500/20 hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed text-base font-poppins">
+        class="w-full py-4 mt-2 text-[#0a0a0a] font-semibold rounded-xl bg-white hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-base font-poppins">
         <span v-if="isLoading">{{ $t('auth.register.creating') }}</span>
         <span v-else>{{ $t('auth.register.submit') }}</span>
       </button>
     </form>
 
-    <div class="text-center">
-      <span class="text-[#4B5563] dark:text-gray-400">{{ $t('auth.hasAccount') }} </span>
+    <div class="text-center mt-2">
+      <span class="text-gray-400">{{ $t('auth.hasAccount') }} </span>
       <NuxtLink to="/login"
-        class="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#6C4EFD] to-[#4C38AF]">
+        class="font-semibold text-white hover:text-gray-300 transition-colors">
         {{ $t('auth.login.title') }}
       </NuxtLink>
     </div>

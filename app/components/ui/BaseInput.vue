@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-2">
-    <label v-if="label" :for="id" class="text-sm font-semibold text-[#374151] dark:text-gray-200">
+    <label v-if="label" :for="id" :class="['text-sm font-semibold', forceDark ? 'text-gray-300' : 'text-[#374151] dark:text-gray-200']">
       {{ label }}
     </label>
     <div class="relative">
@@ -18,10 +18,13 @@
         :type="inputType"
         :placeholder="placeholder"
         :class="[
-          'w-full px-4 py-4 rounded-xl border-2 transition-colors outline-none text-[#374151] dark:text-white placeholder:text-[#9CA3AF] dark:placeholder:text-gray-500 bg-white dark:bg-gray-800',
-          error
-            ? 'border-red-500 focus:border-red-500'
-            : 'border-[#E5E7EB] dark:border-gray-700 focus:border-[#6C4EFD] dark:focus:border-[#6C4EFD]',
+          'w-full px-4 py-4 rounded-xl border-2 transition-colors outline-none',
+          forceDark 
+            ? 'text-white placeholder-gray-500 bg-[#18181b] border-white/5 focus:border-white/20' 
+            : 'text-[#374151] dark:text-white placeholder-[#9CA3AF] dark:placeholder-gray-500 bg-white dark:bg-gray-800',
+          !forceDark && error ? 'border-red-500 focus:border-red-500' : '',
+          !forceDark && !error ? 'border-[#E5E7EB] dark:border-gray-700 focus:border-[#6C4EFD] dark:focus:border-[#6C4EFD]' : '',
+          forceDark && error ? '!border-red-500' : '',
           icon ? 'pl-12' : '',
           type === 'password' ? 'pr-12' : ''
         ]"
@@ -53,12 +56,14 @@ interface Props {
   error?: string
   id?: string
   icon?: string
+  forceDark?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   type: 'text',
   modelValue: '',
-  id: () => 'input-' + Math.random().toString(36).substr(2, 9)
+  id: () => 'input-' + Math.random().toString(36).substr(2, 9),
+  forceDark: false
 })
 
 const emit = defineEmits(['update:modelValue'])
