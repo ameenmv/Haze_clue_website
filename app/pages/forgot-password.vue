@@ -5,7 +5,7 @@
       
       <!-- Logo Area -->
       <div class="flex items-center gap-3 z-10">
-        <img src="/logo.jpeg" alt="Haze Clue" class="w-16 h-16 object-contain" />
+        <img src="/logo.png" alt="Haze Clue" class="w-24 h-24 object-contain" />
       </div>
 
       <!-- Illustration Area -->

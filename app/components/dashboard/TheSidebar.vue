@@ -7,7 +7,7 @@
          <div class="sidebar__header">
             <NuxtLink to="/dashboard" class="sidebar__logo">
                <div class="sidebar__logo-icon">
-                  <img src="/logo.jpeg" alt="HazeClue" class="w-5 h-5" />
+                  <img src="/logo.png" alt="HazeClue" class="w-14 h-14 object-contain" />
                </div>
                <Transition name="fade-text">
                   <div v-show="!isSidebarCollapsed || isMobile" class="sidebar__logo-text">

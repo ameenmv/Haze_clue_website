@@ -20,7 +20,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       link: [
-        { rel: 'icon', type: 'image/png', href: '/logo.jpeg' }
+        { rel: 'icon', type: 'image/png', href: '/logo.png' }
       ],
       meta: [
         { charset: 'utf-8' },
